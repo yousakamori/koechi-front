@@ -1,0 +1,23 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  @apply absolute h-0 text-opacity-50 pointer-events-none text-secondary-500;
+  content: attr(data-placeholder);
+}

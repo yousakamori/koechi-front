@@ -1,0 +1,1 @@
+type NextPage = number | null;

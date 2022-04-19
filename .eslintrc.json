@@ -1,0 +1,15 @@
+{
+  "extends": ["next", "next/core-web-vitals", "prettier", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "no-console": ["error", { "allow": ["warn", "info", "error"] }],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
+}
