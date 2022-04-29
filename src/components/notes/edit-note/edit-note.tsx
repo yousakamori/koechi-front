@@ -16,7 +16,7 @@ import { Container } from '@/components/ui/container';
 import { endpoints } from '@/config/endpoints';
 import { updateNoteSchema } from '@/config/yup-schema';
 import { HttpError } from '@/error/http-error';
-import { editorExtensionsFactory } from '@/lib/editor';
+import { editorExtensionsFactory, parseBodyText } from '@/lib/editor';
 import { fetchApi } from '@/lib/fetch-api';
 import Error from '@/pages/_error';
 import { NoteDetails } from '@/types/note';
@@ -79,7 +79,7 @@ export const EditNote: React.VFC = withLoginRequired(() => {
       });
 
       if (data.note.body_json) {
-        editor?.commands.setContent(JSON.parse(data.note.body_json));
+        editor?.commands.setContent(parseBodyText(data.note.body_json));
       }
     },
   });

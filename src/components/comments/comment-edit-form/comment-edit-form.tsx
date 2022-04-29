@@ -4,7 +4,7 @@ import React from 'react';
 import { EditorToolbar } from '@/components/common/editor-toolbar';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { editorExtensionsFactory } from '@/lib/editor';
+import { editorExtensionsFactory, parseBodyText } from '@/lib/editor';
 import { Comment } from '@/types/comment';
 // ___________________________________________________________________________
 //
@@ -22,7 +22,7 @@ export const CommentEditForm: React.VFC<CommentEditFormProps> = ({
 }) => {
   const editor = useEditor({
     extensions: editorExtensionsFactory([Placeholder.configure({ placeholder: '内容を編集' })]),
-    content: JSON.parse(comment.body_json),
+    content: parseBodyText(comment.body_json),
     editorProps: {
       attributes: {
         class: 'prose prose-sky max-w-none focus:outline-none',

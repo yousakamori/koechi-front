@@ -45,8 +45,19 @@ export const editorExtensionsFactory = (injects: Extension[] = []) => {
   ];
 };
 
+export const parseBodyText = (text: string) => {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    return {
+      type: 'doc',
+      content: [],
+    };
+  }
+};
+
 export const jsonToHtml = (text: string) => {
   return {
-    __html: generateHTML(JSON.parse(text), editorExtensionsFactory()),
+    __html: generateHTML(parseBodyText(text), editorExtensionsFactory()),
   };
 };

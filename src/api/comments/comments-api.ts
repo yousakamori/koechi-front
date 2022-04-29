@@ -30,7 +30,7 @@ export const commentsApi = {
   },
 
   async updateComment({ slug, body_json, body_text }: UpdateCommentRequest) {
-    return await fetchApi<{ comment: Comment }>(endpoints.comment(slug), {
+    return await fetchApi<void>(endpoints.comment(slug), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
