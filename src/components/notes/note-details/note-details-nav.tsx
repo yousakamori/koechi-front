@@ -11,15 +11,10 @@ import { Participant } from '@/types/participant';
 export type NoteDetailsNavProps = {
   note: NoteDetails;
   participants: Participant[];
-  onClickLike: () => void;
 };
 // ___________________________________________________________________________
 //
-export const NoteDetailsNav: React.VFC<NoteDetailsNavProps> = ({
-  note,
-  participants,
-  onClickLike,
-}) => {
+export const NoteDetailsNav: React.VFC<NoteDetailsNavProps> = ({ note, participants }) => {
   return (
     <div className='sticky top-0 z-20 bg-white border-t border-b border-secondary-200'>
       <Container>
@@ -43,9 +38,9 @@ export const NoteDetailsNav: React.VFC<NoteDetailsNavProps> = ({
             <LikeButton
               className='ml-2'
               size='md'
-              liked={note.current_user_liked}
+              likableId={note.id}
+              likableType='Note'
               likedCount={note.liked_count}
-              onClick={onClickLike}
             />
           </div>
         </div>

@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState, useEffect, useRef, useMemo } from 'react';
 import { toast } from 'react-toastify';
@@ -72,25 +71,13 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
     createComment,
     updateComment,
     deleteComment,
-    likeComment,
   } = useComments(initialComments);
 
-  const {
-    talk,
-    validating: talkValidating,
-    updateTalk,
-    deleteTalk,
-    likeTalk,
-  } = useTalkDetails(initialTalk);
+  const { talk, validating: talkValidating, updateTalk, deleteTalk } = useTalkDetails(initialTalk);
 
   const handleOpenReplyForm = useCallback(
     (comment: Comment) => {
-      if (currentUser) {
-        setParentComment(comment);
-      } else {
-        // TODO: method名
-        toggleModal();
-      }
+      currentUser ? setParentComment(comment) : toggleModal();
     },
     [currentUser, toggleModal],
   );
@@ -149,22 +136,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
     [updateComment],
   );
 
-  const handleLikeComment = useCallback(
-    async (values: Comment) => {
-      if (!currentUser) {
-        toggleModal();
-        return;
-      }
-
-      const { error } = await likeComment(values);
-
-      if (error) {
-        toast.error(error.message);
-      }
-    },
-    [currentUser, likeComment, toggleModal],
-  );
-
   const handleDeleteTalk = useCallback(
     async (slug: string) => {
       const { error } = await deleteTalk(slug);
@@ -188,23 +159,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
     },
     [updateTalk],
   );
-
-  const handleLikeTalk = useCallback(async () => {
-    if (!talk) {
-      return;
-    }
-
-    if (!currentUser) {
-      toggleModal();
-      return;
-    }
-
-    const { error } = await likeTalk(talk);
-
-    if (error) {
-      toast.error(error.message);
-    }
-  }, [currentUser, likeTalk, talk, toggleModal]);
 
   const handleScrollBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -240,7 +194,7 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
 
       <Layout>
         {/* nav */}
-        <TalkNav talk={talk} participants={participants} onClickLike={handleLikeTalk} />
+        <TalkNav talk={talk} participants={participants} />
         <div className='min-h-screen py-10 bg-slate-100'>
           <Container className='max-w-7xl'>
             {/* header */}
@@ -283,7 +237,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                       comment={comment}
                       onUpdateComment={handleUpdateComment}
                       onDeleteComment={handleDeleteComment}
-                      onLikeComment={handleLikeComment}
                       onOpenReplyForm={handleOpenReplyForm}
                     ></CommentItem>
 
@@ -295,7 +248,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                             comment={child}
                             onUpdateComment={handleUpdateComment}
                             onDeleteComment={handleDeleteComment}
-                            onLikeComment={handleLikeComment}
                           />
                         ))}
                         <Button
@@ -340,7 +292,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                   isMine={isMine}
                   participants={participants}
                   onUpdateTalk={handleUpdateTalk}
-                  onClickLike={handleLikeTalk}
                 />
               </aside>
             </div>

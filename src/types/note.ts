@@ -20,7 +20,6 @@ export type NoteDetails = Omit<Note, 'space'> & {
   body_json: string;
   body_updated_at: string;
   last_comment_created_at: string | null;
-  current_user_liked: boolean;
   liked_count: number;
   updated_at: string;
 };

@@ -26,7 +26,6 @@ export type TalkDetails = {
   liked_count: number;
   last_comment_created_at: string | null;
   created_at: string;
-  current_user_liked: boolean;
   user: Pick<
     User,
     | 'id'

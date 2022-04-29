@@ -11,11 +11,10 @@ import { TalkDetails } from '@/types/talk';
 export type TalkNavProps = {
   talk: TalkDetails;
   participants: Participant[];
-  onClickLike: () => void;
 };
 // ___________________________________________________________________________
 //
-export const TalkNav: React.VFC<TalkNavProps> = ({ talk, participants, onClickLike }) => {
+export const TalkNav: React.VFC<TalkNavProps> = ({ talk, participants }) => {
   return (
     <div className='sticky top-0 z-20 bg-white border-t border-b border-secondary-200 lg:hidden'>
       <Container>
@@ -35,9 +34,9 @@ export const TalkNav: React.VFC<TalkNavProps> = ({ talk, participants, onClickLi
             <LikeButton
               className='ml-2'
               size='md'
-              liked={talk.current_user_liked}
+              likableId={talk.id}
+              likableType='Talk'
               likedCount={talk.liked_count}
-              onClick={onClickLike}
             />
           </div>
         </div>

@@ -1,7 +1,6 @@
 import produce from 'immer';
 import { useCallback, useEffect, useState } from 'react';
 import { commentsApi, CreateCommentRequest } from '@/api/comments';
-import { likesApi } from '@/api/likes';
 import { HttpError } from '@/error/http-error';
 import { assertIsDefined } from '@/lib/assertion';
 import { Comment } from '@/types/comment';
@@ -11,7 +10,6 @@ import { Comment } from '@/types/comment';
 type CreateComment = (values: CreateCommentRequest) => Promise<{ error?: HttpError }>;
 type UpdateComment = (values: Comment) => Promise<{ error?: HttpError }>;
 type DeleteComment = (values: Comment) => Promise<{ error?: HttpError }>;
-type LikeComment = (values: Comment) => Promise<{ error?: HttpError }>;
 // ___________________________________________________________________________
 //
 export const useComments = (initialComments: Comment[] = []) => {
@@ -133,57 +131,6 @@ export const useComments = (initialComments: Comment[] = []) => {
     }
   }, []);
 
-  const likeComment = useCallback<LikeComment>(async ({ id, parent_id, current_user_liked }) => {
-    setValidating(true);
-    try {
-      const { liked } = await likesApi.createLike({
-        liked: !current_user_liked,
-        likable_id: id,
-        likable_type: 'Comment',
-      });
-
-      setComments((comments) =>
-        produce(comments, (draftComment) => {
-          if (parent_id) {
-            // child
-            const comment = draftComment.find((comment) => comment.id === parent_id);
-
-            assertIsDefined(comment);
-            assertIsDefined(comment.children);
-
-            const child = comment.children.find((child) => child.id === id);
-
-            assertIsDefined(child);
-
-            if (child.current_user_liked !== liked) {
-              child.current_user_liked = liked;
-              liked ? child.liked_count++ : child.liked_count--;
-            }
-          } else {
-            // parent
-            const comment = draftComment.find((comment) => comment.id === id);
-
-            assertIsDefined(comment);
-
-            if (comment.current_user_liked !== liked) {
-              comment.current_user_liked = liked;
-              liked ? comment.liked_count++ : comment.liked_count--;
-            }
-          }
-        }),
-      );
-
-      return {};
-    } catch (err) {
-      if (err instanceof HttpError) {
-        return { error: err };
-      }
-      throw err;
-    } finally {
-      setValidating(false);
-    }
-  }, []);
-
   useEffect(() => {
     setComments(initialComments);
   }, [initialComments]);
@@ -194,6 +141,5 @@ export const useComments = (initialComments: Comment[] = []) => {
     createComment,
     updateComment,
     deleteComment,
-    likeComment,
   };
 };

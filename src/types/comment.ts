@@ -13,7 +13,6 @@ export type Comment = {
   slug: string;
   children: Comment[] | null;
   liked_count: number;
-  current_user_liked: boolean;
   user: OmitUser;
 };
 

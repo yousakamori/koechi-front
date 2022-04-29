@@ -1,13 +1,11 @@
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BiCalendarAlt, BiPencil, BiRefresh, BiMessageRounded } from 'react-icons/bi';
-import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { NoteDetailsComments } from './note-details-comments';
 import { NoteDetailsNav } from './note-details-nav';
-import { likesApi } from '@/api/likes';
 import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
@@ -29,7 +27,7 @@ export const NoteDetails: React.VFC = withLoginRequired(() => {
   const router = useRouter();
   const slug = router.query.slug as string;
 
-  const { data, error, mutate } = useSWR<
+  const { data, error } = useSWR<
     {
       note: NoteDetailsType;
       comments: Comment[];
@@ -38,43 +36,6 @@ export const NoteDetails: React.VFC = withLoginRequired(() => {
     },
     HttpError
   >(endpoints.note(slug), fetchApi);
-
-  const handleLikeNote = useCallback(
-    async ({ id, current_user_liked }: NoteDetailsType) => {
-      try {
-        if (!data) {
-          return {};
-        }
-
-        const { liked } = await likesApi.createLike({
-          liked: !current_user_liked,
-          likable_id: id,
-          likable_type: 'Note',
-        });
-
-        mutate(
-          {
-            note: {
-              ...data.note,
-              current_user_liked: liked,
-              liked_count: liked ? ++data.note.liked_count : --data.note.liked_count,
-            },
-            space: data.space,
-            comments: data.comments,
-            participants: data.participants,
-          },
-          false,
-        );
-      } catch (err) {
-        if (err instanceof HttpError) {
-          toast.error(err.message);
-        } else {
-          throw err;
-        }
-      }
-    },
-    [data, mutate],
-  );
 
   const isFirstLoad = useRef(true);
 
@@ -111,11 +72,7 @@ export const NoteDetails: React.VFC = withLoginRequired(() => {
       <NextSeo title={data.note.title} titleTemplate='%s' />
       <Layout footer={false}>
         {/* nav */}
-        <NoteDetailsNav
-          onClickLike={() => handleLikeNote(data.note)}
-          note={data.note}
-          participants={data.participants}
-        />
+        <NoteDetailsNav note={data.note} participants={data.participants} />
         <div className='min-h-screen py-10 bg-slate-100'>
           <Container className='max-w-4xl'>
             {/* header */}

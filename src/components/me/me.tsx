@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { BiHeart } from 'react-icons/bi';
+import { BiBox } from 'react-icons/bi';
 import { CgNotes } from 'react-icons/cg';
 import { SiMyspace } from 'react-icons/si';
 import { Library } from './library';
@@ -26,10 +26,11 @@ const MeTabs: React.VFC = () => {
       icon: CgNotes,
     },
     {
-      name: 'いいねした投稿',
+      name: 'ライブラリ',
       route: '/me/library',
       active: router.pathname === '/me/library',
-      icon: BiHeart,
+      icon: BiBox,
+      // icon: BiHeart,
     },
     {
       name: 'スペース',

@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'react';
-import { likesApi } from '@/api/likes';
 import { talksApi, CreateTalkRequest } from '@/api/talks';
 import { HttpError } from '@/error/http-error';
 import { TalkDetails } from '@/types/talk';
@@ -8,7 +7,6 @@ import { TalkDetails } from '@/types/talk';
 type CreateTalk = (values: CreateTalkRequest) => Promise<{ slug?: string; error?: HttpError }>;
 type UpdateTalk = (values: TalkDetails) => Promise<{ error?: HttpError }>;
 type DeleteTalk = (slug: string) => Promise<{ error?: HttpError }>;
-type LikeTalk = (values: TalkDetails) => Promise<{ error?: HttpError }>;
 // ___________________________________________________________________________
 //
 export const useTalkDetails = (initialTalk: TalkDetails | null = null) => {
@@ -62,39 +60,6 @@ export const useTalkDetails = (initialTalk: TalkDetails | null = null) => {
     }
   }, []);
 
-  const likeTalk = useCallback<LikeTalk>(
-    async ({ id, current_user_liked }) => {
-      setValidating(true);
-      try {
-        if (!talk) {
-          return {};
-        }
-
-        const { liked } = await likesApi.createLike({
-          liked: !current_user_liked,
-          likable_id: id,
-          likable_type: 'Talk',
-        });
-
-        setTalk({
-          ...talk,
-          current_user_liked: liked,
-          liked_count: liked ? ++talk.liked_count : --talk.liked_count,
-        });
-
-        return {};
-      } catch (err) {
-        if (err instanceof HttpError) {
-          return { error: err };
-        }
-        throw err;
-      } finally {
-        setValidating(false);
-      }
-    },
-    [talk],
-  );
-
   useEffect(() => {
     setTalk(initialTalk);
   }, [initialTalk]);
@@ -105,6 +70,5 @@ export const useTalkDetails = (initialTalk: TalkDetails | null = null) => {
     createTalk,
     updateTalk,
     deleteTalk,
-    likeTalk,
   };
 };

@@ -15,7 +15,7 @@ export const Library: React.VFC = React.memo(() => {
   const { data, size, error, setSize } = useSWRInfinite<
     { items: MyLike[]; next_page: NextPage },
     HttpError
-  >((index) => `${endpoints.myLikes}?page=${index + 1}`, fetchApi);
+  >((index) => `${endpoints.myLibraryLikes}?page=${index + 1}`, fetchApi);
 
   const isLoadingInitialData = !data && !error;
   const isLoadingMore =
@@ -38,6 +38,11 @@ export const Library: React.VFC = React.memo(() => {
     return (
       <>
         <NextSeo title='いいねした投稿' />
+
+        <Typography variant='h1' fontSize='xl' className='py-4'>
+          いいねした投稿
+        </Typography>
+
         {items.map((item) => (
           <LikesItem key={item.id} item={item} />
         ))}

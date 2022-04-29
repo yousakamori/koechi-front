@@ -24,7 +24,7 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
   comments: initialComments,
   noteId,
 }) => {
-  const { comments, validating, createComment, updateComment, deleteComment, likeComment } =
+  const { comments, validating, createComment, updateComment, deleteComment } =
     useComments(initialComments);
   const [parentComment, setParentComment] = useState<Comment | null>(null);
   const handleOpenReplyForm = (comment: Comment) => setParentComment(comment);
@@ -76,14 +76,6 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
       toast.success('更新しました');
     }
   };
-
-  const handleLikeComment = async (values: Comment) => {
-    const { error } = await likeComment(values);
-
-    if (error) {
-      toast.error(error.message);
-    }
-  };
   // ___________________________________________________________________________
   //
   return (
@@ -106,7 +98,6 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
               comment={comment}
               onUpdateComment={handleUpdateComment}
               onDeleteComment={handleDeleteComment}
-              onLikeComment={handleLikeComment}
               onOpenReplyForm={handleOpenReplyForm}
             ></CommentItem>
             {comment.children && comment.children.length > 0 && (
@@ -117,7 +108,6 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
                     comment={child}
                     onUpdateComment={handleUpdateComment}
                     onDeleteComment={handleDeleteComment}
-                    onLikeComment={handleLikeComment}
                   />
                 ))}
                 <Button

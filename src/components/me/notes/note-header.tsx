@@ -84,7 +84,7 @@ export const NoteHeader: React.VFC<NoteHeaderProps> = ({ type, displayDate, onCh
     <>
       <CreateNoteModal open={open} onClose={toggleModal} postedAt={getUnixTime(displayDate)} />
 
-      <header className='relative z-20 flex items-center justify-between flex-none px-6 py-4'>
+      <header className='relative z-20 flex items-center justify-between flex-none py-4'>
         <div>
           {isListView ? (
             <Typography variant='h1' fontSize='xl'>
@@ -139,14 +139,7 @@ export const NoteHeader: React.VFC<NoteHeaderProps> = ({ type, displayDate, onCh
               position='right'
               className='w-36'
               buttonContent={
-                <Menu.Button
-                  as={React.Fragment}
-                  // type='button'
-                  // className='flex items-center py-2 pl-4 pr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-50'
-                >
-                  {/* リスト表示
-                  <BiChevronDown className='w-5 h-5 ml-2 text-gray-400' aria-hidden='true' /> */}
-
+                <Menu.Button as={React.Fragment}>
                   <Button variant='outlined' color='secondary' className='' roundedFull>
                     表示
                     <BiChevronDown className='w-5 h-5 ml-2 text-gray-400' aria-hidden='true' />

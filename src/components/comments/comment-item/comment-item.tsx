@@ -32,13 +32,12 @@ export type CommentItemProps = {
   comment: Comment;
   onUpdateComment: (values: Comment) => Promise<void>;
   onDeleteComment: (values: Comment) => Promise<void>;
-  onLikeComment: (values: Comment) => Promise<void>;
   onOpenReplyForm?: (values: Comment) => void;
 };
 // ___________________________________________________________________________
 //
 export const CommentItem: React.VFC<CommentItemProps> = React.memo(
-  ({ comment, onUpdateComment, onDeleteComment, onLikeComment, onOpenReplyForm }) => {
+  ({ comment, onUpdateComment, onDeleteComment, onOpenReplyForm }) => {
     const [editSlug, setEditSlug] = useState('');
     const { currentUser } = useCurrentUser();
     const isMine = currentUser && currentUser.id === comment.user.id;
@@ -123,10 +122,10 @@ export const CommentItem: React.VFC<CommentItemProps> = React.memo(
                 />
                 <footer className='flex items-center justify-start mt-3 space-x-3'>
                   <LikeButton
+                    likableId={comment.id}
+                    likableType='Comment'
                     size='sm'
-                    liked={comment.current_user_liked}
                     likedCount={comment.liked_count}
-                    onClick={() => onLikeComment(comment)}
                   />
                   {onOpenReplyForm && comment.children && (
                     <ReplyButton

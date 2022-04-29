@@ -23,12 +23,11 @@ export type TalkDetailsSidebarProps = {
   isMine: boolean;
   participants: Participant[];
   onUpdateTalk: (values: TalkDetails) => Promise<void>;
-  onClickLike: () => void;
 };
 // ___________________________________________________________________________
 //
 export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo(
-  ({ talk, isMine, participants, onUpdateTalk, onClickLike }) => {
+  ({ talk, isMine, participants, onUpdateTalk }) => {
     const handleOpenTalk = async () => {
       await onUpdateTalk({ ...talk, closed: false, closed_at: null });
     };
@@ -67,9 +66,9 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
             <div className='flex items-center justify-between'>
               <LikeButton
                 size='lg'
-                liked={talk.current_user_liked}
+                likableId={talk.id}
+                likableType='Talk'
                 likedCount={talk.liked_count}
-                onClick={onClickLike}
               />
             </div>
             <div className='flex items-center justify-between space-x-3'>
