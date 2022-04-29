@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { AnchorHTMLAttributes } from 'react';
 import { Container } from '@/components/ui/container';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 type NavLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -41,7 +41,7 @@ const NavLink: React.VFC<NavLinkProps> = ({ children, href, className, ...rest }
 export const navigations = [
   { name: 'ホーム', route: '/' },
   { name: 'トーク', route: '/talks/explore' },
-  { name: `${BRAND_NAME}について`, route: '/about' },
+  { name: `${APP_NAME}について`, route: '/about' },
 ];
 // ___________________________________________________________________________
 //

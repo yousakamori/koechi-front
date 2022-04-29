@@ -5,7 +5,7 @@ import { BiSearch } from 'react-icons/bi';
 import { CircleButton } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Typography } from '@/components/ui/typography';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 const HeaderAction = dynamic<object>(() =>
@@ -30,7 +30,7 @@ export const Header: React.VFC = () => {
                 fontSize='2xl'
                 className='tracking-wide'
               >
-                {BRAND_NAME}
+                {APP_NAME}
               </Typography>
             </a>
           </Link>

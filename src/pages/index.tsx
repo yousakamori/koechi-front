@@ -1,12 +1,18 @@
 import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { talksApi, TalksResponse } from '@/api/talks';
 import { Layout } from '@/components/common/layout';
-import { Hero } from '@/components/home/hero';
-import { HomeNotesList } from '@/components/home/home-notes-list';
 import { HomeTalksList } from '@/components/home/home-talks-list';
 import { Spinner } from '@/components/ui/spinner';
 import { HttpError, HttpErrorObject } from '@/error/http-error';
 import Error from '@/pages/_error';
+// ___________________________________________________________________________
+//
+const Hero = dynamic<object>(() => import('@/components/home/hero').then((mod) => mod.Hero));
+
+const HomeNotesList = dynamic<object>(() =>
+  import('@/components/home/home-notes-list').then((mod) => mod.HomeNotesList),
+);
 // ___________________________________________________________________________
 //
 type ServerProps = {

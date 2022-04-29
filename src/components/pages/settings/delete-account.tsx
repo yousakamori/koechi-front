@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Typography } from '@/components/ui/typography';
 import { deleteAccountSchema } from '@/config/yup-schema';
 import { useDeleteCurrentUser } from '@/hooks/current-user';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export const DeleteAccount: React.VFC = withLoginRequired(() => {
@@ -54,7 +54,7 @@ export const DeleteAccount: React.VFC = withLoginRequired(() => {
       <div className='min-h-screen py-10'>
         <Container className='max-w-lg'>
           <Typography variant='h1' align='center'>
-            {BRAND_NAME}を退会
+            {APP_NAME}を退会
           </Typography>
 
           <div className='mt-4 text-center'>

@@ -7,7 +7,7 @@ import { Container } from '@/components/ui/container';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
@@ -71,7 +71,7 @@ export const OnboardingOptional: React.VFC<OnboardingOptionalProps> = ({
               size='lg'
               onClick={handleSaveProfile}
             >
-              {BRAND_NAME}をはじめる
+              {APP_NAME}をはじめる
             </Button>
           </div>
           <div className='flex justify-center mt-6'>

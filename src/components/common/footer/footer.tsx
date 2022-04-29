@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { AnchorHTMLAttributes } from 'react';
 import { Container } from '@/components/ui/container';
 import { Typography } from '@/components/ui/typography';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 const FOOTER_LINKS = [
@@ -17,7 +17,7 @@ const FOOTER_LINKS = [
   {
     name: 'メニュー',
     links: [
-      { name: `${BRAND_NAME}について`, route: '/' },
+      { name: `${APP_NAME}について`, route: '/' },
       { name: 'プロフィール', route: '/' },
     ],
   },
@@ -25,7 +25,7 @@ const FOOTER_LINKS = [
     name: 'リンク',
     links: [
       { name: 'お問い合わせ', route: '/' },
-      { name: 'Twitter', route: `https://twitter.com/${BRAND_NAME}` },
+      { name: 'Twitter', route: `https://twitter.com/${APP_NAME}` },
       { name: 'Github', route: 'https://github.com/yousakamori' },
     ],
   },
@@ -99,7 +99,7 @@ export const Footer: React.VFC<FooterProps> = ({ show = true }) => {
                     fontSize='xl'
                     fontWeight='semibold'
                   >
-                    {BRAND_NAME}
+                    {APP_NAME}
                   </Typography>
                 </a>
               </Link>
@@ -139,7 +139,7 @@ export const Footer: React.VFC<FooterProps> = ({ show = true }) => {
           ))}
         </div>
         <Typography align='left' variant='p' color='textPrimary' className='py-4 mt-8 text-center'>
-          © {BRAND_NAME}
+          © {APP_NAME}
         </Typography>
       </Container>
     </footer>

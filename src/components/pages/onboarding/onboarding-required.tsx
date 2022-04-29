@@ -7,7 +7,7 @@ import { ErrorMessage } from '@/components/ui/error-message';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Typography } from '@/components/ui/typography';
-import { BRAND_NAME, SITE_URL } from '@/lib/constants';
+import { APP_NAME, SITE_URL } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export type OnboardingRequiredProps = {
@@ -33,7 +33,7 @@ export const OnboardingRequired: React.VFC<OnboardingRequiredProps> = ({
     <div className='relative min-h-screen my-14'>
       <Container>
         <Typography variant='h1' align='center'>
-          {BRAND_NAME}へようこそ
+          {APP_NAME}へようこそ
         </Typography>
 
         <div className='mt-4 text-center'>

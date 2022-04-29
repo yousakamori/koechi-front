@@ -2,15 +2,25 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
+import { Spinner } from '@/components/ui/spinner';
 import { useCurrentUser } from '@/hooks/current-user';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export const Hero: React.VFC = () => {
   const { authChecking, currentUser } = useCurrentUser();
   // ___________________________________________________________________________
   //
-  if (authChecking || currentUser) {
+  if (authChecking) {
+    return (
+      <div className='flex justify-center min-h-screen mt-10'>
+        <Spinner color='primary' size='md' />
+      </div>
+    );
+  }
+  // ___________________________________________________________________________
+  //
+  if (currentUser) {
     return <></>;
   }
   // ___________________________________________________________________________
@@ -22,7 +32,6 @@ export const Hero: React.VFC = () => {
           <div className='px-4 text-center lg:text-left lg:shrink-0'>
             <div className='text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl'>
               {/* TODO: なんか考える */}
-
               <p className='block'>介護の情報を</p>
               <p className='block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600'>
                 管理・共有するサービスです
@@ -46,7 +55,7 @@ export const Hero: React.VFC = () => {
                   variant='outlined'
                   className='w-full mt-6 sm:w-auto sm:mt-0'
                 >
-                  {BRAND_NAME}について
+                  {APP_NAME}について
                 </Button>
               </Link>
             </div>

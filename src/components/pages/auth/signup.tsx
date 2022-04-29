@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { signupSchema } from '@/config/yup-schema';
 import { useAuth } from '@/hooks/auth';
-import { BRAND_NAME } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export const SignUp: React.VFC = withLogoutRequired(() => {
@@ -55,7 +55,7 @@ export const SignUp: React.VFC = withLogoutRequired(() => {
       <div className='min-h-screen py-10 border-t border-gray-200'>
         <Container className='max-w-md'>
           <Typography variant='h1' align='center'>
-            {BRAND_NAME}に登録する
+            {APP_NAME}に登録する
           </Typography>
 
           {/* 入力フォーム */}

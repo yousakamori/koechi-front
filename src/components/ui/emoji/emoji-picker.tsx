@@ -1,5 +1,5 @@
-import { Popover } from '@headlessui/react';
 import 'emoji-mart/css/emoji-mart.css';
+import { Popover } from '@headlessui/react';
 import { EmojiData, PickerProps } from 'emoji-mart';
 import { Picker } from 'emoji-mart';
 import React from 'react';
@@ -55,6 +55,7 @@ export const EmojiPicker: React.VFC<EmojiPickerProps> = ({ emoji, onSelect, emoj
         </Popover.Button>
 
         <Popover.Panel className='absolute z-50 mt-2'>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <Picker {...propsFactory(emojiProps)} native onSelect={(v: any) => onSelect(v.native)} />
         </Popover.Panel>
       </>
