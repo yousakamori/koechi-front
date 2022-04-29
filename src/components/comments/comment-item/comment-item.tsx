@@ -10,6 +10,7 @@ import { Dropdown } from '@/components/ui/dropdown';
 import { LikeButtonProps } from '@/components/ui/like-button';
 import { ReplyButtonProps } from '@/components/ui/reply-button';
 import { Time } from '@/components/ui/time';
+import { useCurrentUser } from '@/hooks/current-user';
 import { jsonToHtml } from '@/lib/editor';
 import { Comment } from '@/types/comment';
 // ___________________________________________________________________________
@@ -39,6 +40,8 @@ export type CommentItemProps = {
 export const CommentItem: React.VFC<CommentItemProps> = React.memo(
   ({ comment, onUpdateComment, onDeleteComment, onLikeComment, onOpenReplyForm }) => {
     const [editSlug, setEditSlug] = useState('');
+    const { currentUser } = useCurrentUser();
+    const isMine = currentUser && currentUser.id === comment.user.id;
     // ___________________________________________________________________________
     //
     return (
@@ -66,7 +69,7 @@ export const CommentItem: React.VFC<CommentItemProps> = React.memo(
                   : new Date(comment.created_at)
               }
             />
-            {comment.is_mine && (
+            {isMine && (
               <div className='ml-auto'>
                 <Dropdown
                   position='right'
