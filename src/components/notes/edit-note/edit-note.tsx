@@ -118,7 +118,7 @@ export const EditNote: React.VFC = withLoginRequired(() => {
   };
 
   useEffect(() => {
-    if (!form.formState.isDirty || !form.formState.isValid) {
+    if (!form.formState.isDirty) {
       return;
     }
 
@@ -129,8 +129,9 @@ export const EditNote: React.VFC = withLoginRequired(() => {
       router.events.off('routeChangeStart', handleRouteChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.formState.isDirty, form.formState.isValid]);
+  }, [form.formState.isDirty]);
   // ___________________________________________________________________________
   //
   if (error) {

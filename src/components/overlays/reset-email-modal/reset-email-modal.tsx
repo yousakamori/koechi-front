@@ -1,22 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { ResetEmailRequest } from '@/api/current-user';
+import useSWR from 'swr';
+import { currentUserApi } from '@/api/current-user';
 import { validatorApi } from '@/api/validator';
 import { Button } from '@/components/ui/button';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Modal } from '@/components/ui/modal';
+import { endpoints } from '@/config/endpoints';
 import { resetEmailSchema } from '@/config/yup-schema';
-import { useEmail } from '@/hooks/current-user';
+import { HttpError } from '@/error/http-error';
+import { fetchApi } from '@/lib/fetch-api';
 // ___________________________________________________________________________
 //
 export type ResetEmailModalProps = {
   open: boolean;
   onClose: () => void;
 };
+
+type UpdateValues = { email: string };
 // ___________________________________________________________________________
 //
 export const ResetEmailModal: React.VFC<ResetEmailModalProps> = ({ open, onClose }) => {
@@ -26,7 +31,7 @@ export const ResetEmailModal: React.VFC<ResetEmailModalProps> = ({ open, onClose
     setError,
     reset,
     formState: { errors, isDirty, isValid },
-  } = useForm<ResetEmailRequest>({
+  } = useForm<UpdateValues>({
     mode: 'onChange',
     resolver: yupResolver(resetEmailSchema),
     defaultValues: {
@@ -35,39 +40,45 @@ export const ResetEmailModal: React.VFC<ResetEmailModalProps> = ({ open, onClose
   });
 
   const disabled = !isDirty || !isValid;
-  const { email, validating, getEmail, resetEmail } = useEmail();
 
-  const handleResetEmail = async (values: ResetEmailRequest) => {
-    const { taken } = await validatorApi.emailTaken(values.email);
+  const { data } = useSWR<{ email: string }, HttpError>(endpoints.email, fetchApi, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
-    if (taken) {
-      setError('email', {
-        message: `「${values.email}」は登録できません`,
-      });
-    } else {
-      const { error } = await resetEmail(values);
+  const [validating, setValidating] = useState(false);
 
-      if (error) {
-        toast.error(error.message);
-      } else {
-        toast.success('確認メールを送信しました');
-        reset();
-        onClose();
+  const handleResetEmail = async (values: UpdateValues) => {
+    setValidating(true);
+    try {
+      const { taken } = await validatorApi.emailTaken(values.email);
+      if (taken) {
+        setError('email', {
+          message: `「${values.email}」は登録できません`,
+        });
+        return;
       }
+
+      await currentUserApi.resetEmail(values);
+      toast.success('確認メールを送信しました');
+      reset();
+      onClose();
+    } catch (err) {
+      if (err instanceof HttpError) {
+        toast.error(err.message);
+      }
+      throw err;
+    } finally {
+      setValidating(false);
     }
   };
-
-  useEffect(() => {
-    getEmail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   // ___________________________________________________________________________
   //
   return (
     <Modal open={open} onClose={onClose}>
       <div className='text-xs text-left text-gray-500'>
         現在のメールアドレスは
-        <span className='text-sm px-0.5 font-semibold text-gray-700'>{email}</span>
+        <span className='text-sm px-0.5 font-semibold text-gray-700'>{data?.email}</span>
         です。
       </div>
       <div className='grid mt-6 gap-y-2'>

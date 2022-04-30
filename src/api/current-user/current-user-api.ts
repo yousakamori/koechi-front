@@ -15,26 +15,6 @@ export type UpdateCurrentUserRequest = {
   twitter_username?: string;
   password?: string;
 };
-
-export type ResetEmailRequest = {
-  email: string;
-};
-
-export type UpdateEmailRequest = {
-  token: string;
-  password: string;
-};
-
-export type UpdatePasswordRequest = {
-  old_password: string;
-  new_password: string;
-  new_password_confirm: string;
-};
-// ___________________________________________________________________________
-//
-export type GetEmailResponse = {
-  email: string;
-};
 // ___________________________________________________________________________
 //
 export const currentUserApi = {
@@ -47,42 +27,33 @@ export const currentUserApi = {
     });
   },
 
-  async getEmail() {
-    return await fetchApi<GetEmailResponse>(endpoints.email, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  },
-
-  async resetEmail(values: ResetEmailRequest) {
+  async resetEmail(values: { email: string }) {
     return await fetchApi<void>(endpoints.email, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(values),
     });
   },
 
-  async updateEmail(values: UpdateEmailRequest) {
+  async updateEmail(values: { token: string; password: string }) {
     return await fetchApi<void>(endpoints.email, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(values),
     });
   },
 
-  async updatePassword({ old_password, new_password }: UpdatePasswordRequest) {
+  async updatePassword(values: { old_password: string; new_password: string }) {
     return await fetchApi<void>(endpoints.password, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ old_password, new_password }),
+      body: JSON.stringify(values),
     });
   },
 

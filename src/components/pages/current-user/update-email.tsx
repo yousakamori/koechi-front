@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { UpdateEmailRequest } from '@/api/current-user';
+import { currentUserApi } from '@/api/current-user';
 import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,10 @@ import { ErrorMessage } from '@/components/ui/error-message';
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { updateEmailSchema } from '@/config/yup-schema';
-import { useEmail } from '@/hooks/current-user';
+import { HttpError } from '@/error/http-error';
+// ___________________________________________________________________________
+//
+type UpdateValues = { token: string; password: string };
 // ___________________________________________________________________________
 //
 export const UpdateEmail: React.VFC = withLoginRequired(() => {
@@ -21,40 +24,37 @@ export const UpdateEmail: React.VFC = withLoginRequired(() => {
     register,
     formState: { errors, isDirty, isValid },
     setValue,
-    setError,
-    getValues,
     handleSubmit,
-  } = useForm<UpdateEmailRequest>({
+  } = useForm<UpdateValues>({
     mode: 'onChange',
     resolver: yupResolver(updateEmailSchema),
   });
   const disabled = !isDirty || !isValid;
-  const { validating, updateEmail } = useEmail();
+
   const router = useRouter();
+  const { token } = router.query as { token: string };
+  const [validating, setValidating] = useState(false);
 
-  const handleUpdateEmail = async (values: UpdateEmailRequest) => {
-    const { error } = await updateEmail(values);
-
-    if (error) {
-      setError('password', { message: error.message });
-    } else {
+  const handleUpdateEmail = async (values: UpdateValues) => {
+    setValidating(true);
+    try {
+      await currentUserApi.updateEmail(values);
       toast.success('メールアドレスを変更しました');
       router.replace('/');
+    } catch (err) {
+      if (err instanceof HttpError) {
+        toast.error(err.message);
+      }
+      throw err;
+    } finally {
+      setValidating(false);
     }
   };
 
   useEffect(() => {
-    if (!router.isReady) {
-      return;
-    }
-
-    const token = router.query.token as string;
-    if (token) {
-      setValue('token', token);
-    }
-
+    setValue('token', token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady]);
+  }, [token]);
   // ___________________________________________________________________________
   //
   return (
@@ -65,7 +65,7 @@ export const UpdateEmail: React.VFC = withLoginRequired(() => {
             メールアドレスの再設定
           </Typography>
 
-          {getValues('token') ? (
+          {token ? (
             <>
               <div className='mt-4 text-sm text-gray-500'>
                 パスワードを入力して、メールアドレス変更を完了してください。

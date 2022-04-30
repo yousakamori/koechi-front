@@ -17,7 +17,7 @@ import { HttpError } from '@/error/http-error';
 import { SpaceDetails } from '@/types/space';
 // ___________________________________________________________________________
 //
-export type CreateValues = Pick<SpaceDetails, 'name' | 'emoji'>;
+type CreateValues = Pick<SpaceDetails, 'name' | 'emoji'>;
 // ___________________________________________________________________________
 //
 export const NewSpace: React.VFC = withLoginRequired(() => {

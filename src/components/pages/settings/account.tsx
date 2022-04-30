@@ -25,10 +25,10 @@ export const Account: React.VFC = () => {
 
   const [notifications, setNotifications] = useState({
     comment: false,
-    follow: false,
+    like: false,
   });
 
-  const toggleNotification = (key: 'comment' | 'follow') => {
+  const toggleNotification = (key: 'comment' | 'like') => {
     setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
   };
   // ___________________________________________________________________________
@@ -49,15 +49,15 @@ export const Account: React.VFC = () => {
             checked={notifications['comment']}
             onClick={() => toggleNotification('comment')}
           >
-            投稿にコメントがついたとき
+            コメントがついたとき
           </CheckButton>
 
           <CheckButton
             className='text-sm text-gray-500'
-            checked={notifications['follow']}
-            onClick={() => toggleNotification('follow')}
+            checked={notifications['like']}
+            onClick={() => toggleNotification('like')}
           >
-            フォローされたとき
+            いいねされたとき
           </CheckButton>
         </div>
       </div>

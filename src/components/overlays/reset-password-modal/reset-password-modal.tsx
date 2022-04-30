@@ -1,20 +1,26 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { UpdatePasswordRequest } from '@/api/current-user';
+import { currentUserApi } from '@/api/current-user';
 import { Button } from '@/components/ui/button';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Modal } from '@/components/ui/modal';
 import { updatePasswordSchema } from '@/config/yup-schema';
-import { usePassword } from '@/hooks/current-user';
+import { HttpError } from '@/error/http-error';
 // ___________________________________________________________________________
 //
 export type ResetPasswordModalProps = {
   open: boolean;
   onClose: () => void;
+};
+
+type UpdateValues = {
+  old_password: string;
+  new_password: string;
+  new_password_confirm: string;
 };
 // ___________________________________________________________________________
 //
@@ -22,10 +28,9 @@ export const ResetPasswordModal: React.VFC<ResetPasswordModalProps> = ({ open, o
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     formState: { errors, isDirty, isValid },
-  } = useForm<UpdatePasswordRequest>({
+  } = useForm<UpdateValues>({
     mode: 'onChange',
     resolver: yupResolver(updatePasswordSchema),
     defaultValues: {
@@ -36,16 +41,23 @@ export const ResetPasswordModal: React.VFC<ResetPasswordModalProps> = ({ open, o
   });
 
   const disabled = !isDirty || !isValid;
-  const { validating, updatePassword } = usePassword();
 
-  const handleUpdatePassword = async (values: UpdatePasswordRequest) => {
-    const { error } = await updatePassword(values);
-    if (error) {
-      setError('old_password', { message: error.message });
-    } else {
+  const [validating, setValidating] = useState(false);
+
+  const handleUpdatePassword = async ({ old_password, new_password }: UpdateValues) => {
+    setValidating(true);
+    try {
+      await currentUserApi.updatePassword({ old_password, new_password });
       toast.success('パスワードを変更しました');
       reset();
       onClose();
+    } catch (err) {
+      if (err instanceof HttpError) {
+        toast.success(err.message);
+      }
+      throw err;
+    } finally {
+      setValidating(false);
     }
   };
   // ___________________________________________________________________________
