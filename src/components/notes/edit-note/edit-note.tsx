@@ -59,8 +59,12 @@ export const EditNote: React.VFC = withLoginRequired(() => {
     },
 
     onUpdate({ editor }) {
-      form.setValue('body_text', editor.state.doc.textContent, { shouldDirty: true });
+      form.setValue('body_text', editor.state.doc.textContent, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
       form.setValue('body_json', editor.isEmpty ? '' : JSON.stringify(editor.getJSON()), {
+        shouldValidate: true,
         shouldDirty: true,
       });
     },
@@ -129,7 +133,6 @@ export const EditNote: React.VFC = withLoginRequired(() => {
       router.events.off('routeChangeStart', handleRouteChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.formState.isDirty]);
   // ___________________________________________________________________________
