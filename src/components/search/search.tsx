@@ -8,8 +8,8 @@ import { SearchTabs } from './search-tabs';
 import { UserItem } from './user-item';
 import { notesApi } from '@/api/notes';
 import { Layout } from '@/components/common/layout';
-import { NoteItem } from '@/components/me/notes/note-item'; // TODO: 共通化 => 名前 / ディレクトリ変更
-import { TalkLatestItem } from '@/components/pages/talks-latest/talks-latest-item'; // TODO: 共通化 => 名前 / ディレクトリ変更
+import { NoteItem } from '@/components/models/note/note-item';
+import { TalkItem } from '@/components/models/talk/talk-item';
 import { CircleButton } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Pagination } from '@/components/ui/pagination';
@@ -197,8 +197,11 @@ export const Search: React.VFC = () => {
                   <div className='flex flex-wrap justify-between mt-6'>
                     {(searchResult as SearchNotes).notes.map((note) => (
                       <div key={note.id} className='sm:w-[48%] w-full'>
-                        {/* // TODO: talkと同じようにdivideにしたいな */}
-                        <NoteItem note={note} onDeleteNote={handleDeleteNote} />
+                        <NoteItem
+                          note={note}
+                          onDeleteNote={handleDeleteNote}
+                          className='border-b border-gray-200'
+                        />
                       </div>
                     ))}
                   </div>
@@ -207,7 +210,7 @@ export const Search: React.VFC = () => {
                 {sourceQuery === 'talks' && (
                   <div className='mt-6 border border-gray-200 divide-y divide-gray-200 rounded-lg'>
                     {(searchResult as SearchTalks).talks.map((talk) => (
-                      <TalkLatestItem key={talk.id} talk={talk} />
+                      <TalkItem key={talk.id} talk={talk} className='p-4' />
                     ))}
                   </div>
                 )}
