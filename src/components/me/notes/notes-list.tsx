@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { NoteHeader } from './note-header';
 import { notesApi } from '@/api/notes';
-import { NoteItem } from '@/components/models/note/note-item';
+import { NoteItem } from '@/components/models/note/';
 import { Pagination } from '@/components/ui/pagination';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';

@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { ResetPassword } from '@/components/pages/auth';
+import { ResetPassword } from '@/components/auth/reset-password';
 // ___________________________________________________________________________
 //
 const ResetPasswordPage: NextPage = () => {

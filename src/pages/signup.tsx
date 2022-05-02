@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { SignUp } from '@/components/pages/auth';
+import { SignUp } from '@/components/auth/signup';
 // ___________________________________________________________________________
 //
 const SignUpPage: NextPage = () => {

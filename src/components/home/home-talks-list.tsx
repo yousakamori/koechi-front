@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { TalkItem } from '@/components/models/talk/talk-item';
+import { TalkItem } from '@/components/models/talk';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Typography } from '@/components/ui/typography';

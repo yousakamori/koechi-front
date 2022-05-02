@@ -1,6 +1,6 @@
 import React from 'react';
 import useSWRInfinite from 'swr/infinite';
-import { TalkItem } from '@/components/models/talk/talk-item';
+import { TalkItem } from '@/components/models/talk';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';

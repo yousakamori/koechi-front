@@ -30,7 +30,6 @@ const MeTabs: React.VFC = () => {
       route: '/me/library',
       active: router.pathname === '/me/library',
       icon: BiBox,
-      // icon: BiHeart,
     },
     {
       name: 'スペース',

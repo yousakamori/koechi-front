@@ -5,7 +5,7 @@ import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import { ConfirmModalProps } from '@/components/common/modals/confirm-modal';
+import { ConfirmModalProps } from '@/components/overlays/confirm-modal';
 import { EditSpaceModalProps, UpdateSpace } from '@/components/overlays/edit-space-modal';
 import { Avatar } from '@/components/ui/avatar';
 import { CircleButton } from '@/components/ui/button';
@@ -22,7 +22,7 @@ const EditSpaceModal = dynamic<EditSpaceModalProps>(() =>
 );
 
 const ConfirmModal = dynamic<ConfirmModalProps>(() =>
-  import('@/components/common/modals/confirm-modal').then((mod) => mod.ConfirmModal),
+  import('@/components/overlays/confirm-modal').then((mod) => mod.ConfirmModal),
 );
 // ___________________________________________________________________________
 //

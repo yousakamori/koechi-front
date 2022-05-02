@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { NewTalk } from '@/components/pages/talks/new-talk';
+import { NewTalk } from '@/components/new-talk';
 // ___________________________________________________________________________
 //
 const NewTalkPage: NextPage = () => {

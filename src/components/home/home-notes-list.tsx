@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import useSWR from 'swr';
-import { NoteItem } from '@/components/models/note/note-item';
+import { NoteItem } from '@/components/models/note/';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Spinner } from '@/components/ui/spinner';

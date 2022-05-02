@@ -1,7 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import { NextSeo } from 'next-seo';
 import { talksApi, TalksResponse } from '@/api/talks';
-import { TalksExploreList } from '@/components/pages/talks-explore-list';
+import { TalkExplore } from '@/components/talks-explore';
 import { Spinner } from '@/components/ui/spinner';
 import { HttpError, HttpErrorObject } from '@/error/http-error';
 import Error from '@/pages/_error';
@@ -56,12 +55,7 @@ const TalksExplorePage: NextPage<ServerProps> = ({ talksExplore, err }) => {
   }
   // ___________________________________________________________________________
   //
-  return (
-    <>
-      <NextSeo title='トーク' />
-      <TalksExploreList talksExplore={talksExplore} />
-    </>
-  );
+  return <TalkExplore talksExplore={talksExplore} />;
 };
 // ___________________________________________________________________________
 //

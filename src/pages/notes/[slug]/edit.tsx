@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { EditNote } from '@/components/notes/edit-note';
+import { EditNote } from '@/components/edit-note';
 // ___________________________________________________________________________
 //
 const EditNotePage: NextPage = () => {

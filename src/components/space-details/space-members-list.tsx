@@ -1,14 +1,24 @@
+import dynamic from 'next/dynamic';
 import React, { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
-import { SpaceInviteForm } from './space-invite-form';
-import { SpaceMemberItem } from './space-member-item';
+import { SpaceInviteFormProps } from './space-invite-form';
 import { membersApi } from '@/api/members';
+import { MemberItemProps } from '@/components/models/member';
 import { Spinner } from '@/components/ui/spinner';
 import { endpoints } from '@/config/endpoints';
 import { HttpError } from '@/error/http-error';
 import { fetchApi } from '@/lib/fetch-api';
 import { Member } from '@/types/member';
+// ___________________________________________________________________________
+//
+const SpaceInviteForm = dynamic<SpaceInviteFormProps>(() =>
+  import('./space-invite-form').then((mod) => mod.SpaceInviteForm),
+);
+
+const MemberItem = dynamic<MemberItemProps>(() =>
+  import('@/components/models/member').then((mod) => mod.MemberItem),
+);
 // ___________________________________________________________________________
 //
 export type SpaceMembersListProps = {
@@ -138,7 +148,7 @@ export const SpaceMembersList: React.VFC<SpaceMembersListProps> = React.memo(({ 
       {/* member list */}
       <div className='mt-4'>
         {data.members.map((member) => (
-          <SpaceMemberItem
+          <MemberItem
             key={member.id}
             member={member}
             role={data.space.role}

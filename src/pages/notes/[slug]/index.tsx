@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { NoteDetails } from '@/components/notes/note-details';
+import { NoteDetails } from '@/components/note-details';
 // ___________________________________________________________________________
 //
 const NoteDetailsPage: NextPage = () => {

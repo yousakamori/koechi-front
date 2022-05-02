@@ -1,17 +1,11 @@
 import { NextPage } from 'next';
-import { NextSeo } from 'next-seo';
-import { Settings } from '@/components/pages/settings';
+import { Settings } from '@/components/settings';
 // ___________________________________________________________________________
 //
 const AccountPage: NextPage = () => {
   // ___________________________________________________________________________
   //
-  return (
-    <>
-      <NextSeo title='アカウント設定' />
-      <Settings />
-    </>
-  );
+  return <Settings />;
 };
 // ___________________________________________________________________________
 //

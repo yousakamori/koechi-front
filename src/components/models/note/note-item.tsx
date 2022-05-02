@@ -5,7 +5,7 @@ import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { BiPencil, BiChevronDown, BiTime, BiMessageRounded } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import { ConfirmModal } from '@/components/common/modals/confirm-modal';
+import { ConfirmModal } from '@/components/overlays/confirm-modal';
 import { Avatar } from '@/components/ui/avatar';
 import { CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';

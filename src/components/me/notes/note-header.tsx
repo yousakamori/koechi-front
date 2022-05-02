@@ -19,7 +19,7 @@ import {
   BiChevronDown,
   BiDotsHorizontalRounded,
 } from 'react-icons/bi';
-import { CreateNoteModalProps } from './create-note-modal';
+import { CreateNoteModalProps } from '@/components/overlays/create-note-modal';
 import { Button } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
 import { Typography } from '@/components/ui/typography';
@@ -27,7 +27,7 @@ import { useToggle } from '@/hooks/toggle';
 // ___________________________________________________________________________
 //
 const CreateNoteModal = dynamic<CreateNoteModalProps>(() =>
-  import('./create-note-modal').then((mod) => mod.CreateNoteModal),
+  import('@/components/overlays/create-note-modal').then((mod) => mod.CreateNoteModal),
 );
 // ___________________________________________________________________________
 //
