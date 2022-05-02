@@ -25,11 +25,11 @@ const propsFactory = (injects?: Partial<ServerProps>) => ({
 export const getServerSideProps: GetServerSideProps<ServerProps> = async (
   context: GetServerSidePropsContext,
 ) => {
-  const { page, min_comments_count } = context.query as {
+  const { page = '1', min_comments_count } = context.query as {
     page: string;
     min_comments_count: string;
   };
-  const query = `order=latest&min_comments_count=${min_comments_count || 1}&page=${page || 1}`;
+  const query = `order=latest&min_comments_count=${min_comments_count || 1}&page=${page}`;
 
   try {
     const data = await talksApi.getTalks(query);

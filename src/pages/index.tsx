@@ -1,18 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
-import dynamic from 'next/dynamic';
 import { talksApi, TalksResponse } from '@/api/talks';
-import { Layout } from '@/components/common/layout';
-import { HomeTalksList } from '@/components/home/home-talks-list';
-import { Spinner } from '@/components/ui/spinner';
+import { Home } from '@/components/home';
 import { HttpError, HttpErrorObject } from '@/error/http-error';
 import Error from '@/pages/_error';
-// ___________________________________________________________________________
-//
-const Hero = dynamic<object>(() => import('@/components/home/hero').then((mod) => mod.Hero));
-
-const HomeNotesList = dynamic<object>(() =>
-  import('@/components/home/home-notes-list').then((mod) => mod.HomeNotesList),
-);
 // ___________________________________________________________________________
 //
 type ServerProps = {
@@ -56,17 +46,11 @@ const HomePage: NextPage<ServerProps> = ({ talksExplore, err }) => {
   // ___________________________________________________________________________
   //
   if (!talksExplore) {
-    return <Spinner color='primary' size='lg' />;
+    return <></>;
   }
   // ___________________________________________________________________________
   //
-  return (
-    <Layout navbar>
-      <Hero />
-      <HomeTalksList talks={talksExplore.talks} />
-      <HomeNotesList />
-    </Layout>
-  );
+  return <Home talks={talksExplore.talks} />;
 };
 // ___________________________________________________________________________
 //

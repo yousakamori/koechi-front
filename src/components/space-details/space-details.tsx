@@ -22,8 +22,8 @@ import { SpaceDetails as SpaceDetailsType } from '@/types/space';
 export const SpaceDetails: React.VFC = withLoginRequired(() => {
   const router = useRouter();
   const [validating, setValidating] = useState(false);
-  const { slug, page, tab } = router.query as { slug: string; page: string; tab: string };
-  const currentPage = Number(page) || 1;
+  const { slug, tab, page = '1' } = router.query as { slug: string; page: string; tab: string };
+  const currentPage = Number(page);
 
   const tabs = [
     { name: 'ノート', route: `/spaces/${slug}`, active: tab !== 'members' },

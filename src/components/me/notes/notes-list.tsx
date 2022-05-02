@@ -17,8 +17,8 @@ import { Note } from '@/types/note';
 //
 export const NotesList: React.VFC = React.memo(() => {
   const router = useRouter();
-  const { page } = router.query as { page: string };
-  const currentPage = Number(page) || 1;
+  const { page = '1' } = router.query as { page: string };
+  const currentPage = Number(page);
   const { data, mutate } = useSWR<{ notes: Note[]; next_page: NextPage }, HttpError>(
     `${endpoints.myNotes}?page=${currentPage}`,
     fetchApi,

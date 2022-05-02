@@ -55,7 +55,7 @@ const isSource = (source: string): source is Source => {
 export const Search: React.VFC = () => {
   const router = useRouter();
   const {
-    page = '1', // TODO: 他のとこもこれでいい？
+    page = '1',
     q = '',
     source = '',
   } = router.query as { page: string; q: string; source: string };
