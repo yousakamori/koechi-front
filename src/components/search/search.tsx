@@ -1,26 +1,31 @@
 import { NextSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
-import { SearchTabs } from './search-tabs';
+import { SearchResultProps } from './search-result';
+import { SearchTabsProps } from './search-tabs';
 import { notesApi } from '@/api/notes';
 import { Layout } from '@/components/common/layout';
-import { NoteItem } from '@/components/models/note/';
-import { TalkItem } from '@/components/models/talk';
-import { UserItem } from '@/components/models/user';
 import { CircleButton } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import { Pagination } from '@/components/ui/pagination';
-import { Spinner } from '@/components/ui/spinner';
-import { Typography } from '@/components/ui/typography';
 import { endpoints } from '@/config/endpoints';
 import { HttpError } from '@/error/http-error';
 import { fetchApi } from '@/lib/fetch-api';
 import { Note } from '@/types/note';
 import { Talk } from '@/types/talk';
 import { OmitUser } from '@/types/user';
+// ___________________________________________________________________________
+//
+const SearchTabs = dynamic<SearchTabsProps>(() =>
+  import('./search-tabs').then((mod) => mod.SearchTabs),
+);
+
+const SearchResult = dynamic<SearchResultProps>(() =>
+  import('./search-result').then((mod) => mod.SearchResult),
+);
 // ___________________________________________________________________________
 //
 export type SearchNotes = {
@@ -50,8 +55,6 @@ const isSource = (source: string): source is Source => {
 };
 // ___________________________________________________________________________
 //
-
-// TODO: 表示するときzennみたいにfadeupさせたいな
 export const Search: React.VFC = () => {
   const router = useRouter();
   const {
@@ -177,65 +180,14 @@ export const Search: React.VFC = () => {
               <SearchTabs keyword={q} searchCount={searchCount} sourceQuery={sourceQuery} />
             </div>
 
-            {(!searchCount || sourceQuery) && !error && !searchResult && q && (
-              <div className='mt-6'>
-                <Spinner color='primary' size='md' />
-              </div>
-            )}
-
-            {error && (
-              <div className='flex justify-center mt-6'>
-                <Typography color='textSecondary' fontSize='lg'>
-                  {error.message}
-                </Typography>
-              </div>
-            )}
-
-            {searchCount && searchResult && (
-              <>
-                {sourceQuery === 'notes' && (
-                  <div className='flex flex-wrap justify-between mt-6'>
-                    {(searchResult as SearchNotes).notes.map((note) => (
-                      <div key={note.id} className='sm:w-[48%] w-full'>
-                        <NoteItem
-                          note={note}
-                          onDeleteNote={handleDeleteNote}
-                          className='border-b border-gray-200'
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {sourceQuery === 'talks' && (
-                  <div className='mt-6 border border-gray-200 divide-y divide-gray-200 rounded-lg'>
-                    {(searchResult as SearchTalks).talks.map((talk) => (
-                      <TalkItem key={talk.id} talk={talk} className='p-4' />
-                    ))}
-                  </div>
-                )}
-
-                {sourceQuery === 'users' && (
-                  <div className='flex flex-wrap justify-between mt-6'>
-                    {(searchResult as SearchUsers).users.map((user) => (
-                      <UserItem key={user.id} user={user} />
-                    ))}
-                  </div>
-                )}
-
-                <div className='mt-6'>
-                  <Pagination nextPage={searchResult.next_page} />
-                </div>
-              </>
-            )}
-
-            {searchCount && !searchResult && q && !sourceQuery && (
-              <div className='flex justify-center mt-6'>
-                <Typography color='textSecondary' fontSize='lg'>
-                  {q} の検索結果が見つかりませんでした
-                </Typography>
-              </div>
-            )}
+            <SearchResult
+              searchCount={searchCount}
+              searchResult={searchResult}
+              sourceQuery={sourceQuery}
+              searchQuery={q}
+              error={error}
+              handleDeleteNote={handleDeleteNote}
+            />
           </Container>
         </div>
       </Layout>
