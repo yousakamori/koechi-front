@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import useSWR from 'swr';
-import { HomeNoteItem } from './home-notes-item';
+import { NoteItem } from '@/components/models/note/note-item';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Spinner } from '@/components/ui/spinner';
@@ -49,8 +49,8 @@ export const HomeNotesList: React.VFC = () => {
 
           <div className='block mt-6 md:flex md:items-start md:justify-between md:flex-wrap'>
             {data.notes.map((note) => (
-              <div key={note.id} className='block md:w-1/2 sm:odd:pr-6 sm:even:pl-6'>
-                <HomeNoteItem note={note} />
+              <div key={note.id} className='block md:w-1/2 md:odd:pr-6 md:even:pl-6'>
+                <NoteItem note={note} className='my-1 border-b border-gray-200' />
               </div>
             ))}
           </div>

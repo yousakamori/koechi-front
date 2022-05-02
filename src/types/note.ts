@@ -5,15 +5,15 @@ import { OmitUser } from './user';
 export type Note = {
   id: number;
   title: string;
-  body_letters_count: number;
   body_text: string;
   slug: string;
   posted_at: string;
   comments_count: number;
-  is_mine: boolean;
   created_at: string;
   space: Pick<SpaceDetails, 'slug' | 'emoji' | 'role'>;
   user: OmitUser;
+  body_letters_count: number;
+  is_mine: boolean;
 };
 
 export type NoteDetails = Omit<Note, 'space'> & {

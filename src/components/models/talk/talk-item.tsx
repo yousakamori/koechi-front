@@ -49,7 +49,7 @@ export const TalkItem: React.VFC<TalkItemProps> = ({
 
             {userLink && (
               <Link href={`/${talk.user.username}`}>
-                <a className='block mr-2 text-sm text-gray-600'>{talk.user.name}</a>
+                <a className='block mr-2 text-sm text-gray-800'>{talk.user.name}</a>
               </Link>
             )}
 

@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { Typography } from '../ui/typography';
-import { SpaceNotesItem } from './space-notes-item';
 import { notesApi } from '@/api/notes';
+import { NoteItem } from '@/components/models/note/note-item';
 import { Pagination } from '@/components/ui/pagination';
 import { Spinner } from '@/components/ui/spinner';
 import { endpoints } from '@/config/endpoints';
@@ -20,10 +20,10 @@ export type SpaceNotesListProps = {
 //
 export const SpaceNotesList: React.VFC<SpaceNotesListProps> = React.memo(
   ({ slug, currentPage }) => {
-    const { data, mutate } = useSWR<
-      { notes: Note[]; space: { role: Role }; next_page: NextPage },
-      HttpError
-    >(`${endpoints.spaceNotes(slug)}?page=${currentPage}`, fetchApi);
+    const { data, mutate } = useSWR<{ notes: Note[]; next_page: NextPage }, HttpError>(
+      `${endpoints.spaceNotes(slug)}?page=${currentPage}`,
+      fetchApi,
+    );
 
     const handleDeleteNote = useCallback(
       async (slug: string) => {
@@ -57,12 +57,7 @@ export const SpaceNotesList: React.VFC<SpaceNotesListProps> = React.memo(
         <div className='mb-6'>
           {data.notes.length > 0 &&
             data.notes.map((note) => (
-              <SpaceNotesItem
-                key={note.id}
-                note={note}
-                role={data.space.role}
-                onDeleteNote={handleDeleteNote}
-              />
+              <NoteItem key={note.id} note={note} onDeleteNote={handleDeleteNote} />
             ))}
           {currentPage === 1 && !data.next_page && !data.notes.length && (
             <div className='py-6'>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from '@/components/common/layout';
-import { TalkItem } from '@/components/models/talk/talks-item';
+import { TalkItem } from '@/components/models/talk/talk-item';
 import { Container } from '@/components/ui/container';
 import { Pagination } from '@/components/ui/pagination';
 import { Typography } from '@/components/ui/typography';

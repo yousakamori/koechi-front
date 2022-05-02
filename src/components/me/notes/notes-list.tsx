@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { NoteHeader } from './note-header';
-import { NoteItem } from './note-item';
 import { notesApi } from '@/api/notes';
+import { NoteItem } from '@/components/models/note/note-item';
 import { Pagination } from '@/components/ui/pagination';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';
@@ -58,9 +58,11 @@ export const NotesList: React.VFC = React.memo(() => {
         <NextSeo title='ノートの管理' titleTemplate='%s' />
         <NoteHeader type='list' displayDate={new Date()} />
 
-        {data.notes.map((note) => (
-          <NoteItem key={note.id} note={note} onDeleteNote={handleDeleteNote} />
-        ))}
+        <div className='divide-y divide-gray-200'>
+          {data.notes.map((note) => (
+            <NoteItem key={note.id} note={note} onDeleteNote={handleDeleteNote} />
+          ))}
+        </div>
         <div className='mt-6'>
           <Pagination nextPage={data.next_page} />
         </div>

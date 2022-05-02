@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { BiChevronDown, BiCheck, BiRightArrowAlt } from 'react-icons/bi';
 import { Layout } from '@/components/common/layout';
-import { TalkItem } from '@/components/models/talk/talks-item';
+import { TalkItem } from '@/components/models/talk/talk-item';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Dropdown } from '@/components/ui/dropdown';
