@@ -1,6 +1,6 @@
 import React from 'react';
-import { TalkLatestItem } from './talks-latest-item';
 import { Layout } from '@/components/common/layout';
+import { TalkItem } from '@/components/models/talk/talks-item';
 import { Container } from '@/components/ui/container';
 import { Pagination } from '@/components/ui/pagination';
 import { Typography } from '@/components/ui/typography';
@@ -25,9 +25,9 @@ export const TalksLatestList: React.VFC<TalksLatestListProps> = ({
             トーク一覧
           </Typography>
 
-          <div className='mt-4 bg-white border border-gray-200 rounded-lg'>
+          <div className='mt-4 bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg'>
             {talks.map((talk) => (
-              <TalkLatestItem key={talk.id} talk={talk} />
+              <TalkItem key={talk.id} talk={talk} className='p-4' />
             ))}
           </div>
 

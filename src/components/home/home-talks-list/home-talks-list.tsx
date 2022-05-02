@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { HomeTalksItem } from './home-talks-item';
+import { TalkItem } from '@/components/models/talk/talks-item';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Typography } from '@/components/ui/typography';
@@ -26,8 +26,8 @@ export const HomeTalksList: React.VFC<HomeTalksListProps> = ({ talks }) => {
 
         <div className='block mt-6 md:flex md:items-start md:justify-between md:flex-wrap'>
           {talks.map((talk) => (
-            <div key={talk.id} className='block md:w-1/2 sm:odd:pr-6 sm:even:pl-6'>
-              <HomeTalksItem talk={talk} />
+            <div key={talk.id} className='block md:w-1/2 md:odd:pr-6 md:even:pl-6'>
+              <TalkItem talk={talk} className='py-4' />
             </div>
           ))}
         </div>

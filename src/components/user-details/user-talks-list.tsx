@@ -1,6 +1,6 @@
 import React from 'react';
 import useSWRInfinite from 'swr/infinite';
-import { UserTalksItem } from './user-talks-item';
+import { TalkItem } from '@/components/models/talk/talks-item';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';
@@ -62,7 +62,7 @@ export const UserTalksList: React.VFC<UserTalksListProps> = React.memo(
         <>
           <div className='mt-6 bg-white divide-y divide-gray-100 rounded-lg'>
             {talks.map((talk) => (
-              <UserTalksItem key={talk.id} talk={talk} />
+              <TalkItem key={talk.id} talk={talk} avatar={false} userLink={false} className='p-4' />
             ))}
           </div>
 

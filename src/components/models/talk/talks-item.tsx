@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 import { BiMessageRounded, BiHeart } from 'react-icons/bi';
@@ -7,22 +8,32 @@ import { Time } from '@/components/ui/time';
 import { Talk } from '@/types/talk';
 // ___________________________________________________________________________
 //
-export type HomeTalksItemProps = {
+export type TalkItemProps = {
   talk: Talk;
+  className?: string;
+  avatar?: boolean;
+  userLink?: boolean;
 };
 // ___________________________________________________________________________
 //
-export const HomeTalksItem: React.VFC<HomeTalksItemProps> = ({ talk }) => {
+export const TalkItem: React.VFC<TalkItemProps> = ({
+  talk,
+  className,
+  avatar = true,
+  userLink = true,
+}) => {
   // ___________________________________________________________________________
   //
   return (
-    <div className='flex items-center py-4'>
+    <div className={clsx('flex items-center', className)}>
       <div className='flex mr-3 grow'>
-        <Link href={`/${talk.user.username}/talks/${talk.slug}`}>
-          <a className='mr-3 shrink-0'>
-            <Avatar size='md' src={talk.user.avatar_small_url} alt={talk.user.name} />
-          </a>
-        </Link>
+        {avatar && (
+          <Link href={`/${talk.user.username}/talks/${talk.slug}`}>
+            <a className='mr-3 shrink-0'>
+              <Avatar size='md' src={talk.user.avatar_small_url} alt={talk.user.name} />
+            </a>
+          </Link>
+        )}
 
         <div>
           <Link href={`/${talk.user.username}/talks/${talk.slug}`}>
@@ -36,9 +47,11 @@ export const HomeTalksItem: React.VFC<HomeTalksItemProps> = ({ talk }) => {
               </Badge>
             </div>
 
-            <Link href={`/${talk.user.username}`}>
-              <a className='block mr-2 text-sm text-gray-600'>{talk.user.username}</a>
-            </Link>
+            {userLink && (
+              <Link href={`/${talk.user.username}`}>
+                <a className='block mr-2 text-sm text-gray-600'>{talk.user.name}</a>
+              </Link>
+            )}
 
             <Time
               size='xs'

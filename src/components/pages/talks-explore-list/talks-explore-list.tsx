@@ -3,8 +3,8 @@ import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { BiChevronDown, BiCheck, BiRightArrowAlt } from 'react-icons/bi';
-import { TalksExploreItem } from './talks-explore-item';
 import { Layout } from '@/components/common/layout';
+import { TalkItem } from '@/components/models/talk/talks-item';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Dropdown } from '@/components/ui/dropdown';
@@ -40,11 +40,11 @@ export const TalksExploreList: React.VFC<TalksExploreListProps> = ({
     <Layout navbar>
       <div className='min-h-screen py-10'>
         <Container className='max-w-5xl'>
-          {/* <div className='text-center text-7xl'>💬</div> */}
+          <div className='text-center text-7xl'>💬</div>
           <Typography variant='h1' align='center' className='mt-6'>
-            トーク
+            話題のトーク
           </Typography>
-          <div className='mt-10 -mx-3 border border-gray-200 sm:mx-0 sm:rounded-lg'>
+          <div className='mt-10 -mx-3 border border-gray-200 divide-y divide-gray-200 sm:mx-0 sm:rounded-lg'>
             <div className='px-4 py-4 sm:rounded-t-lg bg-slate-100'>
               <Dropdown
                 position='right'
@@ -95,8 +95,9 @@ export const TalksExploreList: React.VFC<TalksExploreListProps> = ({
                 </Menu.Item>
               </Dropdown>
             </div>
+
             {talks.map((talk) => (
-              <TalksExploreItem key={talk.id} talk={talk} />
+              <TalkItem key={talk.id} talk={talk} className='p-4' />
             ))}
           </div>
           {next_page && (
