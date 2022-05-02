@@ -3,7 +3,7 @@ import { OmitUser } from '@/types/user';
 //
 export type Action = 'comment' | 'comment_reply' | 'follow' | 'like';
 
-export type NotifiableType = 'Note' | 'Talk' | 'Comment' | null;
+export type NotifiableType = 'Note' | 'Talk' | 'Comment' | 'Membership' | null;
 
 export type Notification = {
   id: number;

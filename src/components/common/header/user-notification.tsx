@@ -2,6 +2,7 @@ import { Menu } from '@headlessui/react';
 import Link from 'next/link';
 import React, { SyntheticEvent } from 'react';
 import { BiBell, BiBellOff } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 import { Avatar } from '@/components/ui/avatar';
 import { CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
@@ -19,7 +20,11 @@ export type UserNotificationProps = {
 // ___________________________________________________________________________
 //
 export const UserNotification: React.VFC<UserNotificationProps> = ({ currentUser }) => {
-  const { notification, loading, getNotifications } = useNotifications();
+  const { notification, error, loading, getNotifications } = useNotifications();
+
+  if (error) {
+    toast.error(error.message);
+  }
 
   const handleNotificationClick = async () => {
     if (notification.nextPage === null || notification.nextPage) {
@@ -41,23 +46,18 @@ export const UserNotification: React.VFC<UserNotificationProps> = ({ currentUser
   };
 
   const createPermaLink = ({ notifiable_type, notifiable_slug, sender }: Notification) => {
-    if (notifiable_type === 'Note') {
-      return `/notes/${notifiable_slug}`;
+    switch (notifiable_type) {
+      case 'Note':
+        return `/notes/${notifiable_slug}`;
+      case 'Talk':
+        return `/${currentUser.username}/talks/${notifiable_slug}`;
+      case 'Comment':
+        return `/link/comments/${notifiable_slug}`;
+      case 'Membership':
+        return `/spaces/${notifiable_slug}`;
+      default:
+        return `/${sender.username}`;
     }
-
-    if (notifiable_type === 'Talk') {
-      return `/${currentUser.username}/talks/${notifiable_slug}`;
-    }
-
-    if (notifiable_type === 'Comment') {
-      return `/link/comments/${notifiable_slug}`;
-    }
-
-    if (notifiable_type === 'Membership') {
-      return `/spaces/${notifiable_slug}`;
-    }
-
-    return `/${sender.username}`;
   };
   // ___________________________________________________________________________
   //

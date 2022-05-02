@@ -16,33 +16,35 @@ export const useNotifications = () => {
   const [notification, setNotification] = useRecoilState(notificationState);
   // ___________________________________________________________________________
   //
-  const getNotifications = useCallback<GetNotifications>(async (page) => {
-    setLoading(true);
-    setError(null);
+  const getNotifications = useCallback<GetNotifications>(
+    async (page) => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const { items, next_page } = await notificationsApi.getNotifications(page);
+      try {
+        const { items, next_page } = await notificationsApi.getNotifications(page);
 
-      setNotification((prev) => ({
-        items: [...prev.items, ...items],
-        nextPage: next_page,
-      }));
-      setCurrentUser((prev) => {
-        if (prev) {
-          return { ...prev, notifications_count: 0 };
+        setNotification((prev) => ({
+          items: [...prev.items, ...items],
+          nextPage: next_page,
+        }));
+        setCurrentUser((prev) => {
+          if (prev) {
+            return { ...prev, notifications_count: 0 };
+          }
+        });
+      } catch (err) {
+        if (err instanceof HttpError) {
+          setError(err);
+          return;
         }
-      });
-    } catch (err) {
-      if (err instanceof HttpError) {
-        setError(err);
-        return;
+        throw err;
+      } finally {
+        setLoading(false);
       }
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    },
+    [setCurrentUser, setNotification],
+  );
   // ___________________________________________________________________________
   //
   return {
