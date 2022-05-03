@@ -5,18 +5,12 @@ import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { HttpError } from '@/error/http-error';
 import { useCurrentUser } from '@/hooks/current-user';
-import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
-export type AvatarUploadProps = {
-  currentUser: CurrentUser;
-};
-// ___________________________________________________________________________
-//
-export const AvatarUpload: React.VFC<AvatarUploadProps> = ({ currentUser }) => {
+export const AvatarUpload: React.VFC = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [validating, setValidating] = useState(false);
-  const { setCurrentUser } = useCurrentUser();
+  const { setCurrentUser, currentUser } = useCurrentUser();
 
   const handleUpload = async (files: FileList | null) => {
     if (!files || !files.length) {
@@ -29,8 +23,10 @@ export const AvatarUpload: React.VFC<AvatarUploadProps> = ({ currentUser }) => {
     formData.append('avatar', files[0]);
 
     try {
-      const data = await currentUserApi.updateAvatar(formData);
-      setCurrentUser(data);
+      const currentUser = await currentUserApi.updateAvatar(formData);
+      setCurrentUser((prev) =>
+        prev ? { ...prev, avatar_url: currentUser.avatar_url } : currentUser,
+      );
       toast.update(id, {
         render: 'アップロードしました',
         type: 'success',
@@ -51,6 +47,11 @@ export const AvatarUpload: React.VFC<AvatarUploadProps> = ({ currentUser }) => {
       setValidating(false);
     }
   };
+  // ___________________________________________________________________________
+  //
+  if (!currentUser) {
+    return <></>;
+  }
   // ___________________________________________________________________________
   //
   return (

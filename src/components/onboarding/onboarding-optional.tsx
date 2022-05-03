@@ -8,12 +8,10 @@ import { ErrorMessage } from '@/components/ui/error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';
 import { APP_NAME } from '@/lib/constants';
-import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
 export type OnboardingOptionalProps = {
   validating: boolean;
-  currentUser: CurrentUser;
   handleSaveProfile: () => void;
   handlePrevStep: () => void;
 };
@@ -21,7 +19,6 @@ export type OnboardingOptionalProps = {
 //
 export const OnboardingOptional: React.VFC<OnboardingOptionalProps> = ({
   validating,
-  currentUser,
   handleSaveProfile,
   handlePrevStep,
 }) => {
@@ -49,7 +46,7 @@ export const OnboardingOptional: React.VFC<OnboardingOptionalProps> = ({
 
         <div className='max-w-md mx-auto mt-10'>
           <div className='text-center'>
-            <AvatarUpload currentUser={currentUser} />
+            <AvatarUpload />
           </div>
           <div className='grid mt-6 gap-y-2'>
             <Textarea

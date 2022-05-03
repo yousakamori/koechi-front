@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/hooks/auth';
 import { useCurrentUser } from '@/hooks/current-user';
 // ___________________________________________________________________________
@@ -41,5 +42,9 @@ export const LoginWithEmail: React.VFC = () => {
   }, [router.isReady, authChecking]);
   // ___________________________________________________________________________
   //
-  return null;
+  return (
+    <div className='flex items-center justify-center min-h-screen'>
+      <Spinner color='primary' size='lg' />
+    </div>
+  );
 };

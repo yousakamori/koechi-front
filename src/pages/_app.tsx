@@ -23,7 +23,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
       <DefaultSeo {...SEO} />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <link rel='icon' href='/images/logo.svg' type='image/svg+xml' />
+        <link rel='icon' href='/images/icon.svg' type='image/svg+xml' />
       </Head>
       <RecoilRoot>
         <InitializeApp />

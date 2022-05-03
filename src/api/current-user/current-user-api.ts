@@ -6,15 +6,6 @@ import { CurrentUser } from '@/types/current-user';
 export type DeleteCurrentUserRequest = {
   password?: string;
 };
-
-export type UpdateCurrentUserRequest = {
-  name?: string;
-  username?: string;
-  avatar_url?: string;
-  bio?: string;
-  twitter_username?: string;
-  password?: string;
-};
 // ___________________________________________________________________________
 //
 export const currentUserApi = {
@@ -57,7 +48,7 @@ export const currentUserApi = {
     });
   },
 
-  async updateCurrentUser(values: UpdateCurrentUserRequest) {
+  async updateCurrentUser(values: Partial<CurrentUser> & { password?: string }) {
     return await fetchApi<CurrentUser>(endpoints.currentUser, {
       method: 'PUT',
       headers: {

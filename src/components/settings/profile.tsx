@@ -3,7 +3,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { SiTwitter } from 'react-icons/si';
 import { toast } from 'react-toastify';
-import { UpdateCurrentUserRequest } from '@/api/current-user';
 import { AvatarUpload } from '@/components/avatar-upload';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';
 import { updateProfileSchema } from '@/config/yup-schema';
-import { useUpdateCurrentUser } from '@/hooks/current-user';
+import { useCurrentUser } from '@/hooks/current-user';
+import { CurrentUser } from '@/types/current-user';
+// ___________________________________________________________________________
+//
+type UpdateValues = Pick<CurrentUser, 'name' | 'bio' | 'twitter_username'>;
 // ___________________________________________________________________________
 //
 export const Profile: React.VFC = withLoginRequired(({ currentUser }) => {
@@ -22,21 +25,21 @@ export const Profile: React.VFC = withLoginRequired(({ currentUser }) => {
     handleSubmit,
     reset,
     formState: { errors, isDirty, isValid },
-  } = useForm<UpdateCurrentUserRequest>({
+  } = useForm<UpdateValues>({
     mode: 'onChange',
     resolver: yupResolver(updateProfileSchema),
     defaultValues: {
-      name: currentUser?.name,
-      bio: currentUser?.bio,
-      twitter_username: currentUser?.twitter_username,
+      name: currentUser.name,
+      bio: currentUser.bio,
+      twitter_username: currentUser.twitter_username,
     },
   });
 
   const disabled = !isDirty || !isValid;
-  const { validating, updateCurrentUser } = useUpdateCurrentUser();
+  const { validating, updateCurrentUser } = useCurrentUser();
 
-  const handleUpdate = async (values: UpdateCurrentUserRequest) => {
-    const { error } = await updateCurrentUser({ ...values });
+  const handleUpdate = async (values: UpdateValues) => {
+    const { error } = await updateCurrentUser(values);
 
     if (error) {
       toast.error(error.message);
@@ -49,7 +52,7 @@ export const Profile: React.VFC = withLoginRequired(({ currentUser }) => {
   //
   return (
     <div className='block my-12 sm:flex sm:justify-between sm:items-start'>
-      <AvatarUpload currentUser={currentUser} />
+      <AvatarUpload />
       <div className='w-full sm:w-3/4'>
         <div className='grid mt-6 gap-y-2'>
           <Label htmlFor='name'>表示名</Label>

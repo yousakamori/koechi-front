@@ -12,7 +12,7 @@ export type SpinnerProps = {
 const mapSizeClasses = {
   sm: 'h-4 w-4 border',
   md: 'h-6 w-6 border-2',
-  lg: 'h-8 w-8 border-3',
+  lg: 'h-8 w-8 border-2',
   xl: 'h-10 w-10 border-4',
 };
 

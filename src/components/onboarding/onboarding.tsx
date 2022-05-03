@@ -1,28 +1,37 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { OnboardingOptional } from './onboarding-optional';
+import { OnboardingOptionalProps } from './onboarding-optional';
 import { OnboardingRequired } from './onboarding-required';
-import { UpdateCurrentUserRequest } from '@/api/current-user';
 import { validatorApi } from '@/api/validator/validator-api';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { onboardingSchema } from '@/config/yup-schema';
-import { useUpdateCurrentUser } from '@/hooks/current-user';
+import { useCurrentUser } from '@/hooks/current-user';
 import { useDeleteCurrentUser } from '@/hooks/current-user';
 import { APP_NAME } from '@/lib/constants';
+import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
-export const Onboarding: React.VFC = withLoginRequired(({ currentUser }) => {
+const OnboardingOptional = dynamic<OnboardingOptionalProps>(() =>
+  import('./onboarding-optional').then((mod) => mod.OnboardingOptional),
+);
+// ___________________________________________________________________________
+//
+type UpdateValues = Pick<CurrentUser, 'name' | 'username' | 'bio'> & { password?: string };
+// ___________________________________________________________________________
+//
+export const Onboarding: React.VFC = withLoginRequired(() => {
   const [step, setStep] = useState<'REQUIRED' | 'OPTIONAL' | 'COMPLETE'>('REQUIRED');
   const [validating, setValidating] = useState(false);
   const { deleteCurrentUser } = useDeleteCurrentUser();
-  const { validating: validatingUpdate, updateCurrentUser } = useUpdateCurrentUser();
+  const { validating: validatingUpdate, updateCurrentUser } = useCurrentUser();
   const router = useRouter();
 
-  const form = useForm<UpdateCurrentUserRequest>({
+  const form = useForm<UpdateValues>({
     mode: 'onChange',
     context: { step },
     resolver: yupResolver(onboardingSchema),
@@ -32,7 +41,7 @@ export const Onboarding: React.VFC = withLoginRequired(({ currentUser }) => {
     setStep('REQUIRED');
   };
 
-  const handleNextStep = async ({ username }: UpdateCurrentUserRequest) => {
+  const handleNextStep = async ({ username }: UpdateValues) => {
     setValidating(true);
 
     const { taken } = await validatorApi.usernameTaken(username + '');
@@ -61,7 +70,7 @@ export const Onboarding: React.VFC = withLoginRequired(({ currentUser }) => {
     }
   };
 
-  const handleSaveProfile = async (values: UpdateCurrentUserRequest) => {
+  const handleSaveProfile = async (values: UpdateValues) => {
     const { error } = await updateCurrentUser({ ...values });
 
     if (error) {
@@ -94,7 +103,6 @@ export const Onboarding: React.VFC = withLoginRequired(({ currentUser }) => {
         {step === 'OPTIONAL' && (
           <OnboardingOptional
             validating={validatingUpdate}
-            currentUser={currentUser}
             handleSaveProfile={form.handleSubmit(handleSaveProfile)}
             handlePrevStep={handlePrevStep}
           />

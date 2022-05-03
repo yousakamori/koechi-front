@@ -91,16 +91,7 @@ export const Footer: React.VFC<FooterProps> = ({ show = true }) => {
               <Link href='/'>
                 <a className='flex items-center space-x-1'>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src='/images/logo.svg' width='24' height='18' alt='ロゴ' />
-                  <Typography
-                    align='left'
-                    variant='p'
-                    color='textPrimary'
-                    fontSize='xl'
-                    fontWeight='semibold'
-                  >
-                    {APP_NAME}
-                  </Typography>
+                  <img src='/images/logo.svg' width='120' height='28' alt={APP_NAME} />
                 </a>
               </Link>
               <Typography

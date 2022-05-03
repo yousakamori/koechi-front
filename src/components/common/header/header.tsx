@@ -4,7 +4,6 @@ import React from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { CircleButton } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import { Typography } from '@/components/ui/typography';
 import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
@@ -18,23 +17,12 @@ export const Header: React.VFC = () => {
     <header className='bg-white'>
       <Container>
         <div className='flex items-center justify-between h-16'>
-          {/* <div> */}
           <Link href='/'>
             <a className='flex items-center space-x-2'>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src='/images/logo.svg' width='32' height='24' alt='ロゴ' />
-              <Typography
-                variant='p'
-                color='textPrimary'
-                fontWeight='bold'
-                fontSize='2xl'
-                className='tracking-wide'
-              >
-                {APP_NAME}
-              </Typography>
+              <img src='/images/logo.svg' width='140' height='32' alt={APP_NAME} />
             </a>
           </Link>
-          {/* </div> */}
           <div className='flex items-center'>
             <Link href='/search' passHref>
               <CircleButton size='md' color='secondary'>
