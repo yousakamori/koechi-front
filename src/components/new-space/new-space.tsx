@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -10,18 +9,13 @@ import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import { EmojiPickerProps } from '@/components/ui/emoji';
+import { EmojiPicker } from '@/components/ui/emoji';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';
 import { createSpaceSchema } from '@/config/yup-schema';
 import { HttpError } from '@/error/http-error';
 import { SpaceDetails } from '@/types/space';
-// ___________________________________________________________________________
-//
-const EmojiPicker = dynamic<EmojiPickerProps>(() =>
-  import('@/components/ui/emoji').then((mod) => mod.EmojiPicker),
-);
 // ___________________________________________________________________________
 //
 type CreateValues = Pick<SpaceDetails, 'name' | 'emoji'>;
@@ -106,7 +100,7 @@ export const NewSpace: React.VFC = withLoginRequired(() => {
               <div className='flex justify-center mt-12'>
                 <Controller
                   render={({ field: { onChange, value } }) => (
-                    <EmojiPicker emoji={value} onSelect={onChange} />
+                    <EmojiPicker emoji={value} onSelect={onChange} position='center' />
                   )}
                   name='emoji'
                   control={control}
