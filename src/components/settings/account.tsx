@@ -83,7 +83,7 @@ export const Account: React.VFC = () => {
             checked={currentUser.email_notify_followings}
             onClick={() =>
               handleUpdateNotification({
-                email_notify_comments: !currentUser.email_notify_comments,
+                email_notify_comments: currentUser.email_notify_comments,
                 email_notify_followings: !currentUser.email_notify_followings,
                 email_notify_likes: currentUser.email_notify_likes,
               })

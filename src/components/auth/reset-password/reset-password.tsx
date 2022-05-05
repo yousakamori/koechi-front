@@ -91,8 +91,17 @@ export const ResetPassword: React.VFC = () => {
                 <Typography align='left' color='textSecondary' fontSize='sm'>
                   メールに記載されているURLにアクセスし、 パスワードを再設定してください。
                 </Typography>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className='mt-2' src='/images/talk.png' alt='パスワード再設定' />
+
+                <div className='w-full mt-6'>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className='mx-auto'
+                    src='/images/reset-password.svg'
+                    width='340'
+                    height='340'
+                    alt=''
+                  />
+                </div>
               </div>
             </div>
           )}

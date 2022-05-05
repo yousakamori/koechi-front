@@ -119,7 +119,7 @@ export const UpdatePassword: React.VFC = () => {
                   variant='contained'
                   type='submit'
                 >
-                  送信
+                  変更する
                 </Button>
               </form>
             </>
