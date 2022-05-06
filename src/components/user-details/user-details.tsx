@@ -146,7 +146,7 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
             {(tab === undefined || tab !== 'comment') && (
               <>
                 <Tabs tabs={talkTabs} />
-                {!authChecking && currentUser && (
+                {!authChecking && currentUser && currentUser.username === user.username && (
                   <div className='flex justify-end mt-6 sm:hidden sm:mt-0'>
                     <Link href='/talks/new' passHref>
                       <Button size='sm' variant='outlined' color='secondary'>
