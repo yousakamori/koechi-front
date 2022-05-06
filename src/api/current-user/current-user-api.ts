@@ -3,11 +3,6 @@ import { fetchApi } from '@/lib/fetch-api';
 import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
-export type DeleteCurrentUserRequest = {
-  password?: string;
-};
-// ___________________________________________________________________________
-//
 export const currentUserApi = {
   async getCurrentUser() {
     return await fetchApi<CurrentUser>(endpoints.currentUser, {
@@ -54,7 +49,7 @@ export const currentUserApi = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(values),
     });
   },
 
@@ -65,13 +60,22 @@ export const currentUserApi = {
     });
   },
 
-  async deleteCurrentUser(values?: DeleteCurrentUserRequest) {
-    return await fetchApi<void>(endpoints.currentUser, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...values }),
-    });
+  async deleteCurrentUser(values?: { password: string }) {
+    const requestHeader = values
+      ? {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        }
+      : {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+
+    return await fetchApi<void>(endpoints.currentUser, requestHeader);
   },
 };

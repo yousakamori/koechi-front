@@ -41,7 +41,7 @@ export const Account: React.VFC = () => {
       clearTimeout(timeout.current);
     }
 
-    timeout.current = setTimeout(async function () {
+    timeout.current = setTimeout(async () => {
       await updateCurrentUser(values);
     }, 1000);
   };

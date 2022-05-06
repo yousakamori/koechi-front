@@ -26,7 +26,7 @@ const ConfirmModal = dynamic<ConfirmModalProps>(() =>
 );
 // ___________________________________________________________________________
 //
-export type SpacesCardProps = {
+export type SpaceCardProps = {
   space: Space;
   validating: boolean;
   onUpdateSpace: UpdateSpace;
@@ -34,7 +34,7 @@ export type SpacesCardProps = {
 };
 // ___________________________________________________________________________
 //
-export const SpacesCard: React.VFC<SpacesCardProps> = ({
+export const SpaceCard: React.VFC<SpaceCardProps> = ({
   space,
   validating,
   onDeleteSpace,
@@ -133,11 +133,11 @@ export const SpacesCard: React.VFC<SpacesCardProps> = ({
         )}
         <Link href={`/spaces/${space.slug}`}>
           <a className='flex-1'>
-            <div className='py-6 text-center bg-primary-100'>
+            <div className='py-4 text-center sm:py-6 bg-primary-100'>
               <Emoji emoji={space.emoji} />
             </div>
 
-            <div className='px-4 pt-2 font-semibold text-gray-800 break-all line-clamp-2'>
+            <div className='px-4 pt-2 text-sm font-semibold text-gray-800 break-all sm:text-base line-clamp-2'>
               {space.name}
             </div>
           </a>

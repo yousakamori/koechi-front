@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import React from 'react';
 import useSWRInfinite from 'swr/infinite';
-import { LikesItem } from './likes-item';
+import { LikeItem } from '@/components/models/like';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';
@@ -43,9 +43,13 @@ export const Library: React.VFC = React.memo(() => {
           いいねした投稿
         </Typography>
 
-        {items.map((item) => (
-          <LikesItem key={item.id} item={item} />
-        ))}
+        <div className='block mt-6 md:flex md:items-start md:justify-between md:flex-wrap'>
+          {items.map((item) => (
+            <div key={item.id} className='block md:w-1/2 md:odd:pr-6 md:even:pl-6'>
+              <LikeItem item={item} />
+            </div>
+          ))}
+        </div>
 
         {nextPage && (
           <div className='flex justify-center mt-6'>

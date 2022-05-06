@@ -91,7 +91,7 @@ export const Me: React.VFC = withLoginRequired(() => {
   return (
     <Layout footer={false}>
       <div className='min-h-screen py-6 border-t border-gray-200'>
-        <Container className='max-w-7xl'>
+        <Container className='max-w-6xl'>
           <div className='flex justify-between mb-4 space-x-2 sm:justify-start sm:space-x-10'>
             <MeTabs />
           </div>

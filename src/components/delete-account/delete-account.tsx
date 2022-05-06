@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { DeleteCurrentUserRequest } from '@/api/current-user';
 import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
@@ -14,12 +13,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Typography } from '@/components/ui/typography';
 import { deleteAccountSchema } from '@/config/yup-schema';
-import { useDeleteCurrentUser } from '@/hooks/current-user';
+import { useCurrentUser } from '@/hooks/current-user';
 import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
+type DeleteValues = { password: string };
+// ___________________________________________________________________________
+//
 export const DeleteAccount: React.VFC = withLoginRequired(() => {
-  const { validating, deleteCurrentUser } = useDeleteCurrentUser();
+  const { validating, deleteCurrentUser } = useCurrentUser();
   const router = useRouter();
 
   const {
@@ -27,14 +29,14 @@ export const DeleteAccount: React.VFC = withLoginRequired(() => {
     handleSubmit,
     setError,
     formState: { errors, isDirty, isValid },
-  } = useForm<DeleteCurrentUserRequest>({
+  } = useForm<DeleteValues>({
     mode: 'onChange',
     resolver: yupResolver(deleteAccountSchema),
   });
 
   const disabled = !isDirty || !isValid;
 
-  const handleLeave = async (values: DeleteCurrentUserRequest) => {
+  const handleLeave = async (values: DeleteValues) => {
     if (!confirm('本当に退会しますか?')) {
       return;
     }

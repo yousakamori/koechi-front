@@ -11,7 +11,6 @@ import { validatorApi } from '@/api/validator/validator-api';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { onboardingSchema } from '@/config/yup-schema';
 import { useCurrentUser } from '@/hooks/current-user';
-import { useDeleteCurrentUser } from '@/hooks/current-user';
 import { APP_NAME } from '@/lib/constants';
 import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
@@ -27,8 +26,7 @@ type UpdateValues = Pick<CurrentUser, 'name' | 'username' | 'bio'> & { password?
 export const Onboarding: React.VFC = withLoginRequired(() => {
   const [step, setStep] = useState<'REQUIRED' | 'OPTIONAL' | 'COMPLETE'>('REQUIRED');
   const [validating, setValidating] = useState(false);
-  const { deleteCurrentUser } = useDeleteCurrentUser();
-  const { validating: validatingUpdate, updateCurrentUser } = useCurrentUser();
+  const { validating: validatingUpdate, updateCurrentUser, deleteCurrentUser } = useCurrentUser();
   const router = useRouter();
 
   const form = useForm<UpdateValues>({
@@ -71,7 +69,7 @@ export const Onboarding: React.VFC = withLoginRequired(() => {
   };
 
   const handleSaveProfile = async (values: UpdateValues) => {
-    const { error } = await updateCurrentUser({ ...values });
+    const { error } = await updateCurrentUser(values);
 
     if (error) {
       toast.error(error.message);

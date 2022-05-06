@@ -7,12 +7,12 @@ import { Time } from '@/components/ui/time';
 import { MyLike } from '@/types/like';
 // ___________________________________________________________________________
 //
-export type LikesItemProps = {
+export type LikeItemProps = {
   item: MyLike;
 };
 // ___________________________________________________________________________
 //
-export const LikesItem: React.VFC<LikesItemProps> = ({ item }) => {
+export const LikeItem: React.VFC<LikeItemProps> = ({ item }) => {
   const postType = {
     Comment: 'コメント',
     Note: 'ノート',

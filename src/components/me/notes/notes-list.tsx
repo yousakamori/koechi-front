@@ -40,7 +40,6 @@ export const NotesList: React.VFC = React.memo(() => {
     },
     [mutate],
   );
-
   // ___________________________________________________________________________
   //
   if (!data) {
@@ -58,9 +57,15 @@ export const NotesList: React.VFC = React.memo(() => {
         <NextSeo title='ノートの管理' titleTemplate='%s' />
         <NoteHeader type='list' displayDate={new Date()} />
 
-        <div className='divide-y divide-gray-200'>
+        <div className='block mt-6 md:flex md:items-start md:justify-between md:flex-wrap'>
           {data.notes.map((note) => (
-            <NoteItem key={note.id} note={note} onDeleteNote={handleDeleteNote} />
+            <div key={note.id} className='block md:w-1/2 md:odd:pr-6 md:even:pl-6'>
+              <NoteItem
+                className='border-b border-gray-100'
+                note={note}
+                onDeleteNote={handleDeleteNote}
+              />
+            </div>
           ))}
         </div>
         <div className='mt-6'>

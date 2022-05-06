@@ -2,8 +2,8 @@ import Link from 'next/link';
 import React, { useCallback, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
-import { SpacesCard } from './spaces-card';
 import { spacesApi } from '@/api/spaces';
+import { SpaceCard } from '@/components/models/space';
 import { EditValues } from '@/components/overlays/edit-space-modal';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -145,9 +145,9 @@ export const Spaces: React.VFC<SpacesProps> = React.memo(({ status }) => {
   // ___________________________________________________________________________
   //
   return (
-    <div className='grid grid-cols-2 gap-4 mt-6 lg:grid-cols-4'>
+    <div className='grid grid-cols-2 gap-4 mt-6 md:grid-cols-3 lg:grid-cols-4'>
       {filteredSpace.map((space) => (
-        <SpacesCard
+        <SpaceCard
           key={space.id}
           space={space}
           validating={validating}
