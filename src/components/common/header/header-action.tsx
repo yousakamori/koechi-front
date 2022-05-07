@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ButtonAddNew } from '@/components/common/header/button-add-new';
+import { NotificationList } from '@/components/common/header/notification-list';
 import { UserMenu } from '@/components/common/header/user-menu';
-import { UserNotification } from '@/components/common/header/user-notification';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/auth';
 import { useCurrentUser } from '@/hooks/current-user';
@@ -40,7 +40,7 @@ export const HeaderAction: React.VFC = () => {
     return (
       <>
         <div className='ml-2'>
-          <UserNotification currentUser={currentUser} />
+          <NotificationList currentUser={currentUser} />
         </div>
         <div className='ml-4'>
           <UserMenu currentUser={currentUser} validating={validating} handleLogout={handleLogout} />

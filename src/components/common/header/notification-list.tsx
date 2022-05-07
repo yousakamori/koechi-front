@@ -1,25 +1,22 @@
 import { Menu } from '@headlessui/react';
-import Link from 'next/link';
 import React, { SyntheticEvent } from 'react';
 import { BiBell, BiBellOff } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import { Avatar } from '@/components/ui/avatar';
+import { NotificationItem } from '@/components/models/notification';
 import { CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
 import { Spinner } from '@/components/ui/spinner';
-import { Time } from '@/components/ui/time';
 import { Typography } from '@/components/ui/typography';
 import { useNotifications } from '@/hooks/notifications';
 import { CurrentUser } from '@/types/current-user';
-import { Notification } from '@/types/notification';
 // ___________________________________________________________________________
 //
-export type UserNotificationProps = {
+export type NotificationListProps = {
   currentUser: CurrentUser;
 };
 // ___________________________________________________________________________
 //
-export const UserNotification: React.VFC<UserNotificationProps> = ({ currentUser }) => {
+export const NotificationList: React.VFC<NotificationListProps> = ({ currentUser }) => {
   const { notification, error, loading, getNotifications } = useNotifications();
 
   if (error) {
@@ -43,21 +40,6 @@ export const UserNotification: React.VFC<UserNotificationProps> = ({ currentUser
     }
 
     await getNotifications(notification.nextPage);
-  };
-
-  const createPermaLink = ({ notifiable_type, notifiable_slug, sender }: Notification) => {
-    switch (notifiable_type) {
-      case 'Note':
-        return `/notes/${notifiable_slug}`;
-      case 'Talk':
-        return `/${currentUser.username}/talks/${notifiable_slug}`;
-      case 'Comment':
-        return `/link/comments/${notifiable_slug}`;
-      case 'Membership':
-        return `/spaces/${notifiable_slug}`;
-      default:
-        return `/${sender.username}`;
-    }
   };
   // ___________________________________________________________________________
   //
@@ -87,22 +69,11 @@ export const UserNotification: React.VFC<UserNotificationProps> = ({ currentUser
       {notification.items.length ? (
         <div className='overflow-y-auto max-h-80' onScroll={handleNotificationScroll}>
           {notification.items.map((notification) => (
-            <Link key={notification.id} href={createPermaLink(notification)}>
-              <a className='block px-4 py-3 text-sm text-gray-500 hover:bg-gray-100'>
-                <div className='flex items-center max-w-6xl space-x-3'>
-                  <Avatar size='sm' src={notification.sender.avatar_small_url} />
-                  <Typography color='textSecondary' fontSize='xs' className='w-3/4 break-all'>
-                    <span className='text-secondary-800'>{notification.sender.name}</span>
-                    さんが
-                    <span className='text-secondary-800'>
-                      {notification.notifiable_title ? notification.notifiable_title : 'あなた'}
-                    </span>
-                    {notification.action_text}
-                    <Time size='xs' className='block' date={new Date(notification.datetime)} />
-                  </Typography>
-                </div>
-              </a>
-            </Link>
+            <NotificationItem
+              key={notification.id}
+              currentUser={currentUser}
+              notification={notification}
+            />
           ))}
           {loading && <Spinner color='primary' size='sm' />}
         </div>
