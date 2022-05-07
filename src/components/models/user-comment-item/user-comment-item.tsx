@@ -6,13 +6,13 @@ import { UserComment } from '@/types/comment';
 import { User } from '@/types/user';
 // ___________________________________________________________________________
 //
-export type UserCommentsItemProps = {
+export type UserCommentItemProps = {
   comment: UserComment;
   user: User;
 };
 // ___________________________________________________________________________
 //
-export const UserCommentsItem: React.VFC<UserCommentsItemProps> = ({ comment, user }) => {
+export const UserCommentItem: React.VFC<UserCommentItemProps> = ({ comment, user }) => {
   // ___________________________________________________________________________
   //
   return (

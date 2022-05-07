@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginRequest } from '@/api/auth';
 import { Layout } from '@/components/common/layout';
 import { withLogoutRequired } from '@/components/hoc/with-logout-required';
 import { Button } from '@/components/ui/button';
@@ -17,13 +16,16 @@ import { loginSchema } from '@/config/yup-schema';
 import { useAuth } from '@/hooks/auth';
 // ___________________________________________________________________________
 //
+type CreateValues = { email: string; password: string };
+// ___________________________________________________________________________
+//
 export const Login: React.VFC = withLogoutRequired(() => {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isDirty, isValid },
-  } = useForm<LoginRequest>({
+  } = useForm<CreateValues>({
     mode: 'onChange',
     resolver: yupResolver(loginSchema),
   });
@@ -32,7 +34,7 @@ export const Login: React.VFC = withLogoutRequired(() => {
   const { validating, login } = useAuth();
   const router = useRouter();
 
-  const handleLogin = async (payload: LoginRequest) => {
+  const handleLogin = async (payload: CreateValues) => {
     const { error } = await login(payload);
 
     if (error) {

@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
-import { UserCommentsList } from './user-comments-list';
+import { UserCommentList } from './user-comment-list';
 import { UserTalksList } from './user-talks-list';
 import { Layout } from '@/components/common/layout';
 import { FollowButton } from '@/components/follow-button';
@@ -158,7 +158,7 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
                 <UserTalksList username={username} status={status || ''} isMine={isMine} />
               </>
             )}
-            {tab === 'comment' && <UserCommentsList username={username} user={user} />}
+            {tab === 'comment' && <UserCommentList username={username} user={user} />}
           </Container>
         </div>
       </Layout>

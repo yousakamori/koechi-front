@@ -8,8 +8,6 @@ import { Comment } from '@/types/comment';
 // ___________________________________________________________________________
 //
 type CreateComment = (values: CreateCommentRequest) => Promise<{ error?: HttpError }>;
-type UpdateComment = (values: Comment) => Promise<{ error?: HttpError }>;
-type DeleteComment = (values: Comment) => Promise<{ error?: HttpError }>;
 // ___________________________________________________________________________
 //
 export const useComments = (initialComments: Comment[] = []) => {
@@ -49,53 +47,50 @@ export const useComments = (initialComments: Comment[] = []) => {
     }
   }, []);
 
-  const updateComment = useCallback<UpdateComment>(
-    async ({ parent_id, slug, body_json, body_text }) => {
-      setValidating(true);
-      try {
-        await commentsApi.updateComment({ slug, body_json, body_text });
+  const updateComment = useCallback(async ({ parent_id, slug, body_json, body_text }: Comment) => {
+    setValidating(true);
+    try {
+      await commentsApi.updateComment({ slug, body_json, body_text });
 
-        setComments((comments) =>
-          produce(comments, (draftComment) => {
-            if (parent_id) {
-              // child
-              const comment = draftComment.find((comment) => comment.id === parent_id);
+      setComments((comments) =>
+        produce(comments, (draftComment) => {
+          if (parent_id) {
+            // child
+            const comment = draftComment.find((comment) => comment.id === parent_id);
 
-              assertIsDefined(comment);
-              assertIsDefined(comment.children);
+            assertIsDefined(comment);
+            assertIsDefined(comment.children);
 
-              const child = comment.children.find((child) => child.slug === slug);
+            const child = comment.children.find((child) => child.slug === slug);
 
-              assertIsDefined(child);
+            assertIsDefined(child);
 
-              child.body_json = body_json;
-              child.body_text = body_text;
-            } else {
-              // parent
-              const comment = draftComment.find((comment) => comment.slug === slug);
+            child.body_json = body_json;
+            child.body_text = body_text;
+          } else {
+            // parent
+            const comment = draftComment.find((comment) => comment.slug === slug);
 
-              assertIsDefined(comment);
+            assertIsDefined(comment);
 
-              comment.body_json = body_json;
-              comment.body_text = body_text;
-            }
-          }),
-        );
+            comment.body_json = body_json;
+            comment.body_text = body_text;
+          }
+        }),
+      );
 
-        return {};
-      } catch (err) {
-        if (err instanceof HttpError) {
-          return { error: err };
-        }
-        throw err;
-      } finally {
-        setValidating(false);
+      return {};
+    } catch (err) {
+      if (err instanceof HttpError) {
+        return { error: err };
       }
-    },
-    [],
-  );
+      throw err;
+    } finally {
+      setValidating(false);
+    }
+  }, []);
 
-  const deleteComment = useCallback<DeleteComment>(async ({ slug, parent_id }) => {
+  const deleteComment = useCallback(async ({ slug, parent_id }: Comment) => {
     setValidating(true);
     try {
       await commentsApi.deleteComment(slug);

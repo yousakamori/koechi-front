@@ -1,6 +1,8 @@
 import { OmitUser } from '@/types/user';
 // ___________________________________________________________________________
 //
+export type CommentableType = 'Talk' | 'Note';
+
 export type Comment = {
   id: number;
   body_text: string;
@@ -30,9 +32,6 @@ export type UserComment = {
   id: number;
   title: string;
   reply: boolean;
-  commentable_id: number;
-  commentable_type: 'Talk' | 'Note';
-  parent_id: number;
   slug: string;
   created_at: string;
   liked_count: number;

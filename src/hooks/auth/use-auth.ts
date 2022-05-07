@@ -1,14 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import { useCurrentUser } from '../current-user';
-import { authApi, SignupRequest, LoginRequest } from '@/api/auth';
+import { authApi } from '@/api/auth';
 import { HttpError } from '@/error/http-error';
 import { notificationState } from '@/state/notification';
-// ___________________________________________________________________________
-//
-type Signup = (values: SignupRequest) => Promise<{ error?: HttpError }>;
-type Login = (values: LoginRequest) => Promise<{ error?: HttpError }>;
-type Logout = () => Promise<{ error?: HttpError }>;
 // ___________________________________________________________________________
 //
 export const useAuth = () => {
@@ -17,7 +12,7 @@ export const useAuth = () => {
   const resetNotificationState = useResetRecoilState(notificationState);
   // ___________________________________________________________________________
   //
-  const signup = useCallback<Signup>(async (values) => {
+  const signup = useCallback(async (values: { email: string }) => {
     setValidating(true);
     try {
       await authApi.signup(values);
@@ -32,8 +27,8 @@ export const useAuth = () => {
     }
   }, []);
 
-  const login = useCallback<Login>(
-    async (values) => {
+  const login = useCallback(
+    async (values: { email?: string; token?: string; password: string }) => {
       setValidating(true);
       try {
         const currentUser = await authApi.login(values);
@@ -52,7 +47,7 @@ export const useAuth = () => {
     [],
   );
 
-  const logout = useCallback<Logout>(async () => {
+  const logout = useCallback(async () => {
     setValidating(true);
     try {
       await authApi.logout();

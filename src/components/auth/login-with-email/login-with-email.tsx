@@ -8,7 +8,7 @@ import { useCurrentUser } from '@/hooks/current-user';
 //
 export const LoginWithEmail: React.VFC = () => {
   const router = useRouter();
-  const { token, password } = router.query as { token?: string; password?: string };
+  const { token, password } = router.query as { token: string; password: string };
   const { authChecking, currentUser } = useCurrentUser();
   const { login } = useAuth();
 

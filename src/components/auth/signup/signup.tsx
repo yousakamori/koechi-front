@@ -3,7 +3,6 @@ import { NextSeo } from 'next-seo';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { SignupRequest } from '@/api/auth';
 import { validatorApi } from '@/api/validator';
 import { Layout } from '@/components/common/layout';
 import { withLogoutRequired } from '@/components/hoc/with-logout-required';
@@ -17,13 +16,16 @@ import { useAuth } from '@/hooks/auth';
 import { APP_NAME } from '@/lib/constants';
 // ___________________________________________________________________________
 //
+type CreateValues = { email: string };
+// ___________________________________________________________________________
+//
 export const SignUp: React.VFC = withLogoutRequired(() => {
   const {
     register,
     formState: { errors, isDirty, isValid },
     setError,
     handleSubmit,
-  } = useForm<SignupRequest>({
+  } = useForm<CreateValues>({
     mode: 'onChange',
     resolver: yupResolver(signupSchema),
   });
@@ -32,7 +34,7 @@ export const SignUp: React.VFC = withLogoutRequired(() => {
   const [step, setStep] = useState<'INPUT_EMAIL' | 'COMPLETE'>('INPUT_EMAIL');
   const { validating, signup } = useAuth();
 
-  const handleSignup = async (values: SignupRequest) => {
+  const handleSignup = async (values: CreateValues) => {
     const { taken } = await validatorApi.emailTaken(values.email);
 
     if (taken) {
@@ -48,7 +50,6 @@ export const SignUp: React.VFC = withLogoutRequired(() => {
       }
     }
   };
-
   // ___________________________________________________________________________
   //
   return (
