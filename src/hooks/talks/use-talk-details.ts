@@ -1,19 +1,14 @@
 import { useCallback, useState, useEffect } from 'react';
-import { talksApi, CreateTalkRequest } from '@/api/talks';
+import { talksApi } from '@/api/talks';
 import { HttpError } from '@/error/http-error';
 import { TalkDetails } from '@/types/talk';
 // ___________________________________________________________________________
 //
-type CreateTalk = (values: CreateTalkRequest) => Promise<{ slug?: string; error?: HttpError }>;
-type UpdateTalk = (values: TalkDetails) => Promise<{ error?: HttpError }>;
-type DeleteTalk = (slug: string) => Promise<{ error?: HttpError }>;
-// ___________________________________________________________________________
-//
-export const useTalkDetails = (initialTalk: TalkDetails | null = null) => {
-  const [talk, setTalk] = useState<TalkDetails | null>(initialTalk);
+export const useTalkDetails = (initialTalk?: TalkDetails) => {
+  const [talk, setTalk] = useState(initialTalk);
   const [validating, setValidating] = useState(false);
 
-  const createTalk = useCallback<CreateTalk>(async (values) => {
+  const createTalk = useCallback(async (values: { title: string }) => {
     setValidating(true);
     try {
       const { talk } = await talksApi.createTalk(values);
@@ -29,23 +24,31 @@ export const useTalkDetails = (initialTalk: TalkDetails | null = null) => {
     }
   }, []);
 
-  const updateTalk = useCallback<UpdateTalk>(async (values) => {
-    setValidating(true);
-    try {
-      await talksApi.updateTalk(values);
-      setTalk(values);
-      return {};
-    } catch (err) {
-      if (err instanceof HttpError) {
-        return { error: err };
+  const updateTalk = useCallback(
+    async (values: Pick<TalkDetails, 'slug' | 'title' | 'closed' | 'archived' | 'closed_at'>) => {
+      setValidating(true);
+      try {
+        await talksApi.updateTalk({
+          slug: values.slug,
+          title: values.title,
+          closed: values.closed,
+          archived: values.archived,
+        });
+        setTalk((prev) => (prev ? { ...prev, ...values } : prev));
+        return {};
+      } catch (err) {
+        if (err instanceof HttpError) {
+          return { error: err };
+        }
+        throw err;
+      } finally {
+        setValidating(false);
       }
-      throw err;
-    } finally {
-      setValidating(false);
-    }
-  }, []);
+    },
+    [],
+  );
 
-  const deleteTalk = useCallback<DeleteTalk>(async (slug) => {
+  const deleteTalk = useCallback(async (slug: string) => {
     setValidating(true);
     try {
       await talksApi.deleteTalk(slug);

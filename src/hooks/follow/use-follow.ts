@@ -4,16 +4,12 @@ import { HttpError } from '@/error/http-error';
 import { useCurrentUser } from '@/hooks/current-user';
 // ___________________________________________________________________________
 //
-type Follow = (otherUserId: number) => Promise<{ error?: HttpError }>;
-type Unfollow = (otherUserId: number) => Promise<{ error?: HttpError }>;
-// ___________________________________________________________________________
-//
 export const useFollow = () => {
   const [validating, setValidating] = useState(false);
   const { currentUser, setCurrentUser } = useCurrentUser();
 
-  const follow = useCallback<Follow>(
-    async (otherUserId) => {
+  const follow = useCallback(
+    async (otherUserId: number) => {
       setValidating(true);
 
       try {
@@ -40,7 +36,7 @@ export const useFollow = () => {
     [setCurrentUser],
   );
 
-  const unfollow = useCallback<Unfollow>(
+  const unfollow = useCallback(
     async (otherUserId: number) => {
       setValidating(true);
 

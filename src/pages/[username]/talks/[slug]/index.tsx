@@ -30,12 +30,14 @@ const propsFactory = (injects?: Partial<ServerProps>) => ({
 // ___________________________________________________________________________
 //
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  req,
   params,
 }: GetServerSidePropsContext) => {
+  const cookie = req.headers.cookie;
   const { slug, username } = params as { slug: string; username: string };
 
   try {
-    const data = await talksApi.getTalk(slug);
+    const data = await talksApi.getTalk(slug, cookie);
 
     if (username !== data.talk.user.username) {
       return { notFound: true };

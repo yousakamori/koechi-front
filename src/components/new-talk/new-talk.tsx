@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { CreateTalkRequest } from '@/api/talks';
 import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
@@ -15,17 +14,20 @@ import { createTalkSchema } from '@/config/yup-schema';
 import { useTalkDetails } from '@/hooks/talks/';
 // ___________________________________________________________________________
 //
+type CreateValues = { title: string };
+// ___________________________________________________________________________
+//
 export const NewTalk: React.VFC = withLoginRequired(({ currentUser }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-  } = useForm<CreateTalkRequest>({ mode: 'onChange', resolver: yupResolver(createTalkSchema) });
+  } = useForm<CreateValues>({ mode: 'onChange', resolver: yupResolver(createTalkSchema) });
   const disabled = !isDirty || !isValid;
   const router = useRouter();
   const { validating, createTalk } = useTalkDetails();
 
-  const handleCreateTalk = async (values: CreateTalkRequest) => {
+  const handleCreateTalk = async (values: CreateValues) => {
     const { slug, error } = await createTalk(values);
 
     if (slug) {

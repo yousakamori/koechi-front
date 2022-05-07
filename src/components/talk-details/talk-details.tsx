@@ -151,8 +151,8 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
   );
 
   const handleUpdateTalk = useCallback(
-    async (values: TalkDetailsType) => {
-      const { error } = await updateTalk(values);
+    async ({ slug, title, closed, archived, closed_at }: TalkDetailsType) => {
+      const { error } = await updateTalk({ slug, title, closed, archived, closed_at });
 
       if (error) {
         toast.error(error.message);

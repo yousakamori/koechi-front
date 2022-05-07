@@ -5,10 +5,6 @@ import { Participant } from '@/types/participant';
 import { Talk, TalkDetails } from '@/types/talk';
 // ___________________________________________________________________________
 //
-export type CreateTalkRequest = {
-  title: string;
-};
-
 export type TalkResponse = {
   talk: TalkDetails;
   comments: Comment[];
@@ -40,32 +36,33 @@ export const talksApi = {
     });
   },
 
-  async getTalk(slug: string) {
+  async getTalk(slug: string, cookie = '') {
     return await fetchApi<TalkResponse>(endpoints.talk(slug), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Cookie: cookie,
       },
     });
   },
 
-  async createTalk(values: CreateTalkRequest) {
+  async createTalk(values: { title: string }) {
     return await fetchApi<{ talk: TalkDetails }>(endpoints.talks, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(values),
     });
   },
 
-  async updateTalk(values: TalkDetails) {
-    return await fetchApi<void>(endpoints.talk(values.slug), {
+  async updateTalk({ slug, ...rest }: Pick<TalkDetails, 'slug' | 'title' | 'closed' | 'archived'>) {
+    return await fetchApi<void>(endpoints.talk(slug), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(rest),
     });
   },
 

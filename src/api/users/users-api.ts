@@ -3,14 +3,9 @@ import { fetchApi } from '@/lib/fetch-api';
 import { User } from '@/types/user';
 // ___________________________________________________________________________
 //
-export type GetUserResponse = {
-  user: User;
-};
-// ___________________________________________________________________________
-//
 export const usersApi = {
   async getUser(username: string) {
-    return await fetchApi<GetUserResponse>(endpoints.user(username), {
+    return await fetchApi<{ user: User }>(endpoints.user(username), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

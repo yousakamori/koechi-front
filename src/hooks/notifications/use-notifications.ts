@@ -6,9 +6,6 @@ import { HttpError } from '@/error/http-error';
 import { notificationState } from '@/state/notification';
 // ___________________________________________________________________________
 //
-type GetNotifications = (page?: number) => Promise<void>;
-// ___________________________________________________________________________
-//
 export const useNotifications = () => {
   const [error, setError] = useState<HttpError | null>(null);
   const [loading, setLoading] = useState(false);
@@ -16,8 +13,8 @@ export const useNotifications = () => {
   const [notification, setNotification] = useRecoilState(notificationState);
   // ___________________________________________________________________________
   //
-  const getNotifications = useCallback<GetNotifications>(
-    async (page) => {
+  const getNotifications = useCallback(
+    async (page?: number) => {
       setLoading(true);
       setError(null);
 
