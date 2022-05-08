@@ -4,11 +4,12 @@ import { User } from '@/types/user';
 // ___________________________________________________________________________
 //
 export const usersApi = {
-  async getUser(username: string) {
+  async getUser(username: string, cookie = '') {
     return await fetchApi<{ user: User }>(endpoints.user(username), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Cookie: cookie,
       },
     });
   },

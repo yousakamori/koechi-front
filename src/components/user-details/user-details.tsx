@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { UserCommentList } from './user-comment-list';
 import { UserTalksList } from './user-talks-list';
 import { Layout } from '@/components/common/layout';
@@ -29,14 +29,6 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
     tab?: string;
   };
 
-  const isMine = useMemo(() => {
-    if (currentUser) {
-      return currentUser.id === user.id;
-    }
-
-    return false;
-  }, [currentUser, user]);
-
   const tabs = [
     {
       name: (
@@ -61,7 +53,7 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
       active:
         !status ||
         !['open', 'closed', 'archived'].includes(status) ||
-        (!isMine && status === 'archived'),
+        (!user.is_mine && status === 'archived'),
     },
     {
       name: 'オープン',
@@ -75,7 +67,7 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
     },
   ];
 
-  talkTabs = isMine
+  talkTabs = user.is_mine
     ? [
         ...talkTabs,
         {
@@ -104,7 +96,7 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
                     {user.name}
                   </Typography>
 
-                  {isMine ? (
+                  {user.is_mine ? (
                     <Link href='/settings/profile' passHref>
                       <Button size='sm' variant='outlined' color='secondary'>
                         プロフィール編集
@@ -155,7 +147,11 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
                     </Link>
                   </div>
                 )}
-                <UserTalksList username={username} status={status || ''} isMine={isMine} />
+                <UserTalksList
+                  username={user.username}
+                  isMine={user.is_mine}
+                  status={status || ''}
+                />
               </>
             )}
             {tab === 'comment' && <UserCommentList username={username} user={user} />}

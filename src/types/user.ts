@@ -12,6 +12,7 @@ export type User = {
   following_count: number;
   total_liked_count: number; // TODO: 未実装
   talks_count: number;
+  is_mine: boolean;
 };
 
 export type OmitUser = Pick<User, 'id' | 'name' | 'username' | 'avatar_small_url'>;

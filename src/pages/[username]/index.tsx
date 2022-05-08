@@ -22,12 +22,14 @@ const propsFactory = (injects?: Partial<ServerProps>) => ({
 // ___________________________________________________________________________
 //
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  req,
   params,
 }: GetServerSidePropsContext) => {
+  const cookie = req.headers.cookie;
   const { username } = params as { username: string };
 
   try {
-    const { user } = await usersApi.getUser(username);
+    const { user } = await usersApi.getUser(username, cookie);
     return propsFactory({ user });
   } catch (err) {
     if (err instanceof HttpError) {
