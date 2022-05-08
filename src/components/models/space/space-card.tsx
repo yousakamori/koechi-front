@@ -73,7 +73,7 @@ export const SpaceCard: React.VFC<SpaceCardProps> = ({
               className='w-36'
               buttonContent={
                 <Menu.Button as={React.Fragment}>
-                  <CircleButton variant='none' color='secondary' aria-label='メニューを開く'>
+                  <CircleButton variant='none' color='secondary' aria-label='スペースを編集'>
                     <BiDotsHorizontalRounded />
                   </CircleButton>
                 </Menu.Button>
