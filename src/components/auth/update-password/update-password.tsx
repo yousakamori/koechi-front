@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { UpdatePasswordRequest } from '@/api/reset-password';
 import { Layout } from '@/components/common/layout';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
@@ -17,13 +16,16 @@ import { updateNewPasswordSchema } from '@/config/yup-schema';
 import { useResetPassword } from '@/hooks/reset-password';
 // ___________________________________________________________________________
 //
+type UpdateValues = { token: string; password: string; password_confirm: string };
+// ___________________________________________________________________________
+//
 export const UpdatePassword: React.VFC = () => {
   const {
     register,
     setValue,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-  } = useForm<UpdatePasswordRequest>({
+  } = useForm<UpdateValues>({
     mode: 'onChange',
     resolver: yupResolver(updateNewPasswordSchema),
   });
@@ -32,7 +34,7 @@ export const UpdatePassword: React.VFC = () => {
   const router = useRouter();
   const { validating, validToken, checkToken, updatePassword } = useResetPassword();
 
-  const handleUpdatePassword = async (values: UpdatePasswordRequest) => {
+  const handleUpdatePassword = async (values: UpdateValues) => {
     const { error } = await updatePassword(values);
     if (error) {
       toast.error(error.message);
@@ -48,8 +50,8 @@ export const UpdatePassword: React.VFC = () => {
     }
 
     (async () => {
-      const { token } = router.query;
-      const { error } = await checkToken({ token: token as string });
+      const { token } = router.query as { token: string };
+      const { error } = await checkToken(token);
 
       if (error) {
         toast.error(error.message);

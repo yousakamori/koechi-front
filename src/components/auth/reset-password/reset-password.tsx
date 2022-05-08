@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ResetPasswordRequest } from '@/api/reset-password';
 import { Layout } from '@/components/common/layout';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
@@ -12,13 +11,16 @@ import { resetPasswordSchema } from '@/config/yup-schema';
 import { useResetPassword } from '@/hooks/reset-password';
 // ___________________________________________________________________________
 //
+type CreateValues = { email: string };
+// ___________________________________________________________________________
+//
 export const ResetPassword: React.VFC = () => {
   const {
     register,
     formState: { errors, isDirty, isValid },
     setError,
     handleSubmit,
-  } = useForm<ResetPasswordRequest>({
+  } = useForm<CreateValues>({
     mode: 'onChange',
     resolver: yupResolver(resetPasswordSchema),
   });
@@ -27,7 +29,7 @@ export const ResetPassword: React.VFC = () => {
   const [step, setStep] = useState<'INPUT_EMAIL' | 'COMPLETE'>('INPUT_EMAIL');
   const { validating, resetPassword } = useResetPassword();
 
-  const handleResetPassword = async (values: ResetPasswordRequest) => {
+  const handleResetPassword = async (values: CreateValues) => {
     const { error } = await resetPassword(values);
     if (error) {
       setError('email', { message: error.message });

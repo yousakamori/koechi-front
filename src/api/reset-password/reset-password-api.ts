@@ -2,47 +2,33 @@ import { endpoints } from '@/config/endpoints';
 import { fetchApi } from '@/lib/fetch-api';
 // ___________________________________________________________________________
 //
-export type ResetPasswordRequest = {
-  email: string;
-};
-
-export type UpdatePasswordRequest = {
-  token: string;
-  password: string;
-  password_confirm: string;
-};
-
-export type CheckTokenRequest = {
-  token: string;
-};
-
 export type CheckTokenResponse = {
   valid_token: boolean;
 };
 // ___________________________________________________________________________
 //
 export const resetPasswordApi = {
-  async resetPassword(values: ResetPasswordRequest) {
+  async resetPassword(values: { email: string }) {
     return await fetchApi<void>(endpoints.resetPassword, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...values }),
+      body: JSON.stringify(values),
     });
   },
 
-  async updatePassword({ token, password }: UpdatePasswordRequest) {
+  async updatePassword(values: { token: string; password: string }) {
     return await fetchApi<void>(endpoints.resetPassword, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ token, password }),
+      body: JSON.stringify(values),
     });
   },
 
-  async checkToken({ token }: CheckTokenRequest) {
+  async checkToken(token: string) {
     return await fetchApi<CheckTokenResponse>(`${endpoints.checkToken}?token=${token}`, {
       method: 'GET',
       headers: {

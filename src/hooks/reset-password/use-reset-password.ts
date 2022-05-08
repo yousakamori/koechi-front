@@ -1,16 +1,6 @@
 import { useCallback, useState } from 'react';
-import {
-  CheckTokenRequest,
-  resetPasswordApi,
-  ResetPasswordRequest,
-  UpdatePasswordRequest,
-} from '@/api/reset-password';
+import { resetPasswordApi } from '@/api/reset-password';
 import { HttpError } from '@/error/http-error';
-// ___________________________________________________________________________
-//
-type ResetPassword = (values: ResetPasswordRequest) => Promise<{ error?: HttpError }>;
-type CheckToken = (values: CheckTokenRequest) => Promise<{ error?: HttpError }>;
-type UpdatePassword = (values: UpdatePasswordRequest) => Promise<{ error?: HttpError }>;
 // ___________________________________________________________________________
 //
 export const useResetPassword = () => {
@@ -18,7 +8,7 @@ export const useResetPassword = () => {
   const [validToken, setValidToken] = useState<boolean | undefined>();
   // ___________________________________________________________________________
   //
-  const resetPassword = useCallback<ResetPassword>(async (values) => {
+  const resetPassword = useCallback(async (values: { email: string }) => {
     setValidating(true);
     try {
       await resetPasswordApi.resetPassword(values);
@@ -33,10 +23,10 @@ export const useResetPassword = () => {
     }
   }, []);
 
-  const checkToken = useCallback<CheckToken>(async (values) => {
+  const checkToken = useCallback(async (token: string) => {
     setValidating(true);
     try {
-      const { valid_token } = await resetPasswordApi.checkToken(values);
+      const { valid_token } = await resetPasswordApi.checkToken(token);
       setValidToken(valid_token);
       return {};
     } catch (err) {
@@ -49,7 +39,7 @@ export const useResetPassword = () => {
     }
   }, []);
 
-  const updatePassword = useCallback<UpdatePassword>(async (values) => {
+  const updatePassword = useCallback(async (values: { token: string; password: string }) => {
     setValidating(true);
     try {
       await resetPasswordApi.updatePassword(values);
