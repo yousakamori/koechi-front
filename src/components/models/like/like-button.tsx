@@ -35,12 +35,16 @@ export const LikeButton: React.VFC<LikeButtonProps> = ({
   size = 'md',
   className,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { authChecking, currentUser } = useCurrentUser();
   const [item, setItem] = useState({ liked, likedCount });
   const [open, toggleModal] = useToggle();
 
   const handleClickLike = async () => {
     try {
+      if (authChecking) {
+        return;
+      }
+
       if (!currentUser) {
         toggleModal();
         return;
@@ -52,7 +56,7 @@ export const LikeButton: React.VFC<LikeButtonProps> = ({
         likable_type: likableType,
       });
 
-      setItem((prev) => ({ liked, likedCount: liked ? prev.likedCount++ : prev.likedCount-- }));
+      setItem((prev) => ({ liked, likedCount: liked ? ++prev.likedCount : --prev.likedCount }));
     } catch (err) {
       if (err instanceof HttpError) {
         toast.error(err.message);

@@ -1,11 +1,17 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 import { AvatarGroup } from '@/components/avatar-group';
-import { LikeButton } from '@/components/models/like';
+import { LikeButtonProps } from '@/components/models/like';
 import { Avatar } from '@/components/ui/avatar';
 import { Container } from '@/components/ui/container';
 import { Participant } from '@/types/participant';
 import { TalkDetails } from '@/types/talk';
+// ___________________________________________________________________________
+//
+const LikeButton = dynamic<LikeButtonProps>(() =>
+  import('@/components/models/like').then((mod) => mod.LikeButton),
+);
 // ___________________________________________________________________________
 //
 export type TalkNavProps = {
