@@ -108,17 +108,9 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
                     comment={child}
                     onUpdateComment={handleUpdateComment}
                     onDeleteComment={handleDeleteComment}
+                    onOpenReplyForm={handleOpenReplyForm}
                   />
                 ))}
-                <Button
-                  onClick={() => handleOpenReplyForm(comment)}
-                  roundedFull
-                  size='sm'
-                  color='secondary'
-                  variant='outlined'
-                >
-                  返信を追加
-                </Button>
               </div>
             )}
           </div>

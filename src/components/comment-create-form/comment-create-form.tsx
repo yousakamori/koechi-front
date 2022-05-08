@@ -4,15 +4,16 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { BiX } from 'react-icons/bi';
+import { Spinner } from '../ui/spinner';
 import { EditorToolbar } from '@/components/common/editor-toolbar';
 import { Avatar } from '@/components/ui/avatar';
 import { Button, CircleButton } from '@/components/ui/button';
+import { useCurrentUser } from '@/hooks/current-user';
 import { editorExtensionsFactory } from '@/lib/editor';
 import { Comment } from '@/types/comment';
 // ___________________________________________________________________________
 //
 export type CommentCreateFormProps = {
-  isLogin?: boolean;
   validating: boolean;
   parentComment: Comment | null;
   onCloseForm: () => void;
@@ -21,7 +22,6 @@ export type CommentCreateFormProps = {
 // ___________________________________________________________________________
 //
 export const CommentCreateForm: React.VFC<CommentCreateFormProps> = ({
-  isLogin = true,
   validating,
   parentComment,
   onCloseForm,
@@ -29,6 +29,7 @@ export const CommentCreateForm: React.VFC<CommentCreateFormProps> = ({
 }) => {
   const isReplyForm = parentComment !== null;
   const haveChildren = parentComment && parentComment.children && parentComment.children.length > 0;
+  const { authChecking, currentUser } = useCurrentUser();
 
   const replySourceComment = haveChildren
     ? (parentComment?.children?.slice(-1)[0] as Comment)
@@ -67,12 +68,12 @@ export const CommentCreateForm: React.VFC<CommentCreateFormProps> = ({
   }, [isReplyForm, editor]);
   // ___________________________________________________________________________
   //
-  if (!editor) {
-    return <></>;
+  if (!editor || authChecking) {
+    return <Spinner color='primary' size='md' />;
   }
   // ___________________________________________________________________________
   //
-  if (isLogin) {
+  if (currentUser) {
     return (
       <div
         className={clsx(

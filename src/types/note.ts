@@ -22,4 +22,6 @@ export type NoteDetails = Omit<Note, 'space'> & {
   last_comment_created_at: string | null;
   liked_count: number;
   updated_at: string;
+  is_mine: boolean;
+  current_user_liked: boolean;
 };

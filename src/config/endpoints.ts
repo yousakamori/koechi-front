@@ -3,7 +3,6 @@ export const endpoints = {
   login: '/login',
   logout: '/logout',
   currentUser: '/me',
-  myLiked: '/me/liked',
   myLibraryLikes: '/me/library/likes',
   email: '/me/email',
   password: '/me/password',

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 import { AvatarGroup } from '@/components/avatar-group';
+import { LikeButton } from '@/components/models/like';
 import { Avatar } from '@/components/ui/avatar';
 import { Container } from '@/components/ui/container';
-import { LikeButton } from '@/components/ui/like-button';
 import { Participant } from '@/types/participant';
 import { TalkDetails } from '@/types/talk';
 // ___________________________________________________________________________
@@ -34,9 +34,10 @@ export const TalkNav: React.VFC<TalkNavProps> = ({ talk, participants }) => {
             <LikeButton
               className='ml-2'
               size='md'
+              liked={talk.current_user_liked}
               likableId={talk.id}
-              likableType='Talk'
               likedCount={talk.liked_count}
+              likableType='Talk'
             />
           </div>
         </div>

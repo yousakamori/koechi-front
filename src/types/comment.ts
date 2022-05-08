@@ -13,7 +13,9 @@ export type Comment = {
   user_id: number;
   parent_id: number | null;
   slug: string;
-  children: Comment[] | null;
+  children?: Comment[];
+  is_mine: boolean;
+  current_user_liked: boolean;
   liked_count: number;
   user: OmitUser;
 };

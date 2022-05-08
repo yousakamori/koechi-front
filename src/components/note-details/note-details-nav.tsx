@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 import { AvatarGroup } from '@/components/avatar-group';
+import { LikeButton } from '@/components/models/like';
 import { Avatar } from '@/components/ui/avatar';
 import { Container } from '@/components/ui/container';
-import { LikeButton } from '@/components/ui/like-button';
 import { NoteDetails } from '@/types/note';
 import { Participant } from '@/types/participant';
 // ___________________________________________________________________________
@@ -38,9 +38,10 @@ export const NoteDetailsNav: React.VFC<NoteDetailsNavProps> = ({ note, participa
             <LikeButton
               className='ml-2'
               size='md'
+              liked={note.current_user_liked}
               likableId={note.id}
-              likableType='Note'
               likedCount={note.liked_count}
+              likableType='Note'
             />
           </div>
         </div>

@@ -24,7 +24,6 @@ const ConfirmModal = dynamic<ConfirmModalProps>(() =>
 //
 export type TalkDetailsHeaderProps = {
   talk: TalkDetails;
-  isMine: boolean;
   validating: boolean;
   onUpdateTalk: (values: TalkDetails) => Promise<void>;
   onDeleteTalk: (slug: string) => Promise<void>;
@@ -32,7 +31,7 @@ export type TalkDetailsHeaderProps = {
 // ___________________________________________________________________________
 //
 export const TalkDetailsHeader: React.VFC<TalkDetailsHeaderProps> = React.memo(
-  ({ talk, isMine, validating, onUpdateTalk, onDeleteTalk }) => {
+  ({ talk, validating, onUpdateTalk, onDeleteTalk }) => {
     const [openTitleForm, setOpenTitleForm] = useState(false);
     const [open, toggleModal] = useToggle();
 
@@ -120,7 +119,7 @@ export const TalkDetailsHeader: React.VFC<TalkDetailsHeaderProps> = React.memo(
                 </span>
               )}
             </div>
-            {isMine && (
+            {talk.is_mine && (
               <Dropdown
                 position='right'
                 className='w-40'
@@ -196,7 +195,7 @@ export const TalkDetailsHeader: React.VFC<TalkDetailsHeaderProps> = React.memo(
                     {talk.title}
                   </Typography>
                 </div>
-                {isMine && (
+                {talk.is_mine && (
                   <CircleButton
                     onClick={() => setOpenTitleForm(true)}
                     aria-label='タイトルを編集'

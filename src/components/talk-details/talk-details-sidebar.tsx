@@ -5,29 +5,28 @@ import React from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { BsTwitter, BsFacebook } from 'react-icons/bs';
 import { FollowButton } from '@/components/follow-button';
+import { LikeButtonProps } from '@/components/models/like';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CircleButton } from '@/components/ui/button';
-import { LikeButtonProps } from '@/components/ui/like-button';
 import { Participant } from '@/types/participant';
 import { TalkDetails } from '@/types/talk';
 // ___________________________________________________________________________
 //
 const LikeButton = dynamic<LikeButtonProps>(() =>
-  import('@/components/ui/like-button').then((mod) => mod.LikeButton),
+  import('@/components/models/like').then((mod) => mod.LikeButton),
 );
 // ___________________________________________________________________________
 //
 export type TalkDetailsSidebarProps = {
   talk: TalkDetails;
-  isMine: boolean;
   participants: Participant[];
   onUpdateTalk: (values: TalkDetails) => Promise<void>;
 };
 // ___________________________________________________________________________
 //
 export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo(
-  ({ talk, isMine, participants, onUpdateTalk }) => {
+  ({ talk, participants, onUpdateTalk }) => {
     const handleOpenTalk = async () => {
       await onUpdateTalk({ ...talk, closed: false, closed_at: null });
     };
@@ -39,7 +38,7 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
     //
     return (
       <>
-        {isMine && (
+        {talk.is_mine && (
           <div className='w-full p-4 bg-white border-t border-gray-200 first:border-t-0 sm:w-[48%] lg:w-full'>
             {talk.closed_at ? (
               <div className='flex items-center justify-between'>
@@ -66,9 +65,10 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
             <div className='flex items-center justify-between'>
               <LikeButton
                 size='lg'
+                liked={talk.current_user_liked}
                 likableId={talk.id}
-                likableType='Talk'
                 likedCount={talk.liked_count}
+                likableType='Talk'
               />
             </div>
             <div className='flex items-center justify-between space-x-3'>
@@ -92,7 +92,7 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
               <Link href={`/${talk.user.username}`}>
                 <a className='inline-block font-semibold line-clamp-1'>{talk.user.name}</a>
               </Link>
-              {!isMine && (
+              {!talk.is_mine && (
                 <div className='block mt-1'>
                   <FollowButton userId={talk.user.id} />
                 </div>

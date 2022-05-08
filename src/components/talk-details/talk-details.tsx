@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useCallback, useState, useEffect, useRef, useMemo } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { TalkDetailsHeader } from './talk-details-header';
 import { TalkDetailsSidebarProps } from './talk-details-sidebar';
@@ -10,23 +10,14 @@ import { CommentCreateFormProps } from '@/components/comment-create-form';
 import { Layout } from '@/components/common/layout';
 import { JumpButtonProps } from '@/components/jump-button';
 import { CommentItem } from '@/components/models/comment';
-import { LoginLinkModalProps } from '@/components/overlays/login-link-modal';
-import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import { Spinner } from '@/components/ui/spinner';
 import { useComments } from '@/hooks/comments';
-import { useCurrentUser } from '@/hooks/current-user';
 import { useTalkDetails } from '@/hooks/talks';
-import { useToggle } from '@/hooks/toggle';
 import { Comment } from '@/types/comment';
 import { Participant } from '@/types/participant';
 import { TalkDetails as TalkDetailsType } from '@/types/talk';
 // ___________________________________________________________________________
 //
-const LoginLinkModal = dynamic<LoginLinkModalProps>(() =>
-  import('@/components/overlays/login-link-modal').then((mod) => mod.LoginLinkModal),
-);
-
 const JumpButton = dynamic<JumpButtonProps>(() =>
   import('@/components/jump-button').then((mod) => mod.JumpButton),
 );
@@ -52,17 +43,7 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
   comments: initialComments,
   participants,
 }) => {
-  const { authChecking, currentUser } = useCurrentUser();
-  const isMine = useMemo(() => {
-    if (currentUser && initialTalk) {
-      return currentUser.id === initialTalk.user.id;
-    }
-
-    return false;
-  }, [currentUser, initialTalk]);
-
   const [parentComment, setParentComment] = useState<Comment | null>(null);
-  const [open, toggleModal] = useToggle();
   const router = useRouter();
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -76,12 +57,9 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
 
   const { talk, validating: talkValidating, updateTalk, deleteTalk } = useTalkDetails(initialTalk);
 
-  const handleOpenReplyForm = useCallback(
-    (comment: Comment) => {
-      currentUser ? setParentComment(comment) : toggleModal();
-    },
-    [currentUser, toggleModal],
-  );
+  const handleOpenReplyForm = useCallback((comment: Comment) => {
+    setParentComment(comment);
+  }, []);
 
   const handleCreateComment = useCallback(
     async ({ body_text, body_json }: Pick<Comment, 'body_text' | 'body_json'>) => {
@@ -144,10 +122,10 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
       if (error) {
         toast.error(error.message);
       } else {
-        router.replace(`/${currentUser?.username}?tab=talk`);
+        router.replace(`/${talk?.user.username}?tab=talk`);
       }
     },
-    [currentUser?.username, deleteTalk, router],
+    [deleteTalk, router, talk?.user.username],
   );
 
   const handleUpdateTalk = useCallback(
@@ -189,9 +167,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
     <>
       <NextSeo title={initialTalk.title} />
 
-      {/* login link modal */}
-      <LoginLinkModal open={open} onClose={toggleModal} />
-
       {/* jump button */}
       <JumpButton height={5000} onScroll={handleScrollBottom} />
 
@@ -203,7 +178,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
             {/* header */}
             <TalkDetailsHeader
               talk={talk}
-              isMine={isMine}
               validating={talkValidating}
               onUpdateTalk={handleUpdateTalk}
               onDeleteTalk={handleDeleteTalk}
@@ -251,38 +225,23 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                             comment={child}
                             onUpdateComment={handleUpdateComment}
                             onDeleteComment={handleDeleteComment}
+                            onOpenReplyForm={handleOpenReplyForm}
                           />
                         ))}
-                        <Button
-                          onClick={() => handleOpenReplyForm(comment)}
-                          roundedFull
-                          size='sm'
-                          color='secondary'
-                          variant='outlined'
-                        >
-                          返信を追加
-                        </Button>
                       </div>
                     )}
                   </div>
                 ))}
 
                 {/* comment create form */}
-                {authChecking ? (
-                  <div className='mt-5'>
-                    <Spinner color='primary' size='md' />
-                  </div>
-                ) : (
-                  <CommentCreateForm
-                    isLogin={!!currentUser}
-                    validating={commentsValidating}
-                    parentComment={parentComment}
-                    onCloseForm={() => {
-                      setParentComment(null);
-                    }}
-                    onCreateComment={handleCreateComment}
-                  />
-                )}
+                <CommentCreateForm
+                  validating={commentsValidating}
+                  parentComment={parentComment}
+                  onCloseForm={() => {
+                    setParentComment(null);
+                  }}
+                  onCreateComment={handleCreateComment}
+                />
 
                 {/* scroll bottom */}
                 <div ref={bottomRef} />
@@ -292,7 +251,6 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
               <aside className='sticky flex flex-wrap justify-between w-full mt-12 lg:mt-0 top-8 lg:w-1/3'>
                 <TalkDetailsSidebar
                   talk={talk}
-                  isMine={isMine}
                   participants={participants}
                   onUpdateTalk={handleUpdateTalk}
                 />
