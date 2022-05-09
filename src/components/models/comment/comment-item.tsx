@@ -34,124 +34,161 @@ const CommentEditForm = dynamic<CommentEditFormProps>(() =>
 );
 // ___________________________________________________________________________
 //
-export type CommentItemProps = {
+type BaseItemProps = {
   comment: Comment;
   onUpdateComment: (values: Comment) => Promise<void>;
   onDeleteComment: (values: Comment) => Promise<void>;
   onOpenReplyForm: (values: Comment) => void;
+  children?: React.ReactNode;
 };
+// ___________________________________________________________________________
+//
+const BaseItem: React.VFC<BaseItemProps> = ({
+  comment,
+  onUpdateComment,
+  onDeleteComment,
+  onOpenReplyForm,
+  children,
+}) => {
+  const [editSlug, setEditSlug] = useState('');
+  // ___________________________________________________________________________
+  //
+  return (
+    <>
+      <div id={`comment-${comment.slug}`} className='flex justify-between space-x-2 bg-white'>
+        <div className='flex flex-col items-center w-9'>
+          <Avatar src={comment.user.avatar_small_url} size='sm' />
+          {!comment.children && <div className='flex-grow w-px my-1 bg-gray-400' />}
+        </div>
+        <div className='flex-1 mb-4'>
+          <div className='flex items-center mb-4'>
+            <p className='text-sm font-semibold text-gray-900 line-clamp-1'>
+              <Link href={`/${comment.user.username}`}>
+                <a>{comment.user.name}</a>
+              </Link>
+            </p>
+            <Time
+              size='sm'
+              className='flex-shrink-0 ml-2 text-gray-500 '
+              date={
+                comment.body_updated_at
+                  ? new Date(comment.body_updated_at)
+                  : new Date(comment.created_at)
+              }
+            />
+            {comment.is_mine && (
+              <div className='ml-auto'>
+                <Dropdown
+                  position='right'
+                  className='w-36'
+                  buttonContent={
+                    <Menu.Button as={React.Fragment}>
+                      <CircleButton variant='none' color='secondary' aria-label='メニューを開く'>
+                        <BiChevronDown />
+                      </CircleButton>
+                    </Menu.Button>
+                  }
+                >
+                  <div>
+                    <Menu.Item>
+                      <button
+                        onClick={() => setEditSlug(comment.slug)}
+                        className='block w-full px-4 py-3 text-sm text-left text-gray-500 hover:bg-gray-100'
+                      >
+                        編集する
+                      </button>
+                    </Menu.Item>
+
+                    <Menu.Item>
+                      <button
+                        onClick={() => onDeleteComment(comment)}
+                        className='block w-full px-4 py-3 text-sm text-left text-red-500 hover:bg-red-100'
+                      >
+                        削除する
+                      </button>
+                    </Menu.Item>
+                  </div>
+                </Dropdown>
+              </div>
+            )}
+          </div>
+          <div className={`${comment.children ? 'break-all -ml-11' : 'break-all'}`}>
+            {comment.slug === editSlug ? (
+              <CommentEditForm
+                comment={comment}
+                onCancel={() => setEditSlug('')}
+                onUpdateComment={async (comment) => {
+                  await onUpdateComment(comment);
+                  setEditSlug('');
+                }}
+              />
+            ) : (
+              <>
+                <div
+                  className='prose prose-sky max-w-none'
+                  dangerouslySetInnerHTML={jsonToHtml(comment.body_json)}
+                />
+                <footer className='flex items-center justify-start mt-3 space-x-3'>
+                  <LikeButton
+                    size='sm'
+                    liked={comment.current_user_liked}
+                    likableId={comment.id}
+                    likedCount={comment.liked_count}
+                    likableType='Comment'
+                  />
+                  {comment.children && (
+                    <ReplyButton
+                      onClick={() => onOpenReplyForm(comment)}
+                      commentsCount={comment.children.length}
+                    />
+                  )}
+                </footer>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+      {children && <div className='pt-4 mt-3 border-t border-gray-200'>{children}</div>}
+    </>
+  );
+};
+// ___________________________________________________________________________
+//
+export type CommentItemProps = Omit<BaseItemProps, 'children'>;
 // ___________________________________________________________________________
 //
 export const CommentItem: React.VFC<CommentItemProps> = React.memo(
   ({ comment, onUpdateComment, onDeleteComment, onOpenReplyForm }) => {
+    // ___________________________________________________________________________
+    //
     const { currentUser } = useCurrentUser();
-    const [editSlug, setEditSlug] = useState('');
     const [open, toggleModal] = useToggle();
-
     const handleOpenReplyForm = (comment: Comment) =>
       currentUser ? onOpenReplyForm(comment) : toggleModal();
 
-    // ___________________________________________________________________________
-    //
     return (
       <>
         {/* login link modal */}
         <LoginLinkModal open={open} onClose={toggleModal} />
-
-        <div id={`comment-${comment.slug}`} className='flex justify-between space-x-2 bg-white'>
-          <div className='flex flex-col items-center w-9'>
-            <Avatar src={comment.user.avatar_small_url} size='sm' />
-            {!comment.children && <div className='flex-grow w-px my-1 bg-gray-400' />}
-          </div>
-          <div className='flex-1 mb-4'>
-            <div className='flex items-center mb-4'>
-              <p className='text-sm font-semibold text-gray-900 line-clamp-1'>
-                <Link href={`/${comment.user.username}`}>
-                  <a>{comment.user.name}</a>
-                </Link>
-              </p>
-              <Time
-                size='sm'
-                className='flex-shrink-0 ml-2 text-gray-500 '
-                date={
-                  comment.body_updated_at
-                    ? new Date(comment.body_updated_at)
-                    : new Date(comment.created_at)
-                }
+        <BaseItem
+          comment={comment}
+          onUpdateComment={onUpdateComment}
+          onDeleteComment={onDeleteComment}
+          onOpenReplyForm={handleOpenReplyForm}
+        >
+          {comment.children &&
+            comment.children.length > 0 &&
+            comment.children.map((child) => (
+              <BaseItem
+                key={child.id}
+                comment={child}
+                onUpdateComment={onUpdateComment}
+                onDeleteComment={onDeleteComment}
+                onOpenReplyForm={handleOpenReplyForm}
               />
-              {comment.is_mine && (
-                <div className='ml-auto'>
-                  <Dropdown
-                    position='right'
-                    className='w-36'
-                    buttonContent={
-                      <Menu.Button as={React.Fragment}>
-                        <CircleButton variant='none' color='secondary' aria-label='メニューを開く'>
-                          <BiChevronDown />
-                        </CircleButton>
-                      </Menu.Button>
-                    }
-                  >
-                    <div>
-                      <Menu.Item>
-                        <button
-                          onClick={() => setEditSlug(comment.slug)}
-                          className='block w-full px-4 py-3 text-sm text-left text-gray-500 hover:bg-gray-100'
-                        >
-                          編集する
-                        </button>
-                      </Menu.Item>
-
-                      <Menu.Item>
-                        <button
-                          onClick={() => onDeleteComment(comment)}
-                          className='block w-full px-4 py-3 text-sm text-left text-red-500 hover:bg-red-100'
-                        >
-                          削除する
-                        </button>
-                      </Menu.Item>
-                    </div>
-                  </Dropdown>
-                </div>
-              )}
-            </div>
-            <div className={`${comment.children ? 'break-all -ml-11' : 'break-all'}`}>
-              {comment.slug === editSlug ? (
-                <CommentEditForm
-                  comment={comment}
-                  onCancel={() => setEditSlug('')}
-                  onUpdateComment={async (comment) => {
-                    await onUpdateComment(comment);
-                    setEditSlug('');
-                  }}
-                />
-              ) : (
-                <>
-                  <div
-                    className='prose prose-sky max-w-none'
-                    dangerouslySetInnerHTML={jsonToHtml(comment.body_json)}
-                  />
-                  <footer className='flex items-center justify-start mt-3 space-x-3'>
-                    <LikeButton
-                      size='sm'
-                      liked={comment.current_user_liked}
-                      likableId={comment.id}
-                      likedCount={comment.liked_count}
-                      likableType='Comment'
-                    />
-                    {comment.children && (
-                      <ReplyButton
-                        onClick={() => handleOpenReplyForm(comment)}
-                        commentsCount={comment.children.length}
-                      />
-                    )}
-                  </footer>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-        {!comment.children && (
+            ))}
+        </BaseItem>
+        {comment.children && comment.children.length > 0 && (
           <Button
             onClick={() => handleOpenReplyForm(comment)}
             roundedFull

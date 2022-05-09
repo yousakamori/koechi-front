@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { CommentCreateFormProps } from '@/components/comment-create-form';
 import { CommentItem } from '@/components/models/comment';
-import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { useComments } from '@/hooks/comments';
 import { Comment } from '@/types/comment';
@@ -99,20 +98,7 @@ export const NoteDetailsComments: React.VFC<NoteDetailsCommentsProps> = ({
               onUpdateComment={handleUpdateComment}
               onDeleteComment={handleDeleteComment}
               onOpenReplyForm={handleOpenReplyForm}
-            ></CommentItem>
-            {comment.children && comment.children.length > 0 && (
-              <div className='pt-4 mt-3 border-t border-gray-200'>
-                {comment.children.map((child) => (
-                  <CommentItem
-                    key={child.id}
-                    comment={child}
-                    onUpdateComment={handleUpdateComment}
-                    onDeleteComment={handleDeleteComment}
-                    onOpenReplyForm={handleOpenReplyForm}
-                  />
-                ))}
-              </div>
-            )}
+            />
           </div>
         ))}
       </div>

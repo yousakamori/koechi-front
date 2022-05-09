@@ -215,21 +215,7 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                       onUpdateComment={handleUpdateComment}
                       onDeleteComment={handleDeleteComment}
                       onOpenReplyForm={handleOpenReplyForm}
-                    ></CommentItem>
-
-                    {comment.children && comment.children.length > 0 && (
-                      <div className='pt-4 mt-3 border-t border-gray-200'>
-                        {comment.children.map((child) => (
-                          <CommentItem
-                            key={child.id}
-                            comment={child}
-                            onUpdateComment={handleUpdateComment}
-                            onDeleteComment={handleDeleteComment}
-                            onOpenReplyForm={handleOpenReplyForm}
-                          />
-                        ))}
-                      </div>
-                    )}
+                    />
                   </div>
                 ))}
 
