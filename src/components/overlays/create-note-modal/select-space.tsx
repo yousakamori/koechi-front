@@ -1,7 +1,8 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import React from 'react';
+import { BiCheck } from 'react-icons/bi';
+import { HiSelector } from 'react-icons/hi';
 import { Emoji } from '@/components/ui/emoji';
 import { OmitSpace } from '@/types/space';
 // ___________________________________________________________________________
@@ -32,7 +33,7 @@ export const SelectSpace: React.VFC<SelectSpaceProps> = ({ values, selected, onC
                 <div className='ml-2 truncate'>{selected.name}</div>
               </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none'>
-                <SelectorIcon className='w-5 h-5 text-gray-400' aria-hidden='true' />
+                <HiSelector className='w-5 h-5 text-gray-400' aria-hidden='true' />
               </span>
             </Listbox.Button>
 
@@ -79,7 +80,7 @@ export const SelectSpace: React.VFC<SelectSpaceProps> = ({ values, selected, onC
                               'absolute inset-y-0 right-0 flex items-center pr-4',
                             )}
                           >
-                            <CheckIcon className='w-5 h-5' aria-hidden='true' />
+                            <BiCheck className='w-5 h-5' aria-hidden='true' />
                           </span>
                         ) : null}
                       </>

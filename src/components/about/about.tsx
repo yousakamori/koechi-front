@@ -15,17 +15,17 @@ export const About: React.VFC = () => {
     {
       icon: BsChatDots,
       title: 'トーク',
-      body: 'ユーザー同士で知見や意見交換をしたり、記事を通して誰かとつながる場所です。',
+      body: '複数人で知見や意見交換をしたり、記事を通して介護者がつながる場所です。',
     },
     {
       icon: SiMyspace,
       title: 'スペース',
-      body: '招待したユーザー(施設の担当者やケアマネジャーなど)と記録を共有できます。',
+      body: 'ノートを共有するための、グループ（ユーザーを招待できる）を作ることができます。',
     },
     {
       icon: CgNotes,
       title: 'ノート',
-      body: '毎日の記録をスペースに招待したユーザーと共有することができます。',
+      body: '毎日の記録を招待したユーザー（施設の担当者・ケアマネジャー など）で共有することができます。',
     },
   ];
   // ___________________________________________________________________________
@@ -37,8 +37,8 @@ export const About: React.VFC = () => {
         <Container className='max-w-md sm:max-w-5xl'>
           <div className='mt-4 text-center'>
             <div className='inline-block'>
-              <Typography variant='h1' align='left' fontSize='4xl'>
-                {APP_NAME} とは？
+              <Typography variant='h1' align='left'>
+                {APP_NAME} について
               </Typography>
             </div>
           </div>
@@ -50,9 +50,9 @@ export const About: React.VFC = () => {
               </p>
 
               <ul className='my-1 ml-5 font-semibold text-gray-500 list-disc text-bse'>
-                <li className='py-2'>介護のナレッジを共有したい</li>
-                <li className='py-2'>紙でのノート管理をやめたい</li>
-                <li className='py-2'>ノートを複数人で共有したい</li>
+                <li className='py-2'>介護の 知識・情報・ノウハウ を共有したい</li>
+                <li className='py-2'>紙での 記録・管理 をやめたい</li>
+                <li className='py-2'>記録を複数人で共有したい</li>
               </ul>
             </div>
             <div className='w-full'>

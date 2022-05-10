@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
-    "@heroicons/react": "^1.0.5",
     "@hookform/resolvers": "^2.8.5",
     "@next/bundle-analyzer": "^11.1.0",
     "@popperjs/core": "^2.11.2",
