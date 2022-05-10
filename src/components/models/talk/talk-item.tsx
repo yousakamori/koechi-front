@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { BiMessageRounded, BiHeart } from 'react-icons/bi';
 import { Avatar } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import { Badge, BadgeProps } from '@/components/ui/badge';
 import { Time } from '@/components/ui/time';
 import { Talk } from '@/types/talk';
 // ___________________________________________________________________________
@@ -22,6 +22,15 @@ export const TalkItem: React.VFC<TalkItemProps> = ({
   avatar = true,
   userLink = true,
 }) => {
+  const talkStatus = (): { title: string; color: Required<BadgeProps['color']> } => {
+    if (talk.archived) {
+      return { title: 'アーカイブ', color: 'error' };
+    } else if (talk.closed) {
+      return { title: 'クローズ', color: 'secondary' };
+    } else {
+      return { title: 'オープン', color: 'primary' };
+    }
+  };
   // ___________________________________________________________________________
   //
   return (
@@ -42,8 +51,8 @@ export const TalkItem: React.VFC<TalkItemProps> = ({
 
           <div className='flex flex-wrap items-center mt-3'>
             <div className='mr-2'>
-              <Badge color={talk.closed ? 'secondary' : 'primary'} size='xs'>
-                {talk.closed ? 'クローズ' : 'オープン'}
+              <Badge color={talkStatus().color} size='xs'>
+                {talkStatus().title}
               </Badge>
             </div>
 

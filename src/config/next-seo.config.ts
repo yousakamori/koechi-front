@@ -1,5 +1,4 @@
-// TODO: OGPとか未設定
-import { APP_NAME, SEO_TITLE, SEO_DESCRIPTION, SITE_URL } from '@/lib/constants';
+import { APP_NAME, SEO_TITLE, SEO_DESCRIPTION, SITE_URL, TWITTER_HANDLE } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export const SEO = {
@@ -16,7 +15,7 @@ export const SEO = {
     site_name: APP_NAME,
     images: [
       {
-        url: '/card.png',
+        url: `${SITE_URL}/images/ogp-image.png`,
         width: 800,
         height: 600,
         alt: APP_NAME,
@@ -24,7 +23,7 @@ export const SEO = {
     ],
   },
   twitter: {
-    handle: `@${APP_NAME}`,
+    handle: `@${TWITTER_HANDLE}`,
     site: `@${APP_NAME}`,
     cardType: 'summary_large_image',
   },

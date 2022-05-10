@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { BsTwitter, BsFacebook } from 'react-icons/bs';
@@ -9,6 +10,7 @@ import { LikeButtonProps } from '@/components/models/like';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CircleButton } from '@/components/ui/button';
+import { SITE_URL, APP_NAME } from '@/lib/constants';
 import { Participant } from '@/types/participant';
 import { TalkDetails } from '@/types/talk';
 // ___________________________________________________________________________
@@ -27,6 +29,7 @@ export type TalkDetailsSidebarProps = {
 //
 export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo(
   ({ talk, participants, onUpdateTalk }) => {
+    const router = useRouter();
     const handleOpenTalk = async () => {
       await onUpdateTalk({ ...talk, closed: false, closed_at: null });
     };
@@ -34,6 +37,15 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
     const handleCloseTalk = async () => {
       await onUpdateTalk({ ...talk, closed: true, closed_at: new Date().toISOString() });
     };
+
+    const shareUrl = SITE_URL + router.asPath;
+    const shareText = talk.title;
+    const twitterShareUrl = `https://twitter.com/share?url=${encodeURIComponent(
+      shareUrl,
+    )}&text=${encodeURIComponent(shareText)}&hashtags=${APP_NAME}`;
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      shareUrl,
+    )}`;
     // ___________________________________________________________________________
     //
     return (
@@ -72,10 +84,22 @@ export const TalkDetailsSidebar: React.VFC<TalkDetailsSidebarProps> = React.memo
               />
             </div>
             <div className='flex items-center justify-between space-x-3'>
-              <CircleButton color='secondary' size='md'>
+              <CircleButton
+                color='secondary'
+                size='md'
+                rel='nofollow noopener noreferrer'
+                target='_blank'
+                href={twitterShareUrl}
+              >
                 <BsTwitter />
               </CircleButton>
-              <CircleButton color='secondary' size='md'>
+              <CircleButton
+                color='secondary'
+                size='md'
+                rel='nofollow noopener noreferrer'
+                target='_blank'
+                href={facebookShareUrl}
+              >
                 <BsFacebook />
               </CircleButton>
             </div>
