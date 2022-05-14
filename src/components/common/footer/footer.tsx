@@ -10,23 +10,22 @@ const FOOTER_LINKS = [
   {
     name: 'コンテンツ',
     links: [
-      { name: 'ノート', route: '/signup' },
-      { name: 'トーク', route: '/' },
+      { name: 'トーク', route: '/talks' },
+      { name: 'ノート', route: '/me' },
     ],
   },
   {
     name: 'メニュー',
     links: [
-      { name: `${APP_NAME}について`, route: '/' },
-      { name: 'プロフィール', route: '/' },
+      { name: `${APP_NAME}について`, route: '/about' },
+      { name: 'プロフィール', route: 'https://younakamura.vercel.app/' },
     ],
   },
   {
     name: 'リンク',
     links: [
-      { name: 'お問い合わせ', route: '/' },
-      { name: 'Twitter', route: `https://twitter.com/${APP_NAME}` },
-      { name: 'Github', route: 'https://github.com/yousakamori' },
+      { name: 'お問い合わせ', route: '#' },
+      { name: 'Twitter', route: `https://twitter.com/koechicom` },
     ],
   },
 ];

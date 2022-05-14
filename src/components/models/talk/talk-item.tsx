@@ -49,29 +49,29 @@ export const TalkItem: React.VFC<TalkItemProps> = ({
             <a className='block font-semibold text-gray-800 break-all'>{talk.title}</a>
           </Link>
 
-          <div className='flex flex-wrap items-center mt-3'>
-            <div className='mr-2'>
-              <Badge color={talkStatus().color} size='xs'>
-                {talkStatus().title}
-              </Badge>
+          <div className='flex items-center mt-3'>
+            <Badge color={talkStatus().color} size='xs'>
+              {talkStatus().title}
+            </Badge>
+
+            <div className='ml-2'>
+              {userLink && (
+                <Link href={`/${talk.user.username}`}>
+                  <a className='block mr-2 text-sm text-gray-800'>{talk.user.name}</a>
+                </Link>
+              )}
+
+              <Time
+                size='xs'
+                className='text-gray-500 '
+                suffix='にコメントを追加'
+                date={
+                  talk.last_comment_created_at
+                    ? new Date(talk.last_comment_created_at)
+                    : new Date(talk.created_at)
+                }
+              />
             </div>
-
-            {userLink && (
-              <Link href={`/${talk.user.username}`}>
-                <a className='block mr-2 text-sm text-gray-800'>{talk.user.name}</a>
-              </Link>
-            )}
-
-            <Time
-              size='xs'
-              className='text-gray-500 '
-              suffix='にコメントを追加'
-              date={
-                talk.last_comment_created_at
-                  ? new Date(talk.last_comment_created_at)
-                  : new Date(talk.created_at)
-              }
-            />
           </div>
         </div>
       </div>

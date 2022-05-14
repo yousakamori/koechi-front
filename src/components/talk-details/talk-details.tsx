@@ -208,7 +208,7 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
                 {comments.map((comment) => (
                   <div
                     key={comment.id}
-                    className='px-5 py-4 mb-5 bg-white border border-gray-200 rounded-lg'
+                    className='px-5 py-4 mb-12 bg-white border border-gray-200 rounded-lg'
                   >
                     <CommentItem
                       comment={comment}

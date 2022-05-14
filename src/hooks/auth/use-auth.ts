@@ -43,8 +43,7 @@ export const useAuth = () => {
         setValidating(false);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [setCurrentUser],
   );
 
   const logout = useCallback(async () => {
@@ -62,8 +61,7 @@ export const useAuth = () => {
     } finally {
       setValidating(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [resetNotificationState, setCurrentUser]);
   // ___________________________________________________________________________
   //
   return { validating, signup, login, logout };
