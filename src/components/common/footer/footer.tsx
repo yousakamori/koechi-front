@@ -11,21 +11,21 @@ const FOOTER_LINKS = [
     name: 'コンテンツ',
     links: [
       { name: 'トーク', route: '/talks' },
-      { name: 'ノート', route: '/me' },
+      { name: '検索', route: '/search' },
     ],
   },
   {
     name: 'メニュー',
     links: [
       { name: `${APP_NAME}について`, route: '/about' },
-      { name: 'プロフィール', route: 'https://younakamura.vercel.app/' },
+      { name: 'お問い合わせ', route: '#' },
     ],
   },
   {
     name: 'リンク',
     links: [
-      { name: 'お問い合わせ', route: '#' },
-      { name: 'Twitter', route: `https://twitter.com/koechicom` },
+      { name: 'Twitter', route: 'https://twitter.com/koechicom' },
+      { name: 'プロフィール', route: 'https://younakamura.vercel.app/' },
     ],
   },
 ];
@@ -84,11 +84,11 @@ export const Footer: React.VFC<FooterProps> = ({ show = true }) => {
   return (
     <footer className='pt-10'>
       <Container>
-        <div className='grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4'>
+        <div className='grid grid-cols-1 gap-4 sm:gap-16 sm:grid-cols-3 md:grid-cols-4'>
           <div className='flex col-span-1 mb-3 sm:col-span-4 md:col-span-1 md:mb-0'>
             <div>
               <Link href='/'>
-                <a className='flex items-center space-x-1'>
+                <a className='flex items-center pb-2 mb-1 space-x-1'>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src='/images/logo.svg' width='120' height='28' alt={APP_NAME} />
                 </a>
@@ -120,7 +120,7 @@ export const Footer: React.VFC<FooterProps> = ({ show = true }) => {
               </Typography>
               <ul>
                 {column.links.map((link) => (
-                  <li key={link.name}>
+                  <li className='mt-2' key={link.name}>
                     <FooterLink href={link.route}>{link.name}</FooterLink>
                   </li>
                 ))}
