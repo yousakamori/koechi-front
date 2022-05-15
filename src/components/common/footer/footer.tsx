@@ -18,7 +18,7 @@ const FOOTER_LINKS = [
     name: 'メニュー',
     links: [
       { name: `${APP_NAME}について`, route: '/about' },
-      { name: 'お問い合わせ', route: '#' },
+      { name: 'お問い合わせ', route: 'https://forms.gle/csLMHRHZTP9d6rPh9' },
     ],
   },
   {
