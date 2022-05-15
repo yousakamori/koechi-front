@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { SearchCount, Source } from './search';
+import { FadeInUp } from '@/components/ui/fade-in-up';
 import { Tabs, Tab } from '@/components/ui/tabs';
 // ___________________________________________________________________________
 //
@@ -51,5 +52,9 @@ export const SearchTabs: React.VFC<SearchTabsProps> = ({ keyword, searchCount, s
   }
   // ___________________________________________________________________________
   //
-  return <Tabs tabs={tabs} />;
+  return (
+    <FadeInUp>
+      <Tabs tabs={tabs} />
+    </FadeInUp>
+  );
 };

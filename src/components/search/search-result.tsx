@@ -10,6 +10,7 @@ import {
 import { NoteItem } from '@/components/models/note/';
 import { TalkItem } from '@/components/models/talk';
 import { UserItem } from '@/components/models/user';
+import { FadeInUp } from '@/components/ui/fade-in-up';
 import { Pagination } from '@/components/ui/pagination';
 import { Spinner } from '@/components/ui/spinner';
 import { Typography } from '@/components/ui/typography';
@@ -26,7 +27,6 @@ export type SearchResultProps = {
 };
 // ___________________________________________________________________________
 //
-// TODO: 表示するときzennみたいにfadeupさせたいな
 export const SearchResult: React.VFC<SearchResultProps> = ({
   sourceQuery,
   searchCount,
@@ -54,7 +54,7 @@ export const SearchResult: React.VFC<SearchResultProps> = ({
       )}
 
       {searchCount && searchResult && (
-        <>
+        <FadeInUp>
           {sourceQuery === 'notes' && (
             <div className='flex flex-wrap justify-between mt-6'>
               {(searchResult as SearchNotes).notes.map((note) => (
@@ -88,15 +88,17 @@ export const SearchResult: React.VFC<SearchResultProps> = ({
           <div className='mt-6'>
             <Pagination nextPage={searchResult.next_page} />
           </div>
-        </>
+        </FadeInUp>
       )}
 
       {searchCount && !searchResult && searchQuery && !sourceQuery && (
-        <div className='flex justify-center mt-6'>
-          <Typography color='textSecondary' fontSize='lg'>
-            {searchQuery} の検索結果が見つかりませんでした
-          </Typography>
-        </div>
+        <FadeInUp>
+          <div className='flex justify-center mt-6'>
+            <Typography color='textSecondary' fontSize='lg'>
+              {searchQuery} の検索結果が見つかりませんでした
+            </Typography>
+          </div>
+        </FadeInUp>
       )}
     </>
   );
