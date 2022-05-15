@@ -73,9 +73,15 @@ export const SignUp: React.VFC = withLogoutRequired(() => {
                   </div>
                 </div>
 
-                <div className='w-48 mx-auto mt-6 sm:w-full '>
+                <div className='w-full mt-6'>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src='/images/signup.svg' width='360' height='360' alt='' />
+                  <img
+                    className='mx-auto'
+                    src='/images/signup.svg'
+                    width='240'
+                    height='240'
+                    alt=''
+                  />
                 </div>
 
                 <form className='grid mt-8 gap-y-6' onSubmit={handleSubmit(handleSignup)}>
