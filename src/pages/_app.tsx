@@ -9,7 +9,9 @@ import { ToastContainerProps } from 'react-toastify';
 import { RecoilRoot } from 'recoil';
 import { InitializeApp } from '@/components/common/initialize-app';
 import { Progress } from '@/components/common/progress';
+import { GoogleAnalytics } from '@/components/google-analytics';
 import { SEO } from '@/config/next-seo.config';
+import { usePageView } from '@/hooks/use-pageview';
 // ___________________________________________________________________________
 //
 const ToastContainer = dynamic<ToastContainerProps>(() =>
@@ -18,8 +20,12 @@ const ToastContainer = dynamic<ToastContainerProps>(() =>
 // ___________________________________________________________________________
 //
 export default function CustomApp({ Component, pageProps }: AppProps) {
+  usePageView();
+  // ___________________________________________________________________________
+  //
   return (
     <>
+      <GoogleAnalytics />
       <DefaultSeo {...SEO} />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
