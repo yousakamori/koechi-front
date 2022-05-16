@@ -10,12 +10,7 @@ const AppError = ({ message, http }: HttpErrorObject) => {
   return (
     <Layout>
       <NextSeo title={message} />
-      {http.status === 401 ? (
-        // TODO: 未実装
-        <p>Require Login</p>
-      ) : (
-        <Error statusCode={http.status} title={message} />
-      )}
+      <Error statusCode={http.status} title={message} />
     </Layout>
   );
 };

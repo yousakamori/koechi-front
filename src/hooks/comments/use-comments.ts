@@ -4,7 +4,6 @@ import { commentsApi, CreateCommentRequest } from '@/api/comments';
 import { HttpError } from '@/error/http-error';
 import { assertIsDefined } from '@/lib/assertion';
 import { Comment } from '@/types/comment';
-// TODO: useSWRにしたい => https://sergiodxa.com/articles/swr/mutate-immer
 // ___________________________________________________________________________
 //
 type CreateComment = (values: CreateCommentRequest) => Promise<{ error?: HttpError }>;

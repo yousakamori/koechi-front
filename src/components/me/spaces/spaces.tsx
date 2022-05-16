@@ -22,12 +22,7 @@ export type SpacesProps = {
 export const Spaces: React.VFC<SpacesProps> = React.memo(({ status }) => {
   const archived = status === 'archived';
   const [validating, setValidating] = useState(false);
-
-  // TODO: error処理
-  const { data, error, mutate } = useSWR<{ spaces: Space[] }, HttpError>(
-    endpoints.mySpaces,
-    fetchApi,
-  );
+  const { data, mutate } = useSWR<{ spaces: Space[] }, HttpError>(endpoints.mySpaces, fetchApi);
 
   const filteredSpace = useMemo(
     () => (data ? data.spaces.filter((space) => space.archived === archived) : []),

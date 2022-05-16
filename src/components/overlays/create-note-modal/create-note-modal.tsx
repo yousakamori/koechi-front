@@ -26,12 +26,7 @@ export const CreateNoteModal: React.VFC<CreateNoteModalProps> = ({ open, onClose
   const router = useRouter();
   const [selected, setSelected] = useState<OmitSpace>();
   const [validating, setValidating] = useState(false);
-
-  // TODO: error処理
-  const { data, error } = useSWR<{ spaces: OmitSpace[] }, HttpError>(
-    endpoints.mySpacesName,
-    fetchApi,
-  );
+  const { data } = useSWR<{ spaces: OmitSpace[] }, HttpError>(endpoints.mySpacesName, fetchApi);
 
   const handleCreateNote = useCallback(async () => {
     if (!selected) {

@@ -7,14 +7,12 @@ import { API_URL, MAXIMUM_UPLOAD_IMAGES } from '@/lib/constants';
 // ___________________________________________________________________________
 //
 export type DirectUploadButtonProps = {
-  // TODO: 修正したい
   afterUpload?: (urls: string[]) => void;
 };
 // ___________________________________________________________________________
 //
 export const DirectUploadButton: React.VFC<DirectUploadButtonProps> = ({ afterUpload }) => {
   const uploadImage = (file: File) => {
-    // const url = `${API_URL}/rails/active_storage/direct_uploads`;
     const url = `${API_URL}/direct_uploads`;
     const directUpload = new DirectUpload(file, url);
 
@@ -54,9 +52,6 @@ export const DirectUploadButton: React.VFC<DirectUploadButtonProps> = ({ afterUp
         const { signed_id, key } = (await uploadImage(compressedFile)) as Blob & { key: string };
         const url = `${API_URL}/rails/active_storage/blobs/proxy/${signed_id}/${key}`;
 
-        // TODO: とりあえず
-        // const { key } = (await uploadImage(compressedFile)) as Blob & { key: string };
-        // const url = `https://cdn.koechi.com/${key}`;
         urls.push(url);
       }
 

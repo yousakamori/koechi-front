@@ -3,7 +3,6 @@ import { Notification } from '@/types/notification';
 // ___________________________________________________________________________
 //
 export type NotificationState = {
-  // TODO: typeこれでいいのかな
   items: Notification[];
   nextPage?: NextPage;
 };
