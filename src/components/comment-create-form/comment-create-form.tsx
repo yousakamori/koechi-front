@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { BiX } from 'react-icons/bi';
 import { Spinner } from '../ui/spinner';
-import { EditorToolbar } from '@/components/common/editor-toolbar';
+import { EditorToolbar } from '@/components/editor-toolbar';
 import { Avatar } from '@/components/ui/avatar';
 import { Button, CircleButton } from '@/components/ui/button';
 import { useCurrentUser } from '@/hooks/current-user';

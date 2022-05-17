@@ -1,7 +1,7 @@
 import { Editor, EditorContent } from '@tiptap/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { EditorToolbar } from '@/components/common/editor-toolbar';
+import { EditorToolbar } from '@/components/editor-toolbar';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Textarea } from '@/components/ui/textarea';
 // ___________________________________________________________________________

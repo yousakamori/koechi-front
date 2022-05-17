@@ -1,7 +1,7 @@
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { EditorContent, useEditor } from '@tiptap/react';
 import React from 'react';
-import { EditorToolbar } from '@/components/common/editor-toolbar';
+import { EditorToolbar } from '@/components/editor-toolbar';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { editorExtensionsFactory, parseBodyText } from '@/lib/editor';

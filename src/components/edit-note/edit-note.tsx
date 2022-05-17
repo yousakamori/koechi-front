@@ -70,23 +70,27 @@ export const EditNote: React.VFC = withLoginRequired(() => {
     },
   });
 
-  const { data, error } = useSWR<NoteResponse, HttpError>(endpoints.editNote(slug), fetchApi, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    onSuccess: (data) => {
-      form.reset({
-        slug,
-        posted_at: data.note.posted_at,
-        title: data.note.title,
-        body_text: data.note.body_text,
-        body_json: data.note.body_json,
-      });
+  const { data, error } = useSWR<NoteResponse, HttpError>(
+    slug ? endpoints.editNote(slug) : null,
+    fetchApi,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      onSuccess: (data) => {
+        form.reset({
+          slug,
+          posted_at: data.note.posted_at,
+          title: data.note.title,
+          body_text: data.note.body_text,
+          body_json: data.note.body_json,
+        });
 
-      if (data.note.body_json) {
-        editor?.commands.setContent(parseBodyText(data.note.body_json));
-      }
+        if (data.note.body_json) {
+          editor?.commands.setContent(parseBodyText(data.note.body_json));
+        }
+      },
     },
-  });
+  );
 
   const handleUpdate = useCallback(
     async (values: UpdateValues) => {

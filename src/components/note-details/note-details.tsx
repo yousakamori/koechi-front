@@ -35,7 +35,7 @@ export const NoteDetails: React.VFC = withLoginRequired(() => {
       participants: Participant[];
     },
     HttpError
-  >(endpoints.note(slug), fetchApi);
+  >(slug ? endpoints.note(slug) : null, fetchApi);
 
   const isFirstLoad = useRef(true);
 

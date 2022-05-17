@@ -53,7 +53,7 @@ export const ResetPasswordModal: React.VFC<ResetPasswordModalProps> = ({ open, o
       onClose();
     } catch (err) {
       if (err instanceof HttpError) {
-        toast.success(err.message);
+        toast.error(err.message);
       }
       throw err;
     } finally {

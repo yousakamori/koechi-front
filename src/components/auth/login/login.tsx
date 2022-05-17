@@ -34,8 +34,8 @@ export const Login: React.VFC = withLogoutRequired(() => {
   const { validating, login } = useAuth();
   const router = useRouter();
 
-  const handleLogin = async (payload: CreateValues) => {
-    const { error } = await login(payload);
+  const handleLogin = async (values: CreateValues) => {
+    const { error } = await login(values);
 
     if (error) {
       setError('email', {
@@ -95,6 +95,19 @@ export const Login: React.VFC = withLogoutRequired(() => {
                 ログイン
               </Button>
             </form>
+
+            <div className='mt-6'>
+              <Button
+                onClick={() =>
+                  handleLogin({ email: 'guestuser@example.com', password: 'password' })
+                }
+                fullWidth
+                variant='outlined'
+                type='button'
+              >
+                ゲストログイン
+              </Button>
+            </div>
 
             <div className='grid pt-6 mt-6 border-t border-gray-200 gap-y-3'>
               <Link href='/signup' passHref>
