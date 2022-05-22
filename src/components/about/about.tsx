@@ -31,7 +31,7 @@ export const About: React.VFC = () => {
   // ___________________________________________________________________________
   //
   return (
-    <Layout navbar>
+    <Layout navbar customMeta={{ title: `${APP_NAME}について` }}>
       <AboutHeader />
       <div className='min-h-screen py-6'>
         <Container className='max-w-md sm:max-w-5xl'>

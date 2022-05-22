@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
@@ -13,6 +12,7 @@ import { CommentItem } from '@/components/models/comment';
 import { Container } from '@/components/ui/container';
 import { useComments } from '@/hooks/comments';
 import { useTalkDetails } from '@/hooks/talks';
+import { generateOgpImageUrl } from '@/lib/ogp';
 import { Comment } from '@/types/comment';
 import { Participant } from '@/types/participant';
 import { TalkDetails as TalkDetailsType } from '@/types/talk';
@@ -164,87 +164,90 @@ export const TalkDetails: React.VFC<TalkDetailsProps> = ({
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title={initialTalk.title} />
-
+    <Layout
+      customMeta={{
+        title: talk.title,
+        ogpImage: generateOgpImageUrl(talk.title, talk.user.name, talk.user.avatar_url),
+        ogpImageWidth: 1200,
+        ogpImageHeight: 630,
+        twitterCardType: 'summary_large_image',
+      }}
+    >
       {/* jump button */}
       <JumpButton height={5000} onScroll={handleScrollBottom} />
+      {/* nav */}
+      <TalkNav talk={talk} participants={participants} />
+      <div className='min-h-screen py-10 bg-slate-100'>
+        <Container className='max-w-7xl'>
+          {/* header */}
+          <TalkDetailsHeader
+            talk={talk}
+            validating={talkValidating}
+            onUpdateTalk={handleUpdateTalk}
+            onDeleteTalk={handleDeleteTalk}
+          />
 
-      <Layout>
-        {/* nav */}
-        <TalkNav talk={talk} participants={participants} />
-        <div className='min-h-screen py-10 bg-slate-100'>
-          <Container className='max-w-7xl'>
-            {/* header */}
-            <TalkDetailsHeader
-              talk={talk}
-              validating={talkValidating}
-              onUpdateTalk={handleUpdateTalk}
-              onDeleteTalk={handleDeleteTalk}
-            />
-
-            <div className='block mt-6 lg:flex lg:justify-between lg:items-start lg:space-x-8'>
-              <main className='w-full lg:w-2/3'>
-                {/* initial message */}
-                {comments.length === 0 && (
-                  <div className='py-6 bg-white'>
-                    <p className='text-lg font-semibold text-center text-gray-400'>
-                      最初のコメントを追加しましょう
-                    </p>
-                    <div className='w-full'>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        className='mx-auto'
-                        src='/images/write.svg'
-                        width='280'
-                        height='280'
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* comments */}
-                {comments.map((comment) => (
-                  <div
-                    key={comment.id}
-                    className='px-5 py-4 mb-12 bg-white border border-gray-200 rounded-lg'
-                  >
-                    <CommentItem
-                      comment={comment}
-                      onUpdateComment={handleUpdateComment}
-                      onDeleteComment={handleDeleteComment}
-                      onOpenReplyForm={handleOpenReplyForm}
+          <div className='block mt-6 lg:flex lg:justify-between lg:items-start lg:space-x-8'>
+            <main className='w-full lg:w-2/3'>
+              {/* initial message */}
+              {comments.length === 0 && (
+                <div className='py-6 bg-white'>
+                  <p className='text-lg font-semibold text-center text-gray-400'>
+                    最初のコメントを追加しましょう
+                  </p>
+                  <div className='w-full'>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className='mx-auto'
+                      src='/images/write.svg'
+                      width='280'
+                      height='280'
+                      alt=''
                     />
                   </div>
-                ))}
+                </div>
+              )}
 
-                {/* comment create form */}
-                <CommentCreateForm
-                  validating={commentsValidating}
-                  parentComment={parentComment}
-                  onCloseForm={() => {
-                    setParentComment(null);
-                  }}
-                  onCreateComment={handleCreateComment}
-                />
+              {/* comments */}
+              {comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className='px-5 py-4 mb-12 bg-white border border-gray-200 rounded-lg'
+                >
+                  <CommentItem
+                    comment={comment}
+                    onUpdateComment={handleUpdateComment}
+                    onDeleteComment={handleDeleteComment}
+                    onOpenReplyForm={handleOpenReplyForm}
+                  />
+                </div>
+              ))}
 
-                {/* scroll bottom */}
-                <div ref={bottomRef} />
-              </main>
+              {/* comment create form */}
+              <CommentCreateForm
+                validating={commentsValidating}
+                parentComment={parentComment}
+                onCloseForm={() => {
+                  setParentComment(null);
+                }}
+                onCreateComment={handleCreateComment}
+              />
 
-              {/* sidebar */}
-              <aside className='sticky flex flex-wrap justify-between w-full mt-12 lg:mt-0 top-8 lg:w-1/3'>
-                <TalkDetailsSidebar
-                  talk={talk}
-                  participants={participants}
-                  onUpdateTalk={handleUpdateTalk}
-                />
-              </aside>
-            </div>
-          </Container>
-        </div>
-      </Layout>
-    </>
+              {/* scroll bottom */}
+              <div ref={bottomRef} />
+            </main>
+
+            {/* sidebar */}
+            <aside className='sticky flex flex-wrap justify-between w-full mt-12 lg:mt-0 top-8 lg:w-1/3'>
+              <TalkDetailsSidebar
+                talk={talk}
+                participants={participants}
+                onUpdateTalk={handleUpdateTalk}
+              />
+            </aside>
+          </div>
+        </Container>
+      </div>
+    </Layout>
   );
 };

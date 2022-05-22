@@ -27,15 +27,21 @@ export const TalkNav: React.VFC<TalkNavProps> = ({ talk, participants }) => {
         <div className='flex items-center justify-between space-x-6 h-14 sm:space-x-8'>
           <Link href={`/${talk.user.username}`}>
             <a className='flex items-center'>
-              <span>
+              <span className='shrink-0'>
                 <Avatar src={talk.user.avatar_small_url} />
               </span>
-              <span className='ml-1 text-sm font-semibold text-gray-800'>{talk.user.name}</span>
+              <span className='ml-1 text-sm font-semibold text-gray-800 line-clamp-1'>
+                {talk.user.name}
+              </span>
             </a>
           </Link>
 
           <div className='flex items-center'>
-            {participants.length > 0 && <AvatarGroup participants={participants} />}
+            {participants.length > 0 && (
+              <div className='shrink-0'>
+                <AvatarGroup participants={participants} />
+              </div>
+            )}
 
             <LikeButton
               className='ml-2'

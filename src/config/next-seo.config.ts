@@ -9,13 +9,13 @@ export const SEO = {
   openGraph: {
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
-    type: 'website',
-    locale: 'en_IE',
+    type: 'article',
+    locale: 'ja_JP',
     url: SITE_URL,
     site_name: APP_NAME,
     images: [
       {
-        url: `${SITE_URL}/images/ogp-image.png`,
+        url: `${SITE_URL}/images/ogp-image-light.png`,
         width: 800,
         height: 600,
         alt: APP_NAME,
@@ -25,6 +25,6 @@ export const SEO = {
   twitter: {
     handle: `@${TWITTER_HANDLE}`,
     site: `@${APP_NAME}`,
-    cardType: 'summary_large_image',
+    cardType: 'summary',
   },
 };

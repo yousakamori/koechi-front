@@ -11,6 +11,14 @@ export type DirectUploadButtonProps = {
 };
 // ___________________________________________________________________________
 //
+const options = {
+  maxSizeMB: 1,
+  maxWidthOrHeight: 1400,
+  useWebWorker: true,
+  initialQuality: 0.8,
+};
+// ___________________________________________________________________________
+//
 export const DirectUploadButton: React.VFC<DirectUploadButtonProps> = ({ afterUpload }) => {
   const uploadImage = (file: File) => {
     const url = `${API_URL}/direct_uploads`;
@@ -21,13 +29,6 @@ export const DirectUploadButton: React.VFC<DirectUploadButtonProps> = ({ afterUp
         err ? reject(err) : resolve(blob);
       });
     });
-  };
-
-  const options = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: 1400,
-    useWebWorker: true,
-    initialQuality: 0.8,
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
