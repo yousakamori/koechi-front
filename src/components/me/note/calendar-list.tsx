@@ -12,8 +12,6 @@ import {
   getWeeksInMonth,
   getUnixTime,
 } from 'date-fns';
-import { ja } from 'date-fns/locale';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
@@ -37,13 +35,13 @@ export type MonthData = {
   notes: Note[];
 };
 
-export type CalendarProps = {
+export type CalendarListProps = {
   type?: string;
   date: Date;
 };
 // ___________________________________________________________________________
 //
-export const Calendar: React.VFC<CalendarProps> = React.memo(({ type = 'month', date }) => {
+export const CalendarList: React.VFC<CalendarListProps> = React.memo(({ type = 'month', date }) => {
   const today = new Date();
   const router = useRouter();
   const [displayDate, setDisplayDate] = useState<Date>();
@@ -123,10 +121,6 @@ export const Calendar: React.VFC<CalendarProps> = React.memo(({ type = 'month', 
     return (
       // day
       <>
-        <NextSeo
-          title={format(displayDate, 'ノートの管理 - yyyy年M月d日 (EEEE)', { locale: ja })}
-          titleTemplate='%s'
-        />
         <NoteHeader type={type} displayDate={displayDate} onChangeDate={handleClickMonth} />
         <Day
           notes={filterByDate(displayDate)}
@@ -142,10 +136,6 @@ export const Calendar: React.VFC<CalendarProps> = React.memo(({ type = 'month', 
   return (
     // month
     <div className='mt-6'>
-      <NextSeo
-        title={format(displayDate, 'ノートの管理 - yyyy年M月d日 (EEEE)', { locale: ja })}
-        titleTemplate='%s'
-      />
       <NoteHeader type={type} displayDate={displayDate} onChangeDate={handleClickMonth} />
       <Month notes={data?.notes} monthData={monthData} />
     </div>
@@ -153,4 +143,4 @@ export const Calendar: React.VFC<CalendarProps> = React.memo(({ type = 'month', 
 });
 // ___________________________________________________________________________
 //
-Calendar.displayName = 'Calendar';
+CalendarList.displayName = 'CalendarList';

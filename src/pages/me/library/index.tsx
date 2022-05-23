@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import { Me } from '@/components/me';
+import { Library } from '@/components/me/library';
 // ___________________________________________________________________________
 //
 const LibraryPage: NextPage = () => {
   // ___________________________________________________________________________
   //
-  return <Me />;
+  return <Library />;
 };
 // ___________________________________________________________________________
 //

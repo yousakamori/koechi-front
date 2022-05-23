@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import React from 'react';
-import { MonthData } from './calendar';
+import { MonthData } from './calendar-list';
 import { Emoji } from '@/components/ui/emoji';
 import { Note } from '@/types/note';
 // ___________________________________________________________________________

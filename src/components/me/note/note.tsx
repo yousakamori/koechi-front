@@ -1,14 +1,16 @@
 import React from 'react';
 import { MeContainer } from '../me-container';
-import { LibraryList } from './library-list';
+import { NotesList } from './notes-list';
 import { Layout } from '@/components/common/layout';
 // ___________________________________________________________________________
 //
-export const Library: React.VFC = () => {
+export const Note: React.VFC = () => {
+  // ___________________________________________________________________________
+  //
   return (
-    <Layout customMeta={{ title: 'いいねした投稿', titleTemplate: '%s' }}>
+    <Layout customMeta={{ title: 'ノートの管理', titleTemplate: '%s' }}>
       <MeContainer className='max-w-5xl'>
-        <LibraryList />
+        <NotesList />
       </MeContainer>
     </Layout>
   );

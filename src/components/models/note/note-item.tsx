@@ -109,12 +109,12 @@ export const NoteItem: React.VFC<NoteItemProps> = ({ note, className, onDeleteNo
 
             <footer className='mt-2'>
               <div className='flex items-center space-x-3'>
-                <div className='flex items-center'>
+                <div className='shrink-0'>
                   <Avatar size='sm' src={note.user.avatar_small_url} alt={note.user.name} />
                 </div>
                 <div className='ml-1'>
                   <Link href={`/${note.user.username}`}>
-                    <a className='block text-sm text-gray-800'>{note.user.name}</a>
+                    <a className='block text-sm text-gray-800 line-clamp-1'>{note.user.name}</a>
                   </Link>
 
                   <div className='flex items-center space-x-3 text-gray-500'>

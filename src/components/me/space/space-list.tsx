@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useCallback, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
@@ -7,6 +8,7 @@ import { SpaceCard } from '@/components/models/space';
 import { EditValues } from '@/components/overlays/edit-space-modal';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { Tabs } from '@/components/ui/tabs';
 import { Typography } from '@/components/ui/typography';
 import { endpoints } from '@/config/endpoints';
 import { HttpError } from '@/error/http-error';
@@ -14,15 +16,24 @@ import { fetchApi } from '@/lib/fetch-api';
 import { Space } from '@/types/space';
 // ___________________________________________________________________________
 //
-export type SpacesProps = {
-  status: string | undefined;
-};
-// ___________________________________________________________________________
-//
-export const Spaces: React.VFC<SpacesProps> = React.memo(({ status }) => {
-  const archived = status === 'archived';
+export const SpaceList: React.VFC = React.memo(() => {
+  const router = useRouter();
+  const archived = router.query.status === 'archived';
+
   const [validating, setValidating] = useState(false);
   const { data, mutate } = useSWR<{ spaces: Space[] }, HttpError>(endpoints.mySpaces, fetchApi);
+  const tabs = [
+    {
+      name: 'アクティブ',
+      route: '/me/spaces?status=active',
+      active: router.pathname === '/me/spaces' && !archived,
+    },
+    {
+      name: 'アーカイブ',
+      route: '/me/spaces?status=archived',
+      active: router.pathname === '/me/spaces' && archived,
+    },
+  ];
 
   const filteredSpace = useMemo(
     () => (data ? data.spaces.filter((space) => space.archived === archived) : []),
@@ -132,27 +143,33 @@ export const Spaces: React.VFC<SpacesProps> = React.memo(({ status }) => {
   //
   if (!filteredSpace.length) {
     return (
-      <div className='mt-6'>
-        <Typography color='textSecondary'>スペースはありません</Typography>
-      </div>
+      <>
+        <Tabs tabs={tabs} />
+        <div className='mt-6'>
+          <Typography color='textSecondary'>スペースはありません</Typography>
+        </div>
+      </>
     );
   }
   // ___________________________________________________________________________
   //
   return (
-    <div className='grid grid-cols-2 gap-4 mt-6 md:grid-cols-3 lg:grid-cols-4'>
-      {filteredSpace.map((space) => (
-        <SpaceCard
-          key={space.id}
-          space={space}
-          validating={validating}
-          onUpdateSpace={handleUpdateSpace}
-          onDeleteSpace={handleDeleteSpace}
-        />
-      ))}
-    </div>
+    <>
+      <Tabs tabs={tabs} />
+      <div className='grid grid-cols-2 gap-4 mt-6 md:grid-cols-3 lg:grid-cols-4'>
+        {filteredSpace.map((space) => (
+          <SpaceCard
+            key={space.id}
+            space={space}
+            validating={validating}
+            onUpdateSpace={handleUpdateSpace}
+            onDeleteSpace={handleDeleteSpace}
+          />
+        ))}
+      </div>
+    </>
   );
 });
 // ___________________________________________________________________________
 //
-Spaces.displayName = 'Spaces';
+SpaceList.displayName = 'SpaceList';

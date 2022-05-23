@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -54,18 +53,15 @@ export const NotesList: React.VFC = React.memo(() => {
   if (data.notes.length) {
     return (
       <>
-        <NextSeo title='ノートの管理' titleTemplate='%s' />
         <NoteHeader type='list' displayDate={new Date()} />
-
-        <div className='block mt-6 md:flex md:items-start md:justify-between md:flex-wrap'>
+        <div className='mt-6'>
           {data.notes.map((note) => (
-            <div key={note.id} className='block md:w-1/2 md:odd:pr-6 md:even:pl-6'>
-              <NoteItem
-                className='border-b border-gray-100'
-                note={note}
-                onDeleteNote={handleDeleteNote}
-              />
-            </div>
+            <NoteItem
+              key={note.id}
+              className='border-b border-gray-100'
+              note={note}
+              onDeleteNote={handleDeleteNote}
+            />
           ))}
         </div>
         <div className='mt-6'>
@@ -78,7 +74,6 @@ export const NotesList: React.VFC = React.memo(() => {
   //
   return (
     <>
-      <NextSeo title='ノートはありません' titleTemplate='%s' />
       <NoteHeader type='list' displayDate={new Date()} />
 
       <Typography className='mt-6' align='center' color='textSecondary' fontSize='lg'>

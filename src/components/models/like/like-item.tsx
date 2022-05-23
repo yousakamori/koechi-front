@@ -24,7 +24,7 @@ export const LikeItem: React.VFC<LikeItemProps> = ({ item }) => {
     <div className='flex items-center justify-between py-3 my-1 border-b border-gray-200'>
       <div className='mr-2'>
         <div className='flex items-center space-x-3'>
-          <div className='flex items-center'>
+          <div className='shrink-0'>
             <Avatar size='sm' src={item.user.avatar_small_url} alt={item.user.name} />
           </div>
           <div className='text-xs text-gray-600'>

@@ -137,7 +137,7 @@ export const SpaceCard: React.VFC<SpaceCardProps> = ({
               <Emoji emoji={space.emoji} />
             </div>
 
-            <div className='px-4 pt-2 text-sm font-semibold text-gray-800 break-all sm:text-base line-clamp-2'>
+            <div className='px-4 pt-2 text-sm font-semibold text-gray-800 break-all sm:text-base'>
               {space.name}
             </div>
           </a>
@@ -145,9 +145,13 @@ export const SpaceCard: React.VFC<SpaceCardProps> = ({
 
         <Link href={`/${space.user.username}`}>
           <a className='flex items-center p-4'>
-            <Avatar size='sm' src={space.user.avatar_small_url} alt={space.user.name} />
+            <div className='shrink-0'>
+              <Avatar size='sm' src={space.user.avatar_small_url} alt={space.user.name} />
+            </div>
             <div className='ml-3'>
-              <div className='text-xs font-semibold text-gray-700'>{space.user.name}</div>
+              <div className='text-xs font-semibold text-gray-700 line-clamp-1'>
+                {space.user.name}
+              </div>
               <Time
                 className='flex-shrink-0 mr-2 text-gray-500'
                 size='xs'
