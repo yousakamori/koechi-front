@@ -9,7 +9,7 @@ import { ConfirmModal } from '@/components/overlays/confirm-modal';
 import { Avatar } from '@/components/ui/avatar';
 import { CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
-import { Emoji } from '@/components/ui/emoji';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { Time } from '@/components/ui/time';
 import { useToggle } from '@/hooks/toggle';
 import { SITE_URL } from '@/lib/constants';
@@ -18,12 +18,18 @@ import { Note } from '@/types/note';
 //
 export type NoteItemProps = {
   note: Note;
+  emoji?: boolean;
   className?: string;
   onDeleteNote?: (slug: string) => Promise<void>;
 };
 // ___________________________________________________________________________
 //
-export const NoteItem: React.VFC<NoteItemProps> = ({ note, className, onDeleteNote }) => {
+export const NoteItem: React.VFC<NoteItemProps> = ({
+  note,
+  emoji = true,
+  className,
+  onDeleteNote,
+}) => {
   const [open, toggleModal] = useToggle();
   // ___________________________________________________________________________
   //
@@ -41,11 +47,13 @@ export const NoteItem: React.VFC<NoteItemProps> = ({ note, className, onDeleteNo
 
       <div className={clsx('py-4', className)}>
         <div className='flex items-center'>
-          <Link href={`/spaces/${note.space.slug}`}>
-            <a className='flex items-center justify-center w-16 h-16 p-3 mr-1 transition duration-500 rounded-lg shadow-md hover:shadow-xl bg-primary-100 hover:-translate-y-1.5 ring-1 ring-primary-100 shrink-0'>
-              <Emoji emoji={note.space.emoji} size={40} />
-            </a>
-          </Link>
+          {emoji && (
+            <Link href={`/spaces/${note.space.slug}`}>
+              <a className='flex items-center justify-center w-16 h-16 p-3 mr-1 transition duration-500 rounded-lg shadow-md hover:shadow-xl bg-primary-100 hover:-translate-y-1.5 ring-1 ring-primary-100 shrink-0'>
+                <EmojiOrTwemoji className='text-4xl' emoji={note.space.emoji} />
+              </a>
+            </Link>
+          )}
 
           <div className='flex-1 ml-4'>
             <div className='flex items-center justify-between'>

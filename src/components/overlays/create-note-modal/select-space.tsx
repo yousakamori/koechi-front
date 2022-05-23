@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { HiSelector } from 'react-icons/hi';
-import { Emoji } from '@/components/ui/emoji';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { OmitSpace } from '@/types/space';
 // ___________________________________________________________________________
 //
@@ -28,9 +28,9 @@ export const SelectSpace: React.VFC<SelectSpaceProps> = ({ values, selected, onC
             <Listbox.Button className='relative w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm'>
               <span className='flex items-center'>
                 <div className='w-5 h-5'>
-                  <Emoji emoji={selected.emoji} size={20} />
+                  <EmojiOrTwemoji className='w-4 h-4 text-sm' emoji={selected.emoji} />
                 </div>
-                <div className='ml-2 truncate'>{selected.name}</div>
+                <div className='ml-1 truncate'>{selected.name}</div>
               </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none'>
                 <HiSelector className='w-5 h-5 text-gray-400' aria-hidden='true' />
@@ -60,13 +60,13 @@ export const SelectSpace: React.VFC<SelectSpaceProps> = ({ values, selected, onC
                       <>
                         <div className='flex items-center'>
                           <div className='w-5 h-5'>
-                            <Emoji emoji={value.emoji} size={20} />
+                            <EmojiOrTwemoji className='w-4 h-4 text-sm' emoji={value.emoji} />
                           </div>
 
                           <span
                             className={clsx(
                               selected ? 'font-semibold' : 'font-normal',
-                              'ml-2 block truncate',
+                              'ml-1 block truncate',
                             )}
                           >
                             {value.name}

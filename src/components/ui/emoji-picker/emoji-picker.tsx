@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { EmojiData, PickerProps } from 'emoji-mart';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { Emoji } from './emoji';
+import { EmojiOrTwemoji } from '../emoji-or-twemoji';
 // ___________________________________________________________________________
 //
 const Picker = dynamic<PickerProps>(() => import('emoji-mart').then((mod) => mod.Picker));
@@ -64,7 +64,7 @@ export const EmojiPicker: React.VFC<EmojiPickerProps> = ({
     <Popover className='relative'>
       <Popover.Button as={React.Fragment}>
         <button className='flex items-center gap-x-4'>
-          <Emoji emoji={emoji} />
+          <EmojiOrTwemoji className='text-7xl' emoji={emoji} />
           <div className='text-sm font-semibold text-left text-secondary-500 hover:text-secondary-700'>
             絵文字を変更する
           </div>

@@ -10,7 +10,7 @@ import { EditSpaceModalProps, UpdateSpace } from '@/components/overlays/edit-spa
 import { Avatar } from '@/components/ui/avatar';
 import { CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
-import { Emoji } from '@/components/ui/emoji';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { Time } from '@/components/ui/time';
 import { useToggle } from '@/hooks/toggle';
 import { SITE_URL } from '@/lib/constants';
@@ -133,8 +133,8 @@ export const SpaceCard: React.VFC<SpaceCardProps> = ({
         )}
         <Link href={`/spaces/${space.slug}`}>
           <a className='flex-1'>
-            <div className='py-4 text-center sm:py-6 bg-primary-100'>
-              <Emoji emoji={space.emoji} />
+            <div className='py-4 sm:py-6 bg-primary-100'>
+              <EmojiOrTwemoji className='flex justify-center text-7xl' emoji={space.emoji} />
             </div>
 
             <div className='px-4 pt-2 text-sm font-semibold text-gray-800 break-all sm:text-base'>

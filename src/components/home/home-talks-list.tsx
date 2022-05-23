@@ -4,6 +4,7 @@ import { BiRightArrowAlt } from 'react-icons/bi';
 import { TalkItem } from '@/components/models/talk';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { Typography } from '@/components/ui/typography';
 import { Talk } from '@/types/talk';
 // ___________________________________________________________________________
@@ -19,7 +20,8 @@ export const HomeTalksList: React.VFC<HomeTalksListProps> = ({ talks }) => {
   return (
     <div className='min-h-screen py-10 bg-white'>
       <Container className='max-w-5xl'>
-        <div className='text-center text-7xl'>💬</div>
+        <EmojiOrTwemoji className='flex justify-center text-7xl' emoji='💬' />
+
         <Typography variant='h2' className='mt-6'>
           注目のトーク
         </Typography>

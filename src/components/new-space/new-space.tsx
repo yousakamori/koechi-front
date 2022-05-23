@@ -8,7 +8,7 @@ import { Layout } from '@/components/common/layout';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import { EmojiPicker } from '@/components/ui/emoji';
+import { EmojiPicker } from '@/components/ui/emoji-picker';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';

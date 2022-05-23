@@ -57,7 +57,7 @@ export const SpaceNotesList: React.VFC<SpaceNotesListProps> = React.memo(
         <div className='mb-6'>
           {data.notes.length > 0 &&
             data.notes.map((note) => (
-              <NoteItem key={note.id} note={note} onDeleteNote={handleDeleteNote} />
+              <NoteItem key={note.id} note={note} emoji={false} onDeleteNote={handleDeleteNote} />
             ))}
           {currentPage === 1 && !data.next_page && !data.notes.length && (
             <div className='py-6'>

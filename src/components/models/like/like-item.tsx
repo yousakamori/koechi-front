@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { BiHeart } from 'react-icons/bi';
 import { Avatar } from '@/components/ui/avatar';
-import { Emoji } from '@/components/ui/emoji';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { Time } from '@/components/ui/time';
 import { MyLike } from '@/types/like';
 // ___________________________________________________________________________
@@ -53,7 +53,7 @@ export const LikeItem: React.VFC<LikeItemProps> = ({ item }) => {
       {item.space && (
         <Link href={`/spaces/${item.space.slug}`}>
           <a className='flex items-center justify-center w-16 h-16 p-3 mr-1 transition duration-500 rounded-lg shadow-md hover:shadow-xl bg-primary-100 hover:-translate-y-1.5 ring-1 ring-primary-100 shrink-0'>
-            <Emoji emoji={item.space.emoji} size={40} />
+            <EmojiOrTwemoji className='text-4xl' emoji={item.space.emoji} />
           </a>
         </Link>
       )}

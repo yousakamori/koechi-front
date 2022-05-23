@@ -7,9 +7,10 @@ const isAppleOS = () => {
 
 export type EmojiOrTwemojiProps = {
   emoji: string;
+  className?: string;
 };
 
-export const EmojiOrTwemoji: React.VFC<EmojiOrTwemojiProps> = memo(({ emoji }) => {
+export const EmojiOrTwemoji: React.VFC<EmojiOrTwemojiProps> = memo(({ emoji, className }) => {
   const [shouldUseTwemoji, setShouldUseTwemoji] = useState(false);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export const EmojiOrTwemoji: React.VFC<EmojiOrTwemojiProps> = memo(({ emoji }) =
 
   return (
     <span
+      className={className}
       dangerouslySetInnerHTML={{
         __html: shouldUseTwemoji ? twemoji.parse(emoji) : emoji,
       }}

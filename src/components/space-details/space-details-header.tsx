@@ -2,10 +2,10 @@ import { Menu } from '@headlessui/react';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { BiNote, BiChevronDown, BiEdit, BiRefresh } from 'react-icons/bi';
+import { EmojiOrTwemoji } from '../ui/emoji-or-twemoji';
 import { EditSpaceModalProps, UpdateSpace } from '@/components/overlays/edit-space-modal';
 import { Button, CircleButton } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
-import { Emoji } from '@/components/ui/emoji';
 import { Time } from '@/components/ui/time';
 import { Typography } from '@/components/ui/typography';
 import { useToggle } from '@/hooks/toggle';
@@ -57,9 +57,7 @@ export const SpaceDetailsHeader: React.VFC<SpaceDetailsHeaderProps> = React.memo
             </div>
           )}
 
-          <div className='text-center'>
-            <Emoji emoji={space.emoji} />
-          </div>
+          <EmojiOrTwemoji className='flex justify-center text-7xl' emoji={space.emoji} />
 
           <div className='flex items-center justify-center mt-6'>
             <div className='break-all line-clamp-2 md:line-clamp-none'>

@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import React from 'react';
 import { MonthData } from './calendar-list';
-import { Emoji } from '@/components/ui/emoji';
+import { EmojiOrTwemoji } from '@/components/ui/emoji-or-twemoji';
 import { Note } from '@/types/note';
 // ___________________________________________________________________________
 //
@@ -82,7 +82,7 @@ export const DayGrid: React.VFC<DayGridProps> = ({
                 <Link href={`/notes/${note.slug}`} prefetch={false}>
                   <a className='flex items-center group'>
                     <div className='flex items-center mr-1.5 leading-4 shrink-0'>
-                      <Emoji emoji={note.space.emoji} size={12} />
+                      <EmojiOrTwemoji className='w-5 h-5 text-base' emoji={note.space.emoji} />
                     </div>
                     <p className='flex-auto font-medium text-gray-900 truncate group-hover:text-primary-500'>
                       {note.title}

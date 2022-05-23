@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import { EmojiPicker } from '@/components/ui/emoji';
+import { EmojiPicker } from '@/components/ui/emoji-picker';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Label } from '@/components/ui/label';
 import { Modal } from '@/components/ui/modal';
