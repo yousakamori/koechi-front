@@ -37,7 +37,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
         <Progress />
         <ToastContainer
           toastClassName={() =>
-            'relative flex bg-gray-800 p-2 min-h-10 text-sm bg-gray-800 rounded-lg justify-between overflow-hidden cursor-pointer'
+            'relative flex bg-gray-800 p-2 min-h-[48px] text-sm bg-gray-800 rounded-lg justify-between overflow-hidden cursor-pointer'
           }
           hideProgressBar
           closeButton={false}

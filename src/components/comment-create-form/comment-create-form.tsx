@@ -112,7 +112,7 @@ export const CommentCreateForm: React.VFC<CommentCreateFormProps> = ({
         <header>
           <EditorToolbar editor={editor} />
         </header>
-        <div onClick={() => editor.view.focus()} className='min-h-40'>
+        <div onClick={() => editor.view.focus()} className='min-h-[160px]'>
           <EditorContent editor={editor} />
         </div>
         <footer className='flex pt-4 mt-3 border-t border-gray-200'>

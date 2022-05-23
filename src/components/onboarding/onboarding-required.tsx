@@ -98,7 +98,7 @@ export const OnboardingRequired: React.VFC<OnboardingRequiredProps> = ({
           </div>
           <div className='flex justify-center mt-8'>
             <Button
-              className='min-w-32'
+              className='min-w-[180px]'
               loading={validating}
               disabled={disabled}
               variant='contained'

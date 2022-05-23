@@ -94,7 +94,7 @@ export const DeleteAccount: React.VFC = withLoginRequired(() => {
           <div className='px-2 mx-auto mt-4'>
             <div className='flex justify-center'>
               <Button
-                className='min-w-28'
+                className='min-w-[96px]'
                 loading={validating}
                 disabled={disabled}
                 color='error'

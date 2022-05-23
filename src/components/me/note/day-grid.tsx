@@ -36,7 +36,7 @@ export const DayGrid: React.VFC<DayGridProps> = ({
           isCurrentMonth && !isToday && 'text-gray-900',
           !isCurrentMonth && !isToday && 'text-gray-500',
           notes.length === 0 && 'cursor-default',
-          'lg:hidden min-h-20 flex flex-col py-2 px-3 focus:z-10',
+          'lg:hidden min-h-[80px] flex flex-col py-2 px-3 focus:z-10',
         )}
       >
         <time
@@ -59,7 +59,7 @@ export const DayGrid: React.VFC<DayGridProps> = ({
 
       {/* cell lg~ */}
       <div
-        className={`min-h-28 ${clsx(
+        className={`min-h-[120px] ${clsx(
           isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-500',
           'hidden lg:block relative py-2 px-3',
         )}`}

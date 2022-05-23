@@ -36,7 +36,7 @@ export const EditNoteForm: React.VFC<EditNoteFormProps> = ({ editor }) => {
 
       <div className='p-3 mt-8 break-all bg-white border rounded-lg shadow-md md:p-8'>
         <EditorToolbar editor={editor} />
-        <div onClick={handleFocus} className='min-h-80'>
+        <div onClick={handleFocus} className='min-h-[320px]'>
           <EditorContent editor={editor} />
         </div>
       </div>

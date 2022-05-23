@@ -73,7 +73,7 @@ export const NewTalk: React.VFC = withLoginRequired(({ currentUser }) => {
             </div>
             <div className='mt-10 text-center'>
               <Button
-                className='min-w-36'
+                className='min-w-[180px]'
                 loading={validating}
                 disabled={disabled}
                 variant='contained'

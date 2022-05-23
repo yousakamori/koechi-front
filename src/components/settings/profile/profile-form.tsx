@@ -103,7 +103,7 @@ export const ProfileForm: React.VFC<ProfileFormProps> = ({ currentUser }) => {
         </Typography>
         <div className='mt-8 text-center'>
           <Button
-            className='min-w-36'
+            className='min-w-[96px]'
             loading={validating}
             disabled={disabled}
             size='lg'

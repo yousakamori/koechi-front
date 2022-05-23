@@ -61,7 +61,7 @@ export const MemberItem: React.VFC<MemberItemProps> = ({
           </div>
         </div>
 
-        <div className='flex items-center min-w-20'>
+        <div className='flex items-center min-w-[80px]'>
           <div className='flex items-center text-xs font-semibold text-gray-500'>
             {member.role === 'admin' ? '管理者' : 'メンバー'}
             {member.is_owner && <BiUserCheck className='ml-3 text-xl text-primary-500' />}

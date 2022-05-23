@@ -89,7 +89,7 @@ export const ResetEmailModal: React.VFC<ResetEmailModalProps> = ({ open, onClose
 
       <div className='mt-6'>
         <Button
-          className='min-w-24'
+          className='min-w-[96px]'
           loading={validating}
           disabled={disabled}
           variant='contained'

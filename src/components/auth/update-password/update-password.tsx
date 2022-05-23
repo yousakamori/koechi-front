@@ -70,7 +70,7 @@ export const UpdatePassword: React.VFC = () => {
   //
   return (
     <Layout footer={false} customMeta={{ title: '新しいパスワードを設定' }}>
-      <div className='py-10 border-t border-gray-200 min-h-52'>
+      <div className='py-10 border-t border-gray-200 min-h-[200px]'>
         <Container className='max-w-md'>
           <Typography variant='h1' align='center'>
             新しいパスワードを設定

@@ -70,7 +70,7 @@ export const FollowButton: React.VFC<FollowButtonProps> = ({ userId }) => {
       {isFollowing(userId) ? (
         <Button
           onClick={() => handleUnfollow(userId)}
-          className='min-w-[98px]'
+          className='min-w-[96px]'
           loading={validating}
           variant='contained'
           roundedFull
@@ -81,7 +81,7 @@ export const FollowButton: React.VFC<FollowButtonProps> = ({ userId }) => {
       ) : (
         <Button
           onClick={() => handleFollow(userId)}
-          className='min-w-[98px]'
+          className='min-w-[96px]'
           loading={validating}
           variant='outlined'
           roundedFull

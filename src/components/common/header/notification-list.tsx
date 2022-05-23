@@ -58,7 +58,7 @@ export const NotificationList: React.VFC<NotificationListProps> = ({ currentUser
           >
             <BiBell />
             {currentUser.notifications_count > 0 && (
-              <span className='absolute right-0.5 h-4 p-0.5 text-xs leading-3 text-white rounded-full top-0 min-w-4 bg-primary-500'>
+              <span className='absolute right-0.5 h-4 p-0.5 text-xs leading-3 text-white rounded-full top-0 min-w-[16px] bg-primary-500'>
                 {currentUser.notifications_count}
               </span>
             )}

@@ -126,7 +126,7 @@ export const NewSpace: React.VFC = withLoginRequired(() => {
             <div className='mt-6 text-center'>
               <Button
                 onClick={handleSubmit(handleCreateSpace)}
-                className='min-w-36'
+                className='min-w-[180px]'
                 loading={validating}
                 disabled={disabled}
                 variant='contained'

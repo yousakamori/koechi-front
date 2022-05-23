@@ -61,7 +61,7 @@ export const OnboardingOptional: React.VFC<OnboardingOptionalProps> = ({
           </div>
           <div className='flex justify-center mt-6'>
             <Button
-              className='min-w-44'
+              className='min-w-[180px]'
               loading={validating}
               disabled={disabled}
               variant='contained'

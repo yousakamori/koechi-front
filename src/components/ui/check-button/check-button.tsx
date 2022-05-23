@@ -36,7 +36,7 @@ export const CheckButton: React.VFC<CheckButtonProps> = ({
     'justify-center',
     'w-5',
     'h-5',
-    'min-w-5',
+    'min-w-[20px]',
     'mr-1.5',
     'rounded',
     checked ? ['bg-primary-400', 'border border-primary-400'] : ['border border-gray-400'],
