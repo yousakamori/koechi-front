@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { useEditor } from '@tiptap/react';
-import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, useCallback } from 'react';
@@ -11,6 +10,7 @@ import useSWR from 'swr';
 import { EditNoteFormProps } from './edit-note-form';
 import { EditNoteHeader } from './edit-note-header';
 import { notesApi } from '@/api/notes';
+import { Head } from '@/components/common/head';
 import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Container } from '@/components/ui/container';
 import { endpoints } from '@/config/endpoints';
@@ -153,7 +153,7 @@ export const EditNote: React.VFC = withLoginRequired(() => {
   //
   return (
     <FormProvider {...form}>
-      <NextSeo title={`編集中…${watchTitle || '無題の投稿'}`} />
+      <Head customMeta={{ title: `編集中…${watchTitle || '無題の投稿'}` }} />
       <EditNoteHeader validating={validating} onUpdate={handleUpdate} onClickBack={router.back} />
       <div className='min-h-screen py-10 border-t border-gray-200'>
         <Container className='max-w-4xl'>

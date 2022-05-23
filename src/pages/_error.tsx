@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo';
 import { Layout } from '@/components/common/layout';
 import { Error } from '@/components/error';
 import { HttpErrorObject } from '@/error/http-error';
@@ -8,8 +7,7 @@ const AppError = ({ message, http }: HttpErrorObject) => {
   // ___________________________________________________________________________
   //
   return (
-    <Layout>
-      <NextSeo title={message} />
+    <Layout customMeta={{ title: message }}>
       <Error statusCode={http.status} title={message} />
     </Layout>
   );

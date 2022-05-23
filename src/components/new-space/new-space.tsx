@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -80,74 +79,71 @@ export const NewSpace: React.VFC = withLoginRequired(() => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title='スペースの作成' />
-      <Layout>
-        <div className='min-h-screen py-10 border-t border-gray-200'>
-          <Container className='max-w-lg'>
-            <div className='mt-8'>
-              <Typography variant='h1' align='center'>
-                スペースを作成
-              </Typography>
-              <div className='mt-4 text-center'>
-                <div className='inline-block'>
-                  <Typography align='left' color='textSecondary' fontSize='sm'>
-                    ユーザー同士で記録を共有できる場所です
-                  </Typography>
-                </div>
+    <Layout customMeta={{ title: 'スペースの作成' }}>
+      <div className='min-h-screen py-10 border-t border-gray-200'>
+        <Container className='max-w-lg'>
+          <div className='mt-8'>
+            <Typography variant='h1' align='center'>
+              スペースを作成
+            </Typography>
+            <div className='mt-4 text-center'>
+              <div className='inline-block'>
+                <Typography align='left' color='textSecondary' fontSize='sm'>
+                  ユーザー同士で記録を共有できる場所です
+                </Typography>
               </div>
+            </div>
 
-              <div className='flex justify-center mt-12'>
-                <Controller
-                  render={({ field: { onChange, value } }) => (
-                    <EmojiPicker emoji={value} onSelect={onChange} position='center' />
-                  )}
-                  name='emoji'
-                  control={control}
-                  rules={{ required: true }}
+            <div className='flex justify-center mt-12'>
+              <Controller
+                render={({ field: { onChange, value } }) => (
+                  <EmojiPicker emoji={value} onSelect={onChange} position='center' />
+                )}
+                name='emoji'
+                control={control}
+                rules={{ required: true }}
+              />
+            </div>
+
+            <div className='grid mt-8 gap-y-2'>
+              <div className='overflow-hidden bg-white border border-gray-200 rounded-lg shadow'>
+                <Textarea
+                  {...register('name')}
+                  autoFocus
+                  id='name'
+                  fullWidth
+                  placeholder='スペースの名前を入力'
+                  className='px-3 py-2 text-lg font-bold'
+                  variant='none'
+                  minRows={3}
+                  maxRows={5}
                 />
               </div>
 
-              <div className='grid mt-8 gap-y-2'>
-                <div className='overflow-hidden bg-white border border-gray-200 rounded-lg shadow'>
-                  <Textarea
-                    {...register('name')}
-                    autoFocus
-                    id='name'
-                    fullWidth
-                    placeholder='スペースの名前を入力'
-                    className='px-3 py-2 text-lg font-bold'
-                    variant='none'
-                    minRows={3}
-                    maxRows={5}
-                  />
-                </div>
+              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+            </div>
 
-                <ErrorMessage>{errors.name?.message}</ErrorMessage>
-              </div>
-
-              <div className='mt-6 text-center'>
-                <Button
-                  onClick={handleSubmit(handleCreateSpace)}
-                  className='min-w-36'
-                  loading={validating}
-                  disabled={disabled}
-                  variant='contained'
-                  type='button'
-                  size='lg'
-                >
-                  スペースを作成
-                </Button>
-                <div className='mt-4 text-center'>
-                  <div className='inline-block text-sm text-gray-400'>
-                    絵文字と名前はいつでも変更できます
-                  </div>
+            <div className='mt-6 text-center'>
+              <Button
+                onClick={handleSubmit(handleCreateSpace)}
+                className='min-w-36'
+                loading={validating}
+                disabled={disabled}
+                variant='contained'
+                type='button'
+                size='lg'
+              >
+                スペースを作成
+              </Button>
+              <div className='mt-4 text-center'>
+                <div className='inline-block text-sm text-gray-400'>
+                  絵文字と名前はいつでも変更できます
                 </div>
               </div>
             </div>
-          </Container>
-        </div>
-      </Layout>
-    </>
+          </div>
+        </Container>
+      </div>
+    </Layout>
   );
 });

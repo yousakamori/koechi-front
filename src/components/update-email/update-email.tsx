@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -59,62 +58,59 @@ export const UpdateEmail: React.VFC = withLoginRequired(() => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title='メールアドレスの再設定' />
-      <Layout footer={false}>
-        <div className='min-h-screen py-10 border-t border-gray-200'>
-          <Container className='max-w-md'>
-            <Typography variant='h1' align='center'>
-              メールアドレスの再設定
-            </Typography>
+    <Layout footer={false} customMeta={{ title: 'メールアドレスの再設定' }}>
+      <div className='min-h-screen py-10 border-t border-gray-200'>
+        <Container className='max-w-md'>
+          <Typography variant='h1' align='center'>
+            メールアドレスの再設定
+          </Typography>
 
-            {token ? (
-              <>
-                <div className='mt-4 text-sm text-gray-500'>
-                  パスワードを入力して、メールアドレス変更を完了してください。
-                </div>
+          {token ? (
+            <>
+              <div className='mt-4 text-sm text-gray-500'>
+                パスワードを入力して、メールアドレス変更を完了してください。
+              </div>
 
-                <div className='grid mt-6 gap-y-2'>
-                  <Input
-                    {...register('password')}
-                    color='secondary'
-                    type='password'
-                    placeholder='パスワード'
-                    fullWidth
-                  />
+              <div className='grid mt-6 gap-y-2'>
+                <Input
+                  {...register('password')}
+                  color='secondary'
+                  type='password'
+                  placeholder='パスワード'
+                  fullWidth
+                />
 
-                  <ErrorMessage>{errors.password?.message}</ErrorMessage>
-                </div>
-                <div className='mt-6'>
-                  <Button
-                    fullWidth
-                    onClick={handleSubmit(handleUpdateEmail)}
-                    loading={validating}
-                    disabled={disabled}
-                    variant='contained'
-                  >
-                    送信
+                <ErrorMessage>{errors.password?.message}</ErrorMessage>
+              </div>
+              <div className='mt-6'>
+                <Button
+                  fullWidth
+                  onClick={handleSubmit(handleUpdateEmail)}
+                  loading={validating}
+                  disabled={disabled}
+                  variant='contained'
+                >
+                  送信
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className='mt-4 text-sm text-gray-500'>
+                無効なURLです。もう一度メールアドレスを入力してください。
+              </div>
+
+              <div className='mt-6'>
+                <Link href='/settings/account' passHref>
+                  <Button fullWidth variant='contained'>
+                    アカウント設定へ
                   </Button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className='mt-4 text-sm text-gray-500'>
-                  無効なURLです。もう一度メールアドレスを入力してください。
-                </div>
-
-                <div className='mt-6'>
-                  <Link href='/settings/account' passHref>
-                    <Button fullWidth variant='contained'>
-                      アカウント設定へ
-                    </Button>
-                  </Link>
-                </div>
-              </>
-            )}
-          </Container>
-        </div>
-      </Layout>
-    </>
+                </Link>
+              </div>
+            </>
+          )}
+        </Container>
+      </div>
+    </Layout>
   );
 });

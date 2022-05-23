@@ -41,7 +41,7 @@ export const NewTalk: React.VFC = withLoginRequired(({ currentUser }) => {
   // ___________________________________________________________________________
   //
   return (
-    <Layout>
+    <Layout customMeta={{ title: 'トークを作成' }}>
       <div className='min-h-screen py-10 border-t border-gray-200'>
         <Container className='max-w-md'>
           <Typography variant='h1' align='center'>

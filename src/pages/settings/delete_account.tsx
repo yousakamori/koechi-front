@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { DeleteAccount } from '@/components/delete-account';
+import { DeleteAccount } from '@/components/settings/delete-account';
 // ___________________________________________________________________________
 //
 const DeleteAccountPage: NextPage = () => {

@@ -40,7 +40,7 @@ export const ResetPassword: React.VFC = () => {
   // ___________________________________________________________________________
   //
   return (
-    <Layout footer={false}>
+    <Layout footer={false} customMeta={{ title: 'パスワード再設定' }}>
       <div className='min-h-screen py-10 border-t border-gray-200 '>
         <Container className='max-w-md'>
           <Typography variant='h1' align='center' className='mt-10'>

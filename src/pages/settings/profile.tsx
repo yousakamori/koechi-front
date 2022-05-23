@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import { Settings } from '@/components/settings';
+import { Profile } from '@/components/settings/profile';
 // ___________________________________________________________________________
 //
 const ProfilePage: NextPage = () => {
   // ___________________________________________________________________________
   //
-  return <Settings />;
+  return <Profile />;
 };
 // ___________________________________________________________________________
 //

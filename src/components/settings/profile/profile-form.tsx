@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { SiTwitter } from 'react-icons/si';
 import { toast } from 'react-toastify';
 import { AvatarUpload } from '@/components/avatar-upload';
-import { withLoginRequired } from '@/components/hoc/with-login-required';
 import { Button } from '@/components/ui/button';
 import { ErrorMessage } from '@/components/ui/error-message';
 import { Input } from '@/components/ui/input';
@@ -17,9 +16,11 @@ import { CurrentUser } from '@/types/current-user';
 // ___________________________________________________________________________
 //
 type UpdateValues = Pick<CurrentUser, 'name' | 'bio' | 'twitter_username'>;
+
+export type ProfileFormProps = { currentUser: CurrentUser };
 // ___________________________________________________________________________
 //
-export const Profile: React.VFC = withLoginRequired(({ currentUser }) => {
+export const ProfileForm: React.VFC<ProfileFormProps> = ({ currentUser }) => {
   const {
     register,
     handleSubmit,
@@ -115,4 +116,4 @@ export const Profile: React.VFC = withLoginRequired(({ currentUser }) => {
       </div>
     </div>
   );
-});
+};

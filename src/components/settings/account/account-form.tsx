@@ -21,10 +21,15 @@ const ResetPasswordModal = dynamic<ResetPasswordModalProps>(() =>
 );
 // ___________________________________________________________________________
 //
-export const Account: React.VFC = () => {
+export type AccountFormProps = {
+  currentUser: CurrentUser;
+};
+// ___________________________________________________________________________
+//
+export const AccountForm: React.VFC<AccountFormProps> = ({ currentUser }) => {
   const [openEmail, toggleEmailModal] = useToggle();
   const [openPassword, togglePasswordModal] = useToggle();
-  const { currentUser, setCurrentUser, authChecking, updateCurrentUser } = useCurrentUser();
+  const { setCurrentUser, authChecking, updateCurrentUser } = useCurrentUser();
 
   const timeout = useRef<NodeJS.Timeout>();
   const handleUpdateNotification = async (
@@ -33,9 +38,7 @@ export const Account: React.VFC = () => {
       'email_notify_comments' | 'email_notify_followings' | 'email_notify_likes'
     >,
   ) => {
-    if (currentUser) {
-      setCurrentUser({ ...currentUser, ...values });
-    }
+    setCurrentUser((prev) => ({ ...(prev as CurrentUser), ...values }));
 
     if (timeout.current) {
       clearTimeout(timeout.current);

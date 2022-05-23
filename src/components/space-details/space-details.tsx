@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -86,30 +85,26 @@ export const SpaceDetails: React.VFC = withLoginRequired(() => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title={data.space.name} titleTemplate='%s' />
+    <Layout customMeta={{ title: data.space.name, titleTemplate: '%s' }}>
+      <div className='min-h-screen'>
+        <Container className='max-w-4xl'>
+          <SpaceDetailsHeader
+            space={data.space}
+            validating={validating}
+            onUpdateSpace={handleUpdateSpace}
+          />
 
-      <Layout>
-        <div className='min-h-screen'>
-          <Container className='max-w-4xl'>
-            <SpaceDetailsHeader
-              space={data.space}
-              validating={validating}
-              onUpdateSpace={handleUpdateSpace}
-            />
+          <SpaceTabs slug={slug} tabs={tabs} />
 
-            <SpaceTabs slug={slug} tabs={tabs} />
-
-            {tab === 'members' ? (
-              // members
-              <SpaceMembersList slug={slug} />
-            ) : (
-              // notes
-              <SpaceNotesList slug={slug} currentPage={currentPage} />
-            )}
-          </Container>
-        </div>
-      </Layout>
-    </>
+          {tab === 'members' ? (
+            // members
+            <SpaceMembersList slug={slug} />
+          ) : (
+            // notes
+            <SpaceNotesList slug={slug} currentPage={currentPage} />
+          )}
+        </Container>
+      </div>
+    </Layout>
   );
 });

@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
@@ -152,45 +151,42 @@ export const Search: React.VFC = () => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title='検索' />
-      <Layout>
-        <div className='min-h-screen py-10 bg-white'>
-          <Container className='max-w-5xl'>
-            <form
-              onSubmit={handleSubmit}
-              className='relative flex items-center w-full px-5 py-1.5 mt-10 border rounded-full border-secondary-300 focus-within:border-blue-500'
-            >
-              <input
-                autoFocus
-                value={keyword}
-                className='w-full bg-transparent outline-none pr-7 text-secondary-800'
-                enterKeyHint='search'
-                type='text'
-                placeholder='キーワードを入力...'
-                onChange={(e) => setKeyword(e.target.value)}
-              />
-
-              <CircleButton aria-label='検索' color='secondary' type='submit'>
-                <BiSearch className='text-2xl' />
-              </CircleButton>
-            </form>
-
-            <div className='mt-6'>
-              <SearchTabs keyword={q} searchCount={searchCount} sourceQuery={sourceQuery} />
-            </div>
-
-            <SearchResult
-              searchCount={searchCount}
-              searchResult={searchResult}
-              sourceQuery={sourceQuery}
-              searchQuery={q}
-              error={error}
-              handleDeleteNote={handleDeleteNote}
+    <Layout customMeta={{ title: '検索' }}>
+      <div className='min-h-screen py-10 bg-white'>
+        <Container className='max-w-5xl'>
+          <form
+            onSubmit={handleSubmit}
+            className='relative flex items-center w-full px-5 py-1.5 mt-10 border rounded-full border-secondary-300 focus-within:border-blue-500'
+          >
+            <input
+              autoFocus
+              value={keyword}
+              className='w-full bg-transparent outline-none pr-7 text-secondary-800'
+              enterKeyHint='search'
+              type='text'
+              placeholder='キーワードを入力...'
+              onChange={(e) => setKeyword(e.target.value)}
             />
-          </Container>
-        </div>
-      </Layout>
-    </>
+
+            <CircleButton aria-label='検索' color='secondary' type='submit'>
+              <BiSearch className='text-2xl' />
+            </CircleButton>
+          </form>
+
+          <div className='mt-6'>
+            <SearchTabs keyword={q} searchCount={searchCount} sourceQuery={sourceQuery} />
+          </div>
+
+          <SearchResult
+            searchCount={searchCount}
+            searchResult={searchResult}
+            sourceQuery={sourceQuery}
+            searchQuery={q}
+            error={error}
+            handleDeleteNote={handleDeleteNote}
+          />
+        </Container>
+      </div>
+    </Layout>
   );
 };

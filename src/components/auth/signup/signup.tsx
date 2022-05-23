@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NextSeo } from 'next-seo';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -53,82 +52,73 @@ export const SignUp: React.VFC = withLogoutRequired(() => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title='会員登録' />
-      <Layout footer={false}>
-        <div className='min-h-screen py-10 border-t border-gray-200'>
-          <Container className='max-w-md'>
-            <Typography variant='h1' align='center'>
-              {APP_NAME}に登録する
-            </Typography>
+    <Layout footer={false} customMeta={{ title: '会員登録' }}>
+      <div className='min-h-screen py-10 border-t border-gray-200'>
+        <Container className='max-w-md'>
+          <Typography variant='h1' align='center'>
+            {APP_NAME}に登録する
+          </Typography>
 
-            {/* 入力フォーム */}
-            {step === 'INPUT_EMAIL' && (
-              <>
-                <div className='mt-4 text-center'>
-                  <div className='inline-block'>
-                    <Typography align='left' color='textSecondary' fontSize='sm'>
-                      入力したメールアドレスに登録用のURLを送信します。
-                    </Typography>
-                  </div>
-                </div>
-
-                <div className='w-full mt-6'>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className='mx-auto'
-                    src='/images/signup.svg'
-                    width='240'
-                    height='240'
-                    alt=''
-                  />
-                </div>
-
-                <form className='grid mt-8 gap-y-6' onSubmit={handleSubmit(handleSignup)}>
-                  <div className='grid gap-y-2'>
-                    <Input
-                      {...register('email')}
-                      autoFocus
-                      autoComplete='email'
-                      color={errors.email?.message ? 'error' : 'secondary'}
-                      type='email'
-                      fullWidth
-                      placeholder='メールアドレス'
-                    />
-                    <ErrorMessage className='mt-1'>{errors.email?.message}</ErrorMessage>
-                  </div>
-
-                  <Button
-                    fullWidth
-                    loading={validating}
-                    disabled={disabled}
-                    variant='contained'
-                    type='submit'
-                  >
-                    無料で登録
-                  </Button>
-                </form>
-              </>
-            )}
-
-            {/* 完了メッセージ */}
-            {step === 'COMPLETE' && (
+          {/* 入力フォーム */}
+          {step === 'INPUT_EMAIL' && (
+            <>
               <div className='mt-4 text-center'>
                 <div className='inline-block'>
                   <Typography align='left' color='textSecondary' fontSize='sm'>
-                    メールに記載されているURLにアクセスし、登録を完了してください。
+                    入力したメールアドレスに登録用のURLを送信します。
                   </Typography>
                 </div>
-
-                <div className='w-full'>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src='/images/mail-send.svg' width='360' height='360' alt='' />
-                </div>
               </div>
-            )}
-          </Container>
-        </div>
-      </Layout>
-    </>
+
+              <div className='w-full mt-6'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className='mx-auto' src='/images/signup.svg' width='240' height='240' alt='' />
+              </div>
+
+              <form className='grid mt-8 gap-y-6' onSubmit={handleSubmit(handleSignup)}>
+                <div className='grid gap-y-2'>
+                  <Input
+                    {...register('email')}
+                    autoFocus
+                    autoComplete='email'
+                    color={errors.email?.message ? 'error' : 'secondary'}
+                    type='email'
+                    fullWidth
+                    placeholder='メールアドレス'
+                  />
+                  <ErrorMessage className='mt-1'>{errors.email?.message}</ErrorMessage>
+                </div>
+
+                <Button
+                  fullWidth
+                  loading={validating}
+                  disabled={disabled}
+                  variant='contained'
+                  type='submit'
+                >
+                  無料で登録
+                </Button>
+              </form>
+            </>
+          )}
+
+          {/* 完了メッセージ */}
+          {step === 'COMPLETE' && (
+            <div className='mt-4 text-center'>
+              <div className='inline-block'>
+                <Typography align='left' color='textSecondary' fontSize='sm'>
+                  メールに記載されているURLにアクセスし、登録を完了してください。
+                </Typography>
+              </div>
+
+              <div className='w-full'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src='/images/mail-send.svg' width='360' height='360' alt='' />
+              </div>
+            </div>
+          )}
+        </Container>
+      </div>
+    </Layout>
   );
 });

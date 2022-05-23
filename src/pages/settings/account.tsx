@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import { Settings } from '@/components/settings';
+import { Account } from '@/components/settings/account';
 // ___________________________________________________________________________
 //
 const AccountPage: NextPage = () => {
   // ___________________________________________________________________________
   //
-  return <Settings />;
+  return <Account />;
 };
 // ___________________________________________________________________________
 //

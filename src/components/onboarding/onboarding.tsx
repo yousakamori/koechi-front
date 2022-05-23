@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { Head } from '../common/head';
 import { OnboardingOptionalProps } from './onboarding-optional';
 import { OnboardingRequired } from './onboarding-required';
 import { validatorApi } from '@/api/validator/validator-api';
@@ -87,25 +87,22 @@ export const Onboarding: React.VFC = withLoginRequired(() => {
   // ___________________________________________________________________________
   //
   return (
-    <>
-      <NextSeo title={`${APP_NAME}へようこそ!`} />
-
-      <FormProvider {...form}>
-        {step === 'REQUIRED' && (
-          <OnboardingRequired
-            validating={validating}
-            handleNextStep={form.handleSubmit(handleNextStep)}
-            handleCancelRegistration={handleCancelRegistration}
-          />
-        )}
-        {step === 'OPTIONAL' && (
-          <OnboardingOptional
-            validating={validatingUpdate}
-            handleSaveProfile={form.handleSubmit(handleSaveProfile)}
-            handlePrevStep={handlePrevStep}
-          />
-        )}
-      </FormProvider>
-    </>
+    <FormProvider {...form}>
+      <Head customMeta={{ title: `${APP_NAME}へようこそ!` }} />
+      {step === 'REQUIRED' && (
+        <OnboardingRequired
+          validating={validating}
+          handleNextStep={form.handleSubmit(handleNextStep)}
+          handleCancelRegistration={handleCancelRegistration}
+        />
+      )}
+      {step === 'OPTIONAL' && (
+        <OnboardingOptional
+          validating={validatingUpdate}
+          handleSaveProfile={form.handleSubmit(handleSaveProfile)}
+          handlePrevStep={handlePrevStep}
+        />
+      )}
+    </FormProvider>
   );
 });
