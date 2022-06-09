@@ -1,17 +1,25 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { UserCommentList } from './user-comment-list';
 import { UserTalksList } from './user-talks-list';
 import { Layout } from '@/components/common/layout';
 import { FollowButton } from '@/components/follow-button';
+import { FollowModalProps } from '@/components/overlays/follow-modal';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Tabs } from '@/components/ui/tabs';
 import { Typography } from '@/components/ui/typography';
 import { useCurrentUser } from '@/hooks/current-user';
+import { useToggle } from '@/hooks/toggle';
 import { User } from '@/types/user';
+// ___________________________________________________________________________
+//
+const FollowModal = dynamic<FollowModalProps>(() =>
+  import('@/components/overlays/follow-modal').then((mod) => mod.FollowModal),
+);
 // ___________________________________________________________________________
 //
 export type UserDetailsProps = {
@@ -22,6 +30,9 @@ export type UserDetailsProps = {
 export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
   const router = useRouter();
   const { authChecking, currentUser } = useCurrentUser();
+  const [open, toggleModal] = useToggle();
+  const [isFollowing, setIsFollowing] = useState(false);
+
   const { username, tab, status } = router.query as {
     username: string;
     status?: string;
@@ -80,6 +91,12 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
   //
   return (
     <Layout customMeta={{ title: `${user.name}さんの${!tab ? 'トーク' : 'コメント'}` }}>
+      <FollowModal
+        username={user.username}
+        open={open}
+        onClose={toggleModal}
+        isFollowing={isFollowing}
+      />
       <div className='pt-10 border-t border-gray-200'>
         <Container className='max-w-4xl'>
           <div className='block sm:flex sm:items-center sm:justify-between'>
@@ -110,18 +127,41 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
                   }}
                 />
                 <div className='flex mt-2 space-x-3'>
-                  <Button size='sm' color='secondary' variant='ghost' className='-ml-2'>
-                    <span className='pr-1 text-base font-semibold text-gray-700'>
-                      {user.following_count}
-                    </span>
-                    フォロー中
-                  </Button>
-                  <Button size='sm' color='secondary' variant='ghost' className='-ml-2'>
-                    <span className='pr-1 text-base font-semibold text-gray-700'>
-                      {user.follower_count}
-                    </span>
-                    フォロワー
-                  </Button>
+                  {user.following_count > 0 && (
+                    <Button
+                      onClick={() => {
+                        toggleModal();
+                        setIsFollowing(true);
+                      }}
+                      size='sm'
+                      color='secondary'
+                      variant='ghost'
+                      className='-ml-2'
+                    >
+                      <span className='pr-1 text-base font-semibold text-gray-700'>
+                        {user.following_count}
+                      </span>
+                      フォロー中
+                    </Button>
+                  )}
+
+                  {user.follower_count > 0 && (
+                    <Button
+                      onClick={() => {
+                        toggleModal();
+                        setIsFollowing(false);
+                      }}
+                      size='sm'
+                      color='secondary'
+                      variant='ghost'
+                      className='-ml-2'
+                    >
+                      <span className='pr-1 text-base font-semibold text-gray-700'>
+                        {user.follower_count}
+                      </span>
+                      フォロワー
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

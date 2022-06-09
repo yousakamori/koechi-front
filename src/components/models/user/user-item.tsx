@@ -16,7 +16,7 @@ export const UserItem: React.VFC<UserItemProps> = ({ user }) => {
   // ___________________________________________________________________________
   //
   return (
-    <div className='sm:w-[48%] w-full flex justify-between border-b border-gray-200 items-center py-4'>
+    <div className='flex items-center justify-between py-4 border-b border-gray-200'>
       <Link href={`/${user.username}`}>
         <a className='flex-1'>
           <div className='flex items-center'>

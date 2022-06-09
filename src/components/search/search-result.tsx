@@ -80,7 +80,9 @@ export const SearchResult: React.VFC<SearchResultProps> = ({
           {sourceQuery === 'users' && (
             <div className='flex flex-wrap justify-between mt-6'>
               {(searchResult as SearchUsers).users.map((user) => (
-                <UserItem key={user.id} user={user} />
+                <div key={user.id} className='sm:w-[48%] w-full'>
+                  <UserItem user={user} />
+                </div>
               ))}
             </div>
           )}

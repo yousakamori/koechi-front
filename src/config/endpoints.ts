@@ -30,6 +30,8 @@ export const endpoints = {
   links: '/links',
   user: (username: string) => `/users/${username}`,
   userComments: (username: string) => `/users/${username}/comments`,
+  followings: (username: string) => `/users/${username}/followings`,
+  followers: (username: string) => `/users/${username}/followers`,
   comment: (slug: string) => `/comments/${slug}`,
   talk: (slug: string) => `/talks/${slug}`,
   space: (slug: string) => `/spaces/${slug}`,

@@ -23,7 +23,7 @@ const propsFactory = (injects?: Partial<ServerProps>) => ({
 export const getServerSideProps: GetServerSideProps<ServerProps> = async () => {
   const COUNT = 30;
   const MIN_COMMENTS_COUNT = 1;
-  const query = `order=alltime&count=${COUNT}&min_comments_count=${MIN_COMMENTS_COUNT}`;
+  const query = `order=weekly&count=${COUNT}&min_comments_count=${MIN_COMMENTS_COUNT}`;
 
   try {
     const data = await talksApi.getTalks(query);
