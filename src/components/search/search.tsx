@@ -159,7 +159,6 @@ export const Search: React.VFC = () => {
             className='relative flex items-center w-full px-5 py-1.5 mt-10 border rounded-full border-secondary-300 focus-within:border-blue-500'
           >
             <input
-              autoFocus
               value={keyword}
               className='w-full bg-transparent outline-none pr-7 text-secondary-800'
               enterKeyHint='search'
