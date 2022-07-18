@@ -7,9 +7,9 @@ import Head from 'next/head';
 import React from 'react';
 import { ToastContainerProps } from 'react-toastify';
 import { RecoilRoot } from 'recoil';
-import { InitializeApp } from '@/components/common/initialize-app';
 import { Progress } from '@/components/common/progress';
 import { GoogleAnalytics } from '@/components/google-analytics';
+import { InitializeApp } from '@/components/initialize-app';
 import { SEO } from '@/config/next-seo.config';
 import { usePageView } from '@/hooks/use-pageview';
 // ___________________________________________________________________________
