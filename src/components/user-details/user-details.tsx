@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserCommentList } from './user-comment-list';
 import { UserTalksList } from './user-talks-list';
 import { Layout } from '@/components/common/layout';
@@ -13,7 +13,6 @@ import { Container } from '@/components/ui/container';
 import { Tabs } from '@/components/ui/tabs';
 import { Typography } from '@/components/ui/typography';
 import { useCurrentUser } from '@/hooks/current-user';
-import { useToggle } from '@/hooks/toggle';
 import { User } from '@/types/user';
 // ___________________________________________________________________________
 //
@@ -30,7 +29,7 @@ export type UserDetailsProps = {
 export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
   const router = useRouter();
   const { authChecking, currentUser } = useCurrentUser();
-  const [open, toggleModal] = useToggle();
+  const [open, setOpen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const { username, tab, status } = router.query as {
@@ -87,6 +86,13 @@ export const UserDetails: React.VFC<UserDetailsProps> = ({ user }) => {
         },
       ]
     : talkTabs;
+
+  const toggleModal = () => setOpen((prev) => !prev);
+
+  useEffect(() => {
+    setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath]);
   // ___________________________________________________________________________
   //
   return (
